@@ -54,6 +54,7 @@ export default function (eleventyConfig) {
     "./Proj": "Proj",
     "./Publicity": "Publicity",
     "./Services": "Services",
+    "./courses": "courses",
     "./CNAME": "CNAME",
     "./robots.txt": "robots.txt",
     "./site.webmanifest": "site.webmanifest",

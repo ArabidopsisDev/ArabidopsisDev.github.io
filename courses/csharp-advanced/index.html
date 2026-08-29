@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="C# 从委托到 AOT 高级动画课程：16 章、180 节，覆盖泛型、LINQ、异步、并发、运行时、内存、编译期元编程与 Native AOT。">
+  <meta name="theme-color" content="#123c34">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="C# 从委托到 AOT｜高级动画课程">
+  <meta property="og:description" content="16 章、180 节，从真实代码问题进入现代 C#、运行时与 Native AOT。">
+  <meta property="og:url" content="https://arabid.top/courses/csharp-advanced/">
+  <meta property="og:image" content="https://arabid.top/assets/images/og.png">
+  <link rel="canonical" href="https://arabid.top/courses/csharp-advanced/">
+  <link rel="icon" href="./assets/arabidopsis-mark.png" type="image/png">
+  <link rel="stylesheet" href="./assets/course.css">
+  <title>C# 从委托到 AOT｜高级动画课程</title>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <header class="site-header" data-header>
+    <div class="nav-shell">
+      <a class="brand" href="../../" aria-label="返回 Arabidopsis 个人主页">
+        <img src="./assets/arabidopsis-mark.png" alt="" width="34" height="34">
+        <span>Arabidopsis / C# Advanced</span>
+      </a>
+      <nav class="site-nav" aria-label="课程导航">
+        <a href="../../">个人主页</a>
+        <a href="#top">课程概览</a>
+        <a href="#method">课程方法</a>
+        <a href="#roadmap">学习路线</a>
+        <a href="#preview">免费试看</a>
+        <a href="#curriculum">完整目录</a>
+        <button type="button" class="theme-toggle" data-theme-toggle aria-label="切换深色模式">明 / 暗</button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="shell hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">C# / ADVANCED ANIMATED SERIES</p>
+          <h1>从委托到 AOT</h1>
+          <p class="hero-subtitle">C# 高级动画课程</p>
+          <p class="hero-lead">从真实代码问题出发，沿着语言能力、设计模式、运行时机制和工程边界逐层深入。每节只处理一个明确问题，让高级特性回到可以运行、可以调试的代码中。</p>
+          <div class="hero-actions">
+            <a class="button primary" href="https://www.bilibili.com/cheese/play/ss469263262" target="_blank" rel="noreferrer">前往 B 站课程 <span aria-hidden="true">↗</span></a>
+            <a class="button secondary" href="#preview">先看两节</a>
+          </div>
+          <dl class="hero-stats" aria-label="课程规模">
+            <div><dt>16</dt><dd>章完整路线</dd></div>
+            <div><dt>180</dt><dd>节短课</dd></div>
+            <div><dt>3–5</dt><dd>分钟 / 常规节</dd></div>
+            <div><dt>1</dt><dd>个综合项目</dd></div>
+          </dl>
+        </div>
+        <div class="hero-console" aria-label="课程代码示意">
+          <div class="console-bar"><span></span><span></span><span></span><b>Pipeline.cs</b></div>
+          <pre><code><span class="comment">// 先找到变化，再选择抽象</span>
+<span class="keyword">var</span> pipeline = <span class="keyword">new</span> Pipeline&lt;Input&gt;()
+  .Use(Validate)
+  .Use(Transform)
+  .Use(Export);
+
+<span class="keyword">await</span> pipeline.RunAsync(
+  source,
+  cancellationToken
+);</code></pre>
+          <div class="console-footer"><span>delegate</span><span>generic</span><span>async</span><span>runtime</span><span>AOT</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section method" id="method">
+      <div class="shell">
+        <header class="section-heading">
+          <p class="eyebrow">01 / METHOD</p>
+          <h2>代码先遇到问题，<br>概念随后出现。</h2>
+          <p>课程不从定义列表开始。每组动画先展示一段逐渐失控的代码，再让语言能力、设计模式和运行时知识进入恰当的位置。</p>
+        </header>
+        <div class="method-grid">
+          <article><span>01</span><h3>建立具体场景</h3><p>HR 信息录入、订单管线、交通监控、插件系统和数据处理任务提供稳定上下文。</p></article>
+          <article><span>02</span><h3>看见变化来源</h3><p>判断、依赖、状态、并发和资源生命周期会在代码中留下可观察的问题。</p></article>
+          <article><span>03</span><h3>引入最小抽象</h3><p>委托、泛型、事件、表达式树和 Span 只在当前问题需要时出现。</p></article>
+          <article><span>04</span><h3>回到运行机制</h3><p>编译器展开、状态机、JIT、GC、裁剪与 AOT 解释代码最终怎样执行。</p></article>
+        </div>
+        <div class="pattern-strip" aria-label="问题与设计方式">
+          <div><strong>同一问题，不同处理策略</strong><span>策略模式</span></div>
+          <div><strong>对象内部依赖创建失控</strong><span>依赖注入</span></div>
+          <div><strong>多个对象随状态变化</strong><span>观察者模式</span></div>
+          <div><strong>生产与处理速度不一致</strong><span>生产者—消费者</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section roadmap" id="roadmap">
+      <div class="shell">
+        <header class="section-heading split">
+          <div><p class="eyebrow">02 / ROADMAP</p><h2>一条从语法到运行时的路线</h2></div>
+          <p>16 章按照依赖关系组织。前面的抽象会在后续章节重新出现，并在综合项目中汇合。</p>
+        </header>
+        <ol class="roadmap-list">
+          <li><span>01—04</span><div><h3>抽象与组合</h3><p>委托、事件、现代泛型、自定义集合、扩展方法与流式 API。</p></div></li>
+          <li><span>05—08</span><div><h3>数据、失败与协作</h3><p>LINQ、异常与资源、异步编程、并发与生产者消费者。</p></div></li>
+          <li><span>09—12</span><div><h3>类型与动态能力</h3><p>类型建模、模式匹配、反射、特性、表达式树与零分配内存操作。</p></div></li>
+          <li><span>13—16</span><div><h3>运行时与发布边界</h3><p>CLR、IL、JIT、GC、Roslyn、源生成、非托管互操作、Native AOT 与综合项目。</p></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section preview" id="preview">
+      <div class="shell">
+        <header class="section-heading split">
+          <div><p class="eyebrow">03 / FREE PREVIEW</p><h2>前两章，各看第一节</h2></div>
+          <p>两段视频经过网页压缩，保留完整讲解与动画。完整清晰版本和后续课程位于 B 站课堂。</p>
+        </header>
+        <div class="preview-grid">
+          <article class="video-card">
+            <div class="video-wrap">
+              <video controls preload="metadata" poster="./previews/chapter-01-lesson-01.jpg">
+                <source src="./previews/chapter-01-lesson-01.mp4" type="video/mp4">
+                当前浏览器不支持 HTML5 视频。
+              </video>
+            </div>
+            <div class="video-copy"><p>第 01 章 · 第 01 节 · 3:33</p><h3>委托概述</h3><span>HR 信息录入窗需要把处理方式交给主窗，从这个需求进入委托、签名与回调。</span></div>
+          </article>
+          <article class="video-card">
+            <div class="video-wrap">
+              <video controls preload="metadata" poster="./previews/chapter-02-lesson-01.jpg">
+                <source src="./previews/chapter-02-lesson-01.mp4" type="video/mp4">
+                当前浏览器不支持 HTML5 视频。
+              </video>
+            </div>
+            <div class="video-copy"><p>第 02 章 · 第 07 节 · 3:03</p><h3>泛型具化</h3><span>Buffer 和 List 需要保存不同类型的数据，从用途进入泛型的运行时表示与静态字段。</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section curriculum" id="curriculum">
+      <div class="shell">
+        <header class="section-heading split">
+          <div><p class="eyebrow">04 / FULL CURRICULUM</p><h2>16 章 · 180 节</h2></div>
+          <p>搜索任意概念或展开章节查看每一节的主题、时长、状态与问题场景。</p>
+        </header>
+        <div class="curriculum-tools">
+          <label for="course-search">搜索课程</label>
+          <input id="course-search" type="search" placeholder="例如：泛型、异步、Span、AOT" data-course-search>
+          <button type="button" data-expand-all>全部展开</button>
+          <button type="button" data-collapse-all>全部收起</button>
+        </div>
+        <div class="curriculum-status" aria-live="polite" data-course-status>正在读取课程清单…</div>
+        <div class="chapter-list" data-course-outline>
+          <noscript>课程目录需要启用 JavaScript。完整清单保存在同目录的“课程清单.txt”。</noscript>
+        </div>
+      </div>
+    </section>
+
+    <section class="section audience">
+      <div class="shell audience-grid">
+        <div><p class="eyebrow">05 / FOR WHOM</p><h2>适合已经写过基础 C# 的你</h2></div>
+        <div class="audience-points">
+          <p>掌握基础语法，希望进一步理解抽象如何产生。</p>
+          <p>写过项目，准备补齐异步、并发、内存和运行时知识。</p>
+          <p>遇到复杂代码时，希望知道该选择语言能力、模式还是重新划分边界。</p>
+          <p>关心 Native AOT、源生成和现代 C# 的实际工程限制。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <div class="shell final-inner">
+        <div><p class="eyebrow">KEEP GOING</p><h2>从下一段真实代码继续。</h2><p>完整课程、更新章节与高清动画统一发布在 B 站课堂。</p></div>
+        <a class="button primary" href="https://www.bilibili.com/cheese/play/ss469263262" target="_blank" rel="noreferrer">打开完整课程 ↗</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="shell"><strong>Arabidopsis / C# Advanced Series</strong><span>16 chapters · 180 lessons · From delegates to AOT</span></div></footer>
+  <script src="./assets/course-data.js"></script>
+  <script src="./assets/course.js" defer></script>
+</body>
+</html>

@@ -1,6 +1,7 @@
 [
   {"label": "主页", "url": "/"},
   {"label": "文章", "url": "/blog/"},
+  {"label": "课程", "url": "/courses/csharp-advanced/"},
   {"label": "归档", "url": "/blog/archive/"},
   {"label": "标签", "url": "/blog/tags/"},
   {"label": "历史主页", "url": "/history.html"}
