@@ -1,0 +1,54 @@
+---
+layout: layouts/base.njk
+type: article
+bodyClass: article-page
+---
+<article>
+  <header class="article-header">
+    <div class="shell article-header-inner reveal">
+      <p class="eyebrow">{% for tag in tags | publicTags %}{{ site.tagLabels[tag] or tag }}{% if not loop.last %} · {% endif %}{% endfor %}</p>
+      <h1>{{ title }}</h1>
+      <p class="article-deck">{{ description }}</p>
+      <div class="article-byline">
+        <span>{{ site.author.name }}</span>
+        <time datetime="{{ date | rfc3339 }}">{{ date | dateDisplay }}</time>
+        {% if updated %}<span>更新于 {{ updated | dateDisplay }}</span>{% endif %}
+        <span>{{ content | readingTime }} 分钟阅读</span>
+      </div>
+    </div>
+  </header>
+  <div class="shell article-layout">
+    <aside class="article-aside" data-toc aria-label="文章目录">
+      <strong>目录</strong>
+      <div data-toc-list></div>
+    </aside>
+    <div>
+      <div class="prose" data-article-body>{{ content | safe }}</div>
+      <div class="post-taxonomy">
+        <span>标签</span>
+        {% for tag in tags | publicTags %}<a href="{{ ('/blog/tags/' + (tag | tagSlug) + '/') | relativeUrl(page.url) }}">{{ site.tagLabels[tag] or tag }}</a>{% endfor %}
+      </div>
+
+      {% set related = collections.posts | relatedPosts(page.url, tags) %}
+      {% if related.length %}
+      <section class="related-posts" aria-labelledby="related-heading">
+        <h2 id="related-heading">相关文章</h2>
+        {% for post in related %}
+          <a href="{{ post.url | relativeUrl(page.url) }}"><span>{{ post.date | dateDisplay }}</span><strong>{{ post.data.title }}</strong><b>↗</b></a>
+        {% endfor %}
+      </section>
+      {% endif %}
+
+      {% set previous = collections.posts | previousPost(page.url) %}
+      {% set next = collections.posts | nextPost(page.url) %}
+      <nav class="article-nav" aria-label="文章导航">
+        {% if previous %}<a href="{{ previous.url | relativeUrl(page.url) }}">← 较早：{{ previous.data.title }}</a>{% else %}<span></span>{% endif %}
+        {% if next %}<a href="{{ next.url | relativeUrl(page.url) }}">较新：{{ next.data.title }} →</a>{% else %}<a href="{{ '/blog/' | relativeUrl(page.url) }}">返回文章列表 →</a>{% endif %}
+      </nav>
+      <div class="post-source">
+        <a href="{{ site.repository }}/edit/main/{{ page.inputPath }}" target="_blank" rel="noreferrer">在 GitHub 上修正本文 ↗</a>
+        <a href="mailto:{{ site.author.email }}?subject={{ title | urlencode }}">邮件讨论 ↗</a>
+      </div>
+    </div>
+  </div>
+</article>

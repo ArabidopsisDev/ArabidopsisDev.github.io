@@ -1,0 +1,16 @@
+---
+layout: layouts/base.njk
+title: 文章归档
+description: Arabidopsis Field Notes 的全部文章，按年份排列。
+permalink: /blog/archive/index.html
+bodyClass: blog-page
+---
+<header class="archive-header shell reveal"><p class="eyebrow">ARCHIVE</p><h1>文章归档</h1><p>共 {{ collections.posts.length }} 篇。按发布日期排列。</p></header>
+<section class="shell archive-list">
+  {% set currentYear = '' %}
+  {% for post in collections.posts %}
+    {% set year = post.date | dateYear %}
+    {% if year != currentYear %}<h2>{{ year }}</h2>{% set currentYear = year %}{% endif %}
+    <a href="{{ post.url | relativeUrl(page.url) }}"><time datetime="{{ post.date | rfc3339 }}">{{ post.date | dateDisplay }}</time><strong>{{ post.data.title }}</strong><span>{% for tag in post.data.tags | publicTags %}{{ site.tagLabels[tag] or tag }}{% if not loop.last %} · {% endif %}{% endfor %}</span></a>
+  {% endfor %}
+</section>

@@ -1,0 +1,21 @@
+{
+  "name": "arabidopsis-personal-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Arabidopsis personal website and Markdown-powered blog",
+  "scripts": {
+    "dev": "eleventy --serve",
+    "build": "eleventy",
+    "debug": "DEBUG=Eleventy* eleventy"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "3.1.6",
+    "@11ty/eleventy-plugin-syntaxhighlight": "5.0.2",
+    "markdown-it": "14.1.0",
+    "markdown-it-anchor": "9.2.1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

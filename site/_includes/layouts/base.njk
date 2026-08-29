@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="{{ site.language }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{ description or site.description }}">
+  <meta name="theme-color" content="#123c34">
+  {% if draft %}<meta name="robots" content="noindex, nofollow">{% endif %}
+  <meta property="og:type" content="{{ 'article' if type == 'article' else 'website' }}">
+  <meta property="og:title" content="{{ title }} — {{ site.shortTitle }}">
+  <meta property="og:description" content="{{ description or site.description }}">
+  <meta property="og:url" content="{{ page.url | absoluteUrl }}">
+  <meta property="og:image" content="{{ '/assets/images/og.png' | absoluteUrl }}">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="{{ page.url | absoluteUrl }}">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/blog/feed.xml' | absoluteUrl }}">
+  <link rel="icon" href="{{ '/assets/images/arabidopsis-mark.png' | relativeUrl(page.url) }}" type="image/png">
+  <link rel="manifest" href="{{ '/site.webmanifest' | relativeUrl(page.url) }}">
+  <link rel="stylesheet" href="{{ '/assets/css/site.css' | relativeUrl(page.url) }}">
+  <title>{{ title }} — {{ site.shortTitle }}</title>
+</head>
+<body class="{{ bodyClass or 'blog-page' }}">
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <div class="reading-progress" data-reading-progress aria-hidden="true"></div>
+  <header class="site-header" data-header>
+    <div class="nav-shell">
+      <a class="brand" href="{{ '/' | relativeUrl(page.url) }}" aria-label="返回个人主页">
+        <img src="{{ '/assets/images/arabidopsis-mark.png' | relativeUrl(page.url) }}" alt="" width="34" height="34">
+        <span>Arabidopsis</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>菜单</button>
+      <nav class="site-nav" id="site-nav" aria-label="博客导航" data-nav>
+        {% for item in navigation %}
+          <a href="{{ item.url | relativeUrl(page.url) }}"{% if item.url == page.url %} aria-current="page"{% endif %}>{{ item.label }}</a>
+        {% endfor %}
+        <button class="theme-toggle" type="button" aria-label="切换深色模式" data-theme-toggle>明 / 暗</button>
+      </nav>
+    </div>
+  </header>
+  <main id="main">{{ content | safe }}</main>
+  <footer class="site-footer">
+    <div class="shell footer-grid">
+      <div><strong>{{ site.title }}</strong><p>持续写，持续修正。</p></div>
+      <div class="footer-links"><a href="{{ '/blog/' | relativeUrl(page.url) }}">文章</a><a href="{{ '/blog/feed.xml' | relativeUrl(page.url) }}">RSS</a><a href="{{ site.author.github }}" target="_blank" rel="noreferrer">GitHub</a></div>
+      <p>© <span data-year>2026</span> {{ site.author.name }}.</p>
+    </div>
+  </footer>
+  <script src="{{ '/assets/js/site.js' | relativeUrl(page.url) }}" defer></script>
+</body>
+</html>

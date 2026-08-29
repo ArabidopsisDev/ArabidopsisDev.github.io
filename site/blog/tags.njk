@@ -1,0 +1,14 @@
+---
+layout: layouts/base.njk
+title: 文章标签
+description: 按主题浏览 Arabidopsis Field Notes。
+permalink: /blog/tags/index.html
+bodyClass: blog-page
+---
+<header class="archive-header shell reveal"><p class="eyebrow">TAGS</p><h1>文章标签</h1><p>主题会随写作逐渐生长，不预先制造分类。</p></header>
+<section class="shell tag-cloud" aria-label="标签列表">
+  {% for tag in collections.tagList %}
+    {% set taggedPosts = collections.posts | postsByTag(tag) %}
+    <a href="{{ ('/blog/tags/' + (tag | tagSlug) + '/') | relativeUrl(page.url) }}"><strong>{{ site.tagLabels[tag] or tag }}</strong><span>{{ taggedPosts.length }} 篇</span></a>
+  {% endfor %}
+</section>

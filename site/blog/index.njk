@@ -1,0 +1,40 @@
+---
+layout: layouts/base.njk
+title: 个人博客
+description: 软件架构、AI 应用、桌面工程、农学与独立开发。
+permalink: /blog/index.html
+bodyClass: blog-page
+---
+<section class="blog-hero">
+  <div class="shell blog-hero-grid">
+    <div class="reveal">
+      <p class="eyebrow">FIELD NOTES / 田野笔记</p>
+      <h1>代码、土地与<br>正在形成的想法。</h1>
+      <p class="blog-intro">架构选择、产品形成、独立开发，以及农学语境如何进入软件系统。文章源文件全部使用 Markdown。</p>
+    </div>
+    <div class="blog-controls reveal">
+      <label for="post-search">搜索文章</label>
+      <input class="blog-search" id="post-search" type="search" placeholder="输入标题、正文或标签" data-blog-search data-search-index="{{ '/blog/search.json' | relativeUrl(page.url) }}">
+      <div class="filter-row" aria-label="按标签筛选">
+        <button class="filter-chip is-active" type="button" data-blog-filter="all">全部</button>
+        {% for tag in collections.tagList %}<button class="filter-chip" type="button" data-blog-filter="{{ tag }}">{{ site.tagLabels[tag] or tag }}</button>{% endfor %}
+      </div>
+      <div class="blog-utility-links"><a class="text-link" href="{{ '/blog/archive/' | relativeUrl(page.url) }}">按年份归档 ↗</a><a class="text-link" href="{{ '/blog/feed.xml' | relativeUrl(page.url) }}">订阅 RSS ↗</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="shell blog-list" aria-label="文章列表" data-blog-results>
+  {% for post in collections.posts %}
+  <article class="blog-list-card reveal" data-blog-card data-url="{{ post.url }}" data-tags="{{ post.data.tags | publicTags | join(',') }}">
+    <time datetime="{{ post.date | rfc3339 }}">{{ post.date | dateDisplay }}</time>
+    <div>
+      <p class="post-meta">{% for tag in post.data.tags | publicTags %}{{ site.tagLabels[tag] or tag }}{% if not loop.last %} · {% endif %}{% endfor %} · {{ post.templateContent | readingTime }} 分钟</p>
+      <h2><a href="{{ post.url | relativeUrl(page.url) }}">{{ post.data.title }}</a></h2>
+      <p>{{ post.data.description }}</p>
+    </div>
+    <a class="arrow" href="{{ post.url | relativeUrl(page.url) }}" aria-label="阅读《{{ post.data.title }}》">↗</a>
+  </article>
+  {% endfor %}
+  <p class="empty-state" hidden data-blog-empty>没有找到匹配的文章。换个关键词试试。</p>
+</section>

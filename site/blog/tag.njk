@@ -1,0 +1,24 @@
+---
+layout: layouts/base.njk
+pagination:
+  data: collections.tagList
+  size: 1
+  alias: tag
+permalink: /blog/tags/{{ tag | tagSlug }}/index.html
+eleventyComputed:
+  title: "标签：{{ site.tagLabels[tag] or tag }}"
+  description: "Arabidopsis Field Notes 中标记为 {{ site.tagLabels[tag] or tag }} 的文章。"
+bodyClass: blog-page
+eleventyExcludeFromCollections: true
+---
+{% set taggedPosts = collections.posts | postsByTag(tag) %}
+<header class="archive-header shell reveal"><p class="eyebrow">TAG</p><h1>{{ site.tagLabels[tag] or tag }}</h1><p>{{ taggedPosts.length }} 篇文章。<a class="text-link" href="{{ '/blog/tags/' | relativeUrl(page.url) }}">查看全部标签 ↗</a></p></header>
+<section class="shell blog-list">
+  {% for post in taggedPosts %}
+  <article class="blog-list-card reveal">
+    <time datetime="{{ post.date | rfc3339 }}">{{ post.date | dateDisplay }}</time>
+    <div><p class="post-meta">{{ post.templateContent | readingTime }} 分钟</p><h2><a href="{{ post.url | relativeUrl(page.url) }}">{{ post.data.title }}</a></h2><p>{{ post.data.description }}</p></div>
+    <a class="arrow" href="{{ post.url | relativeUrl(page.url) }}" aria-label="阅读《{{ post.data.title }}》">↗</a>
+  </article>
+  {% endfor %}
+</section>

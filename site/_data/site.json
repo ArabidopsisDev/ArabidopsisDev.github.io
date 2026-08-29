@@ -1,0 +1,24 @@
+{
+  "title": "Arabidopsis Field Notes",
+  "shortTitle": "Field Notes",
+  "description": "软件架构、AI 应用、桌面工程、农学与独立开发。",
+  "url": "https://arabid.top",
+  "language": "zh-CN",
+  "author": {
+    "name": "Arabidopsis",
+    "email": "arab@methodbox.top",
+    "github": "https://github.com/ArabidopsisDev",
+    "bilibili": "https://space.bilibili.com/497309497"
+  },
+  "repository": "https://github.com/ArabidopsisDev/ArabidopsisDev.github.io",
+  "tagLabels": {
+    "architecture": "架构",
+    "product": "产品",
+    "ai": "AI 应用",
+    "desktop": "桌面工程",
+    "learning": "学习工具",
+    "agriculture": "农学",
+    "path": "个人路径",
+    "open-source": "开源"
+  }
+}
