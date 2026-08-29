@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="C# 从委托到 AOT 高级动画课程配套练习：按节答题、即时批阅、错题解析与本地学习进度。">
+  <meta name="theme-color" content="#123c34">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="C# 高级动画课程｜配套练习">
+  <meta property="og:description" content="第 01–24 节配套练习，含自动批阅、主观题自评与错题解析。">
+  <meta property="og:url" content="https://arabid.top/courses/csharp-advanced/practice/">
+  <meta property="og:image" content="https://arabid.top/assets/images/og.png">
+  <link rel="canonical" href="https://arabid.top/courses/csharp-advanced/practice/">
+  <link rel="icon" href="../assets/arabidopsis-mark.png" type="image/png">
+  <link rel="stylesheet" href="../assets/course.css">
+  <link rel="stylesheet" href="./assets/practice.css">
+  <title>C# 高级动画课程｜配套练习</title>
+</head>
+<body>
+  <a class="skip-link" href="#practice-main">跳到练习区</a>
+  <header class="site-header" data-header>
+    <div class="nav-shell">
+      <a class="brand" href="../" aria-label="返回 C# 高级动画课程">
+        <img src="../assets/arabidopsis-mark.png" alt="" width="34" height="34">
+        <span>Arabidopsis / Practice</span>
+      </a>
+      <nav class="site-nav" aria-label="练习页导航">
+        <a href="../../../">个人主页</a>
+        <a href="../">课程页面</a>
+        <a href="#practice-main">开始做题</a>
+        <a href="https://www.bilibili.com/cheese/play/ss469263262" target="_blank" rel="noreferrer">B 站课程 ↗</a>
+        <button type="button" class="theme-toggle" data-theme-toggle aria-label="切换深色模式">明 / 暗</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="practice-hero">
+      <div class="shell practice-hero-grid">
+        <div>
+          <p class="eyebrow">C# / LESSON PRACTICE</p>
+          <h1>练完一节，<br>再往下走。</h1>
+          <p class="practice-lead">课程第 01–24 节配套练习。选择与填空即时判分，代码设计题提交后对照参考解答自评；错题解析直接来自课程配套文档。</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#practice-main">选择一节开始</a>
+            <a class="button secondary" href="../">返回课程目录</a>
+          </div>
+        </div>
+        <div class="practice-overview" aria-label="练习概览">
+          <div><strong data-total-lessons>24</strong><span>节练习</span></div>
+          <div><strong data-total-questions>161</strong><span>道题</span></div>
+          <div><strong data-finished-lessons>0</strong><span>节已批阅</span></div>
+          <div><strong data-review-count>0</strong><span>道待复习</span></div>
+          <p>进度只保存在当前浏览器，不上传答案或学习记录。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="practice-section" id="practice-main">
+      <div class="shell practice-layout">
+        <aside class="lesson-panel" aria-label="练习课程列表">
+          <div class="lesson-panel-head">
+            <p class="eyebrow">LESSONS 01–24</p>
+            <h2>选择课程</h2>
+            <label class="lesson-search">
+              <span class="sr-only">搜索课程</span>
+              <input type="search" placeholder="搜索：委托、泛型、迭代器…" data-lesson-search>
+            </label>
+          </div>
+          <nav class="practice-lessons" data-lesson-list aria-label="可用练习">
+            <p class="loading-note">正在读取题库…</p>
+          </nav>
+        </aside>
+
+        <div class="practice-workspace">
+          <div class="workspace-toolbar">
+            <button type="button" class="text-button" data-prev-lesson>← 上一节</button>
+            <div class="workspace-progress"><span data-progress-label>尚未开始</span><b><i data-progress-bar></i></b></div>
+            <button type="button" class="text-button" data-next-lesson>下一节 →</button>
+          </div>
+
+          <header class="lesson-heading" data-lesson-heading>
+            <p class="eyebrow">LESSON 01</p>
+            <h2>委托概述</h2>
+            <p>选择左侧课程开始练习。</p>
+          </header>
+
+          <div class="result-summary" data-result-summary hidden aria-live="polite"></div>
+          <div class="question-list" data-question-list>
+            <p class="loading-note">正在生成练习页面…</p>
+          </div>
+
+          <div class="lesson-actions" data-lesson-actions hidden>
+            <button type="button" class="button primary" data-submit-lesson>提交本节并批阅</button>
+            <button type="button" class="button secondary" data-filter-wrong hidden>只看错题</button>
+            <button type="button" class="button secondary" data-retry-wrong hidden>重做错题</button>
+            <button type="button" class="text-button danger" data-reset-lesson>清空本节答案</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="shell"><strong>Arabidopsis / C# Practice</strong><span>第 01–24 节 · 本地批阅 · 错题解析</span></div></footer>
+  <script src="./assets/exercise-data.js"></script>
+  <script src="./assets/practice.js" defer></script>
+</body>
+</html>
