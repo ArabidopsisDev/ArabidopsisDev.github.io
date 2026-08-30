@@ -8,6 +8,7 @@ eleventyExcludeFromCollections: true
   <url><loc>{{ '/courses/csharp-advanced/' | absoluteUrl }}</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>{{ '/courses/csharp-advanced/practice/' | absoluteUrl }}</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>{{ '/certificates/' | absoluteUrl }}</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>{{ '/projects/word2sentence/' | absoluteUrl }}</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>{{ '/history.html' | absoluteUrl }}</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
   {% for item in collections.all %}{% if item.url and item.data.eleventyExcludeFromCollections != true %}
   <url><loc>{{ item.url | absoluteUrl }}</loc>{% if item.date %}<lastmod>{{ item.date | rfc3339 }}</lastmod>{% endif %}</url>

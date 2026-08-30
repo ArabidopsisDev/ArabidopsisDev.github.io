@@ -235,6 +235,21 @@ h3 { color: var(--ink); }
 .certificate-home-images img:nth-child(1) { top: 10px; right: -7px; transform: rotate(4deg); }
 .certificate-home-images img:nth-child(2) { top: 62px; left: -5px; width: 125px; transform: rotate(-6deg); }
 .certificate-home-images img:nth-child(3) { right: 22px; bottom: -4px; width: 150px; transform: rotate(-1deg); }
+.core-project-spotlight { position: relative; display: grid; grid-template-columns: .9fr 1.1fr; min-height: 500px; overflow: hidden; border: 1px solid rgba(255,255,255,.12); border-radius: 20px; background: #173a2b; color: #d7e5df; box-shadow: 0 22px 60px rgba(24,45,39,.16); transition: transform .25s ease, box-shadow .25s ease; }
+.core-project-spotlight:hover { transform: translateY(-4px); box-shadow: 0 28px 72px rgba(24,45,39,.22); }
+.core-project-copy { position: relative; z-index: 2; display: flex; flex-direction: column; padding: 32px; }
+.core-project-status { display: flex; align-items: center; gap: 11px; color: #e2ad55; font: 800 .66rem/1.4 ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: .1em; }
+.core-project-status img { width: 42px; height: 42px; border-radius: 11px; }
+.core-project-copy h3 { margin: 62px 0 6px; color: #fffdf7; font: 2.25rem/1.08 "Noto Serif SC", "Songti SC", serif; letter-spacing: -.035em; }
+.core-project-tagline { color: #d5e8df !important; font: 1.06rem/1.6 "Noto Serif SC", "Songti SC", serif; }
+.core-project-copy > p:not(.core-project-tagline) { color: #aebfb7; font-size: .85rem; }
+.core-project-copy ul { display: flex; flex-wrap: wrap; gap: 7px; margin: auto 0 22px; padding: 20px 0 0; list-style: none; }
+.core-project-copy li { padding: 5px 8px; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; color: #b9ccc3; font-size: .66rem; }
+.core-project-copy > strong { color: #fffdf7; font-size: .82rem; }
+.core-project-visual { position: relative; min-width: 0; overflow: hidden; background: #ede8dc; }
+.core-project-visual::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, #173a2b 0%, transparent 26%); pointer-events: none; }
+.core-project-visual img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.project-source-link { margin-left: 8px; color: var(--muted); font: .68rem ui-monospace, SFMono-Regular, Consolas, monospace; white-space: nowrap; }
 .home-history { padding-bottom: 110px; }
 
 /* Blog */
@@ -387,6 +402,11 @@ h3 { color: var(--ink); }
   .writing-list time { grid-column: 1 / -1; }
   .certificate-home-preview { grid-template-columns: 1fr; }
   .certificate-home-images { min-height: 230px; }
+  .core-project-spotlight { grid-template-columns: 1fr; }
+  .core-project-visual { min-height: 245px; grid-row: 1; }
+  .core-project-visual::after { background: linear-gradient(180deg, transparent 55%, #173a2b 100%); }
+  .core-project-copy { grid-row: 2; }
+  .core-project-copy h3 { margin-top: 42px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Word2Sentence 是本地优先的 Windows 词汇学习软件：在具体情境中独立造句，获得逐段反馈、用法卡与基于真实表现的 FSRS-6 自动复习。">
+  <meta name="theme-color" content="#2f6048">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Word2Sentence｜把生词写进句子里，直到真正会用">
+  <meta property="og:description" content="情境造句、逐段反馈、用法卡、自动证据评分与 FSRS-6 复习。开源、本地优先、多语言。">
+  <meta property="og:url" content="https://arabid.top/projects/word2sentence/">
+  <meta property="og:image" content="https://arabid.top/projects/word2sentence/assets/01-overview.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://arabid.top/projects/word2sentence/">
+  <link rel="icon" href="./assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/site.css">
+  <link rel="stylesheet" href="./assets/word2sentence.css">
+  <title>Word2Sentence｜开源桌面词汇学习工具</title>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <header class="site-header w2s-header" data-header>
+    <div class="nav-shell">
+      <a class="brand" href="../../" aria-label="返回 Arabidopsis 首页">
+        <img src="../../assets/images/arabidopsis-mark.png" alt="" width="34" height="34">
+        <span>Arabidopsis / Word2Sentence</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>菜单</button>
+      <nav class="site-nav" id="site-nav" aria-label="项目导航" data-nav>
+        <a href="#loop">学习闭环</a>
+        <a href="#evidence">调度依据</a>
+        <a href="#privacy">本地与隐私</a>
+        <a href="#status">当前状态</a>
+        <a href="https://github.com/ArabidopsisDev/Word2Sentence" target="_blank" rel="noreferrer">GitHub ↗</a>
+        <button class="theme-toggle" type="button" aria-label="切换深色模式" data-theme-toggle>明 / 暗</button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="w2s-hero">
+      <img class="w2s-hero-art" src="./assets/hero-background.webp" alt="" aria-hidden="true">
+      <div class="shell w2s-hero-inner reveal">
+        <div class="w2s-brand-line">
+          <img src="./assets/logo.svg" alt="Word2Sentence 标志" width="58" height="58">
+          <span>ACTIVE DEVELOPMENT · OPEN SOURCE</span>
+        </div>
+        <p class="eyebrow">LOCAL-FIRST VOCABULARY PRACTICE</p>
+        <h1>Word2Sentence</h1>
+        <p class="w2s-tagline">把生词写进句子里，<br>直到真正会用。</p>
+        <p class="w2s-lead">主动加入不会的词，AI 给出具体情境，你独立写下句子。提交之后，软件留下逐段反馈、两种改写、独立用法卡，并依据真实作答表现安排下一次复习。</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="https://github.com/ArabidopsisDev/Word2Sentence" target="_blank" rel="noreferrer">查看源代码 ↗</a>
+          <a class="button button-ghost" href="#loop">了解学习闭环</a>
+        </div>
+        <ul class="w2s-tech-list" aria-label="项目技术与许可">
+          <li>Windows 10 / 11</li>
+          <li>.NET 10 · WPF</li>
+          <li>FSRS-6</li>
+          <li>AGPL-3.0-only</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="w2s-proof">
+      <div class="shell proof-grid reveal">
+        <article><strong>本地优先</strong><p>词库、历史、证据和记忆状态默认保存在本机。</p></article>
+        <article><strong>自动调度</strong><p>没有“好 / 中 / 差”自评按钮，复习等级来自作答证据。</p></article>
+        <article><strong>多语言</strong><p>界面语言、目标语言和解释语言可以分别设置。</p></article>
+        <article><strong>可验证</strong><p>仓库内置 FSRS、自动评分、情境与统计等一致性检查。</p></article>
+      </div>
+      <div class="shell community-proof reveal"><span>COMMUNITY</span><p>已被 <a href="https://github.com/open-spaced-repetition/awesome-fsrs" target="_blank" rel="noreferrer">awesome-fsrs ↗</a> 与 <a href="https://github.com/OpenRecite/awesome-recite-tools" target="_blank" rel="noreferrer">awesome-recite-tools ↗</a> 收录。</p></div>
+    </section>
+
+    <section class="w2s-section shell" id="loop">
+      <header class="w2s-section-heading reveal">
+        <p class="eyebrow">01 / THE LEARNING LOOP</p>
+        <h2>释义只是入口，<br>独立表达才是目标。</h2>
+        <p>Word2Sentence 把一次练习拆成连续闭环。AI 不替你写答案，它负责给出约束明确的情境，并在作答后形成可解释证据。</p>
+      </header>
+      <ol class="learning-loop reveal">
+        <li><span>01</span><strong>主动加入生词</strong><p>学习范围由用户决定，不把整份词库交给模型。</p></li>
+        <li><span>02</span><strong>生成具体情境</strong><p>给出人物、目的和表达要求，提交前隐藏完整示例。</p></li>
+        <li><span>03</span><strong>独立写下句子</strong><p>提示、粘贴、响应时间和修改次数都会被记录。</p></li>
+        <li><span>04</span><strong>逐段批改</strong><p>区分自然、正确但可优化，以及语法或用法错误。</p></li>
+        <li><span>05</span><strong>沉淀用法卡</strong><p>把搭配模式、直接含义与例句拆成可复习单元。</p></li>
+        <li><span>06</span><strong>安排下次复习</strong><p>目标词证据经过本地规则判断，再进入 FSRS-6。</p></li>
+      </ol>
+      <figure class="w2s-showcase reveal">
+        <img src="./assets/01-overview.webp" alt="Word2Sentence 词库、造句、反馈和统计功能概览" loading="lazy">
+        <figcaption>同一条学习路径连接词库、造句、反馈、记忆调度与统计。</figcaption>
+      </figure>
+    </section>
+
+    <section class="w2s-feature-section">
+      <div class="shell feature-stack">
+        <article class="feature-row reveal">
+          <div class="feature-copy">
+            <p class="eyebrow">CONTEXT BEFORE ANSWER</p>
+            <h2>先给情境，<br>再由你完成表达。</h2>
+            <p>练习可以接受系统推荐，也可以从近期候选中主动选择。AI 只提供具体写作任务和可选提示，完整用法卡与示例在提交前保持隐藏。</p>
+            <ul>
+              <li>推荐最需要复习的词，或自主选择候选词</li>
+              <li>目标语言、解释语言与界面语言相互独立</li>
+              <li>查看提示会进入证据，影响内部记忆等级</li>
+            </ul>
+          </div>
+          <figure><img src="./assets/02-sentence-practice.webp" alt="Word2Sentence 情境造句流程" loading="lazy"></figure>
+        </article>
+
+        <article class="feature-row reverse reveal">
+          <div class="feature-copy">
+            <p class="eyebrow">FEEDBACK THAT REMAINS</p>
+            <h2>批改之后，<br>留下可以继续复习的东西。</h2>
+            <p>整句分数只是写作反馈。更重要的是逐段颜色标注、只修错误的句子、更自然的表达，以及拆开的 2–3 条用法卡。</p>
+            <ul>
+              <li>绿色、蓝色和红色分别表达三类反馈</li>
+              <li>错词先去重并补全词性和释义，再由用户确认</li>
+              <li>最近生成的 10 张用法卡回到首页轮播</li>
+            </ul>
+          </div>
+          <figure><img src="./assets/03-feedback-and-usage.webp" alt="Word2Sentence 逐段反馈、改写、用法卡和错词确认" loading="lazy"></figure>
+        </article>
+
+        <article class="feature-row reveal">
+          <div class="feature-copy">
+            <p class="eyebrow">PROGRESS WITH EVIDENCE</p>
+            <h2>复习有依据，<br>进步看得见。</h2>
+            <p>统计页把练习节奏、分数与长期记忆状态放在一起：六周打卡日历、连胜、十四天趋势、分数分布、掌握阶段和待强化词都来自本地记录。</p>
+            <ul>
+              <li>当前与最长连胜、近 30 天活跃情况</li>
+              <li>主动回忆覆盖率与稳定掌握率</li>
+              <li>分数不足或记忆不稳定的词进入待强化列表</li>
+            </ul>
+          </div>
+          <figure><img src="./assets/04-statistics-and-review.webp" alt="Word2Sentence 学习统计、日历、趋势和掌握度" loading="lazy"></figure>
+        </article>
+      </div>
+    </section>
+
+    <section class="w2s-section shell" id="evidence">
+      <header class="w2s-section-heading reveal">
+        <p class="eyebrow">02 / AI EVIDENCE, LOCAL DECISION</p>
+        <h2>模型提供证据，<br>确定性代码决定是否更新记忆。</h2>
+        <p>整句 0–100 分不会直接决定间隔。调度只读取目标词相关证据，并对置信度、内部一致性和二次复核设置边界。</p>
+      </header>
+      <div class="evidence-grid reveal">
+        <article class="evidence-card ai-card">
+          <span>AI / OpenRouter</span>
+          <h3>形成结构化证据</h3>
+          <ul>
+            <li>目标词是否出现</li>
+            <li>拼写、词义与词形是否正确</li>
+            <li>搭配、局部语法与自然度</li>
+            <li>是否需要核心修正与证据置信度</li>
+          </ul>
+        </article>
+        <div class="evidence-bridge" aria-hidden="true"><span>→</span><b>置信度与一致性门控</b><span>→</span></div>
+        <article class="evidence-card code-card">
+          <span>C# / Local</span>
+          <h3>映射为记忆等级</h3>
+          <ul>
+            <li>提示或粘贴会阻止“轻松回忆”</li>
+            <li>响应速度只与个人历史基线比较</li>
+            <li>低置信度或冲突证据触发短时复测</li>
+            <li>仅可靠结论进入长期 FSRS 状态</li>
+          </ul>
+        </article>
+      </div>
+      <div class="fsrs-band reveal">
+        <div><strong>FSRS-6</strong><span>py-fsrs 6.3.1 对齐实现</span></div>
+        <div><strong>21</strong><span>发布默认参数</span></div>
+        <div><strong>90%</strong><span>目标留存率</span></div>
+        <div><strong>1m / 10m</strong><span>学习步骤</span></div>
+        <div><strong>0</strong><span>自定义间隔倍率</span></div>
+      </div>
+    </section>
+
+    <section class="w2s-privacy" id="privacy">
+      <div class="shell privacy-grid reveal">
+        <div>
+          <p class="eyebrow">03 / LOCAL DATA & PRIVACY</p>
+          <h2>完整学习档案，<br>默认留在你的电脑里。</h2>
+        </div>
+        <div class="privacy-copy">
+          <p>词库、造句历史、用法卡、AI 证据、行为记录、FSRS 状态和到期时间保存在本地 JSON 文件。API Key 可以从环境变量读取，也可以加密保存到 Windows 凭据管理器。</p>
+          <code>%LocalAppData%\Word2Sentence\wordbook.json</code>
+          <dl>
+            <div><dt>启用 AI 时会发送</dt><dd>当前目标词、备注、题目情境与本次提交句子。</dd></div>
+            <div><dt>不会发送</dt><dd>完整词库与整个学习历史。</dd></div>
+            <div><dt>离线状态</dt><dd>保留基础检查；证据不可靠时不会更新长期记忆。</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="w2s-section shell" id="status">
+      <header class="w2s-section-heading reveal">
+        <p class="eyebrow">04 / CURRENT STATUS</p>
+        <h2>核心闭环已经运行，<br>产品交付仍在继续。</h2>
+        <p>当前仓库提供源码和可重复验证的核心行为。Windows 安装包与正式 Release 尚未发布，现阶段适合开发者从源码运行和参与贡献。</p>
+      </header>
+      <div class="status-columns reveal">
+        <article>
+          <p class="status-label done">AVAILABLE NOW</p>
+          <h3>已经完成</h3>
+          <ul>
+            <li>中英双语界面与可配置学习语言</li>
+            <li>AI 逐段反馈、两个改写版本和错词确认</li>
+            <li>用法卡、首页轮播与自动 FSRS-6 调度</li>
+            <li>JSON 修复、空内容重试和条件式证据复核</li>
+            <li>日历、连胜、趋势、分数和掌握度统计</li>
+          </ul>
+        </article>
+        <article>
+          <p class="status-label next">NEXT</p>
+          <h3>仍在推进</h3>
+          <ul>
+            <li>导入与导出学习包</li>
+            <li>多义词按具体用法分别维护记忆状态</li>
+            <li>数据充分后的个性化 FSRS 参数</li>
+            <li>Windows 安装包与正式 Release</li>
+          </ul>
+        </article>
+      </div>
+      <div class="w2s-final-cta reveal">
+        <img src="./assets/logo.svg" alt="" width="72" height="72">
+        <div><p class="eyebrow">SOURCE & CONTRIBUTION</p><h2>阅读代码，验证假设，<br>让学习工具继续长出来。</h2></div>
+        <a class="button button-primary" href="https://github.com/ArabidopsisDev/Word2Sentence" target="_blank" rel="noreferrer">打开 GitHub ↗</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-grid">
+      <div><strong>Word2Sentence</strong><p>Local-first vocabulary practice for Windows.</p></div>
+      <div class="footer-links"><a href="../../">Home</a><a href="https://github.com/ArabidopsisDev/Word2Sentence" target="_blank" rel="noreferrer">GitHub</a><a href="../../blog/">Blog</a></div>
+      <p>AGPL-3.0-only · © 2026 contributors.</p>
+    </div>
+  </footer>
+  <script src="../../assets/js/site.js" defer></script>
+</body>
+</html>
