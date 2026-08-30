@@ -225,6 +225,15 @@ h3 { color: var(--ink); }
 .home-about { max-width: 680px; }
 .home-about p { margin: 0 0 20px; color: var(--muted); }
 .home-about p:first-child { color: var(--ink-2); font-size: 1.08rem; }
+.certificate-home-preview { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(210px, .8fr); gap: 30px; overflow: hidden; padding: 30px; border: 1px solid var(--line); border-radius: 18px; background: var(--surface-soft); }
+.certificate-home-count { margin-bottom: 17px; color: var(--accent); font: 800 .68rem/1.4 ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: .1em; }
+.certificate-home-copy h3 { margin: 0 0 16px; color: var(--ink); font: 1.75rem/1.2 "Noto Serif SC", "Songti SC", serif; letter-spacing: -.035em; }
+.certificate-home-copy > p:not(.certificate-home-count) { color: var(--muted); font-size: .88rem; }
+.certificate-home-images { position: relative; min-height: 250px; }
+.certificate-home-images img { position: absolute; width: 175px; max-height: 190px; object-fit: contain; border: 6px solid var(--surface); border-radius: 8px; background: var(--surface); box-shadow: 0 14px 35px rgba(24,45,39,.16); }
+.certificate-home-images img:nth-child(1) { top: 10px; right: -7px; transform: rotate(4deg); }
+.certificate-home-images img:nth-child(2) { top: 62px; left: -5px; width: 125px; transform: rotate(-6deg); }
+.certificate-home-images img:nth-child(3) { right: 22px; bottom: -4px; width: 150px; transform: rotate(-1deg); }
 .home-history { padding-bottom: 110px; }
 
 /* Blog */
@@ -371,6 +380,8 @@ h3 { color: var(--ink); }
   .project-stack { text-align: left; }
   .writing-list > a { grid-template-columns: 1fr auto; gap: 8px 16px; }
   .writing-list time { grid-column: 1 / -1; }
+  .certificate-home-preview { grid-template-columns: 1fr; }
+  .certificate-home-images { min-height: 230px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
