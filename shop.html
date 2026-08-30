@@ -167,7 +167,20 @@
         {
             padding-left: 8px;
         }
+        @media (max-width: 760px)
+        {
+            .top { height: auto; min-height: 150px; padding: 16px; }
+            .top p, .top a, .top .nav a { position: static; float: none; margin: 0; padding: 4px 0; }
+            .top .nav { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; }
+            .top .nav input { position: static; width: min(100%, 260px); margin-top: 8px; }
+            .top .nav button { position: static; width: auto; min-width: 58px; margin-top: 8px; }
+            .software-L, .software-R { float: none; width: calc(100% - 30px); height: auto; min-height: 355px; margin: 16px auto; padding-bottom: 18px; }
+            .buttom { margin-left: 0; padding: 8px 20px 0; display: flex; justify-content: flex-end; }
+            .buttom > a { max-width: 100%; }
+            .costs { margin-top: 34px; }
+        }
     </style>
+    <link rel="stylesheet" href="assets/css/legacy-responsive.css">
     <script>
         function AutoNav() 
         {

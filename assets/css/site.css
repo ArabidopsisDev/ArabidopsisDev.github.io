@@ -66,7 +66,8 @@ button { color: inherit; }
 
 .eyebrow { margin: 0 0 18px; color: var(--accent); font-size: .72rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
 h1, h2, h3, p { margin-top: 0; }
-h1, h2 { font-family: "Noto Serif SC", "Songti SC", Georgia, serif; color: var(--ink); letter-spacing: -.045em; }
+h1, h2 { font-family: "Noto Serif SC", "Songti SC", Georgia, serif; color: var(--ink); letter-spacing: -.045em; text-wrap: balance; }
+h3 { text-wrap: balance; }
 h1 { margin-bottom: 24px; font-size: clamp(3.5rem, 7vw, 6.6rem); line-height: .98; }
 h2 { margin-bottom: 22px; font-size: clamp(2.25rem, 4.2vw, 4.3rem); line-height: 1.05; }
 h3 { color: var(--ink); }
@@ -187,7 +188,7 @@ h3 { color: var(--ink); }
 .footer-links { display: flex; gap: 20px; }
 
 /* Developer homepage */
-.home-main { width: min(920px, calc(100% - 48px)); }
+.home-main { width: min(920px, calc(100% - 48px)); overflow: clip; }
 .home-intro { position: relative; padding: 136px 0 118px; }
 .home-intro h1 { margin-bottom: 30px; font-size: clamp(4.2rem, 11vw, 7.6rem); }
 .home-lead { max-width: 790px; margin-bottom: 20px; color: var(--ink-2); font: clamp(1.25rem, 2.2vw, 1.7rem)/1.65 "Noto Serif SC", "Songti SC", serif; }
@@ -238,6 +239,7 @@ h3 { color: var(--ink); }
 
 /* Blog */
 .blog-hero { padding: 90px 0 70px; }
+.blog-hero h1 { font-size: clamp(3.1rem, 5.35vw, 4.6rem); }
 .blog-hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 70px; align-items: end; }
 .blog-intro { color: var(--muted); font-size: 1.1rem; }
 .blog-controls { display: grid; gap: 12px; padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
@@ -274,17 +276,19 @@ h3 { color: var(--ink); }
 .article-header h1 { font-size: clamp(2.8rem, 6vw, 5.7rem); }
 .article-deck { max-width: 760px; color: var(--muted); font-size: 1.18rem; }
 .article-byline { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 28px; color: var(--muted); font-size: .78rem; }
-.article-layout { display: grid; grid-template-columns: 180px minmax(0, 760px); gap: 60px; justify-content: center; padding: 72px 0 110px; }
+.article-layout { display: grid; grid-template-columns: 180px minmax(0, 760px); gap: 60px; justify-content: center; padding: 72px 0 110px; min-width: 0; }
+.article-layout > *, .prose { min-width: 0; }
 .article-aside { position: sticky; top: 100px; align-self: start; color: var(--muted); font-size: .76rem; }
 .article-aside a { display: block; margin: 8px 0; line-height: 1.45; }
 .article-aside a:hover { color: var(--ink); }
 .article-aside .toc-level-3 { padding-left: 13px; font-size: .7rem; }
-.prose { font-size: 1.04rem; }
+.prose { font-size: 1.04rem; overflow-wrap: anywhere; }
 .prose h2 { margin: 2.7em 0 .7em; font-size: 2rem; letter-spacing: -.025em; }
 .prose h3 { margin-top: 2.1em; font-size: 1.25rem; }
 .prose p, .prose li { color: color-mix(in srgb, var(--ink-2) 82%, var(--muted)); }
 .prose blockquote { margin: 2em 0; padding: 20px 24px; border-left: 3px solid var(--accent); background: var(--accent-soft); }
-.prose pre { position: relative; overflow: auto; padding: 46px 24px 24px; border-radius: 15px; background: var(--ink); color: #d8e4df; }
+.prose pre { position: relative; max-width: 100%; overflow: auto; padding: 46px 24px 24px; border-radius: 15px; background: var(--ink); color: #d8e4df; }
+.prose table { width: 100%; max-width: 100%; display: block; overflow-x: auto; }
 .prose code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
 .prose :not(pre) > code { padding: 2px 5px; border-radius: 5px; background: var(--surface-soft); color: var(--ink); }
 .prose hr { margin: 48px 0; border: 0; border-top: 1px solid var(--line); }
@@ -373,6 +377,7 @@ h3 { color: var(--ink); }
   .home-main { width: min(100% - 30px, 920px); }
   .home-intro { padding: 90px 0 82px; }
   .home-intro h1 { font-size: clamp(3.25rem, 18vw, 5rem); }
+  .blog-hero h1 { font-size: 2.75rem; }
   .home-mark { top: 35px; right: -25px; width: 170px; height: 170px; }
   .home-section { grid-template-columns: 1fr; gap: 32px; padding: 64px 0; }
   .now-list article { grid-template-columns: 1fr; gap: 8px; }

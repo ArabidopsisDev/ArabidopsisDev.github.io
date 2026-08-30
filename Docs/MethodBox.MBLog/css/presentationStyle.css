@@ -419,3 +419,43 @@ sup.citation a:link a:visited a:active {
 .toc-resizable-content {
     flex-grow: 1;
 }
+
+/* Responsive safety fixes for the generated documentation set. */
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.columns {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+#ContentContainer, #SearchContainer, #TopicContent {
+    min-width: 0;
+    max-width: 100%;
+}
+
+.content h1, .content h2, .content h3 {
+    text-wrap: balance;
+    overflow-wrap: anywhere;
+}
+
+.content h1 {
+    font-size: 1.75rem;
+}
+
+.content table, .content pre {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+@media screen and (max-width: 1024px) {
+    .content h1 { font-size: 1.45rem; }
+}
+
+@media screen and (max-width: 768px) {
+    .content h1 { font-size: 1.25rem; }
+    .content table { display: block; }
+    #TopicContent { padding-left: .75rem !important; padding-right: .75rem !important; }
+}

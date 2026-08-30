@@ -1,0 +1,101 @@
+/* Responsive safety layer for preserved historical pages. */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+img,
+video,
+iframe,
+object,
+embed {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+pre,
+code {
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.legacy-missing-media {
+  width: min(100%, 34rem) !important;
+  min-height: 4.5rem;
+  display: grid !important;
+  place-items: center;
+  margin: .75rem auto !important;
+  padding: 1rem;
+  border: 1px dashed #9aa6a0;
+  background: #f2f0e8;
+  color: #66716c;
+  font: 14px/1.5 system-ui, sans-serif;
+  text-align: center;
+}
+
+@media (max-width: 1100px) {
+  h1 { font-size: clamp(1.9rem, 4vw, 2.5rem) !important; }
+  h2 { font-size: clamp(1.45rem, 3.2vw, 2rem) !important; }
+  h3 { font-size: clamp(1.3rem, 2.6vw, 1.7rem) !important; }
+}
+
+@media (max-width: 760px) {
+  body {
+    overflow-wrap: anywhere;
+  }
+
+  h1 { font-size: clamp(1.75rem, 8vw, 2.2rem) !important; }
+  h2 { font-size: clamp(1.25rem, 6vw, 1.65rem) !important; }
+  h3 { font-size: clamp(1.15rem, 5vw, 1.4rem) !important; }
+
+  .container,
+  .content,
+  .title,
+  .WordSection1 {
+    width: auto !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .WordSection1 {
+    padding: 12px !important;
+  }
+
+  table {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block;
+    overflow-x: auto;
+  }
+
+  span[style*="width"],
+  div[style*="width"] {
+    max-width: 100% !important;
+  }
+
+  span > img,
+  p > img {
+    position: static !important;
+    float: none !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}

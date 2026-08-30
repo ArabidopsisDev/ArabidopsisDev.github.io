@@ -10,7 +10,7 @@
 
 .certificate-hero h1 {
   max-width: 900px;
-  font-size: clamp(3.8rem, 8vw, 7.2rem);
+  font-size: clamp(3.5rem, 7vw, 6.2rem);
 }
 
 .certificate-deck {
@@ -414,7 +414,7 @@ body.dialog-open {
   }
 
   .certificate-hero h1 {
-    font-size: clamp(3.1rem, 15vw, 4.8rem);
+    font-size: clamp(2.75rem, 12vw, 4.1rem);
   }
 
   .certificate-stats {
