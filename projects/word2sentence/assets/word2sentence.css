@@ -103,6 +103,21 @@
   font-size: 1.06rem;
 }
 
+.w2s-download-note {
+  margin: -31px 0 34px;
+  color: var(--muted);
+  font-size: .7rem;
+}
+
+.w2s-download-note a {
+  color: var(--w2s-green);
+  border-bottom: 1px solid color-mix(in srgb, var(--w2s-green) 35%, transparent);
+}
+
+[data-theme="dark"] .w2s-download-note a {
+  color: #a8d5be;
+}
+
 .w2s-tech-list {
   display: flex;
   flex-wrap: wrap;
@@ -594,6 +609,21 @@
   font-size: clamp(1.8rem, 3.1vw, 3rem);
 }
 
+.w2s-final-actions {
+  display: grid;
+  gap: 12px;
+  justify-items: end;
+}
+
+.w2s-final-actions .text-link {
+  color: var(--w2s-green-deep);
+  font-size: .76rem;
+}
+
+[data-theme="dark"] .w2s-final-actions .text-link {
+  color: var(--ink);
+}
+
 @media (max-width: 980px) {
   .proof-grid {
     grid-template-columns: 1fr 1fr;
@@ -794,6 +824,15 @@
 
   .w2s-final-cta .button {
     width: 100%;
+  }
+
+  .w2s-final-actions {
+    width: 100%;
+    justify-items: stretch;
+  }
+
+  .w2s-final-actions .text-link {
+    justify-self: start;
   }
 
   .community-proof {
