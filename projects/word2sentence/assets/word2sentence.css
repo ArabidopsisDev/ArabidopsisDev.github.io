@@ -220,6 +220,7 @@
 }
 
 .learning-loop li {
+  position: relative;
   min-height: 220px;
   display: flex;
   flex-direction: column;
@@ -229,9 +230,26 @@
   background: color-mix(in srgb, var(--surface) 68%, transparent);
 }
 
+.learning-loop li::after {
+  content: attr(data-icon);
+  position: absolute;
+  top: 66px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--w2s-green) 18%, var(--line));
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--w2s-sage) 52%, transparent);
+  color: var(--w2s-green);
+  opacity: .72;
+  font: 500 1.75rem/1 "Segoe UI Symbol", "Segoe UI", sans-serif;
+}
+
 .learning-loop span {
   color: var(--w2s-amber);
-  font: 800 .68rem ui-monospace, SFMono-Regular, Consolas, monospace;
+  font: 800 calc(.68rem + 4px) ui-monospace, SFMono-Regular, Consolas, monospace;
 }
 
 .learning-loop strong {
@@ -720,6 +738,14 @@
 
   .learning-loop li {
     min-height: 185px;
+  }
+
+  .learning-loop li::after {
+    top: 56px;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    font-size: 1.5rem;
   }
 
   .feature-stack {
