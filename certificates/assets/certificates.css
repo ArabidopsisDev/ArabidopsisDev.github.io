@@ -185,6 +185,49 @@
   transform: none;
 }
 
+.award-visual-stack {
+  position: relative;
+  min-height: 520px;
+  isolation: isolate;
+}
+
+.award-visual-stack .certificate-visual {
+  min-height: 285px;
+  margin-top: 34px;
+  padding: 14px;
+}
+
+.moonstone-trophy {
+  position: absolute;
+  z-index: 3;
+  right: -72px;
+  bottom: -12px;
+  width: auto;
+  max-width: none;
+  height: 500px;
+  object-fit: contain;
+  filter: drop-shadow(0 28px 28px rgba(16, 38, 31, .23));
+  pointer-events: none;
+}
+
+.trophy-caption {
+  position: absolute;
+  z-index: 4;
+  left: 14px;
+  bottom: 7px;
+  padding: 6px 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface) 84%, transparent);
+  color: var(--muted);
+  backdrop-filter: blur(9px);
+  font-size: .64rem;
+}
+
+.featured-award .entry-story {
+  padding-left: 34px;
+}
+
 .entry-story {
   max-width: 630px;
   padding-top: 4px;
@@ -405,6 +448,15 @@ body.dialog-open {
     grid-template-columns: 62px minmax(260px, .85fr) minmax(300px, 1.15fr);
     gap: 24px;
   }
+
+  .moonstone-trophy {
+    right: -42px;
+    height: 440px;
+  }
+
+  .featured-award .entry-story {
+    padding-left: 20px;
+  }
 }
 
 @media (max-width: 760px) {
@@ -454,6 +506,26 @@ body.dialog-open {
   .certificate-visual,
   .certificate-placeholder {
     min-height: 270px;
+  }
+
+  .award-visual-stack {
+    min-height: 430px;
+    overflow: clip;
+  }
+
+  .award-visual-stack .certificate-visual {
+    min-height: 240px;
+    margin-top: 0;
+  }
+
+  .moonstone-trophy {
+    right: 0;
+    bottom: -4px;
+    height: 390px;
+  }
+
+  .featured-award .entry-story {
+    padding-left: 0;
   }
 
   .entry-story h2 {
