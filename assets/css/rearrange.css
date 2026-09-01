@@ -501,6 +501,65 @@
   line-height: .72;
 }
 
+.story-prologue {
+  margin-bottom: 62px;
+  padding-bottom: 38px;
+  border-bottom: 1px solid var(--story-line);
+}
+
+.story-full-divider {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 25px;
+  align-items: start;
+  margin: 0 0 58px;
+}
+
+.story-full-divider span {
+  color: var(--track-color);
+  font: 850 .7rem ui-monospace, SFMono-Regular, Consolas, monospace;
+  letter-spacing: .1em;
+}
+
+.story-full-divider p {
+  margin: 0;
+  color: var(--story-muted);
+  font-size: .8rem;
+}
+
+.story-chapters {
+  display: grid;
+  gap: 78px;
+}
+
+.story-chapter {
+  scroll-margin-top: 95px;
+}
+
+.story-chapter > header {
+  margin-bottom: 30px;
+  padding-top: 24px;
+  border-top: 2px solid var(--track-color);
+}
+
+.story-chapter > header p {
+  margin-bottom: 10px;
+  color: var(--track-color);
+  font: 800 .67rem ui-monospace, SFMono-Regular, Consolas, monospace;
+  letter-spacing: .08em;
+}
+
+.story-chapter > header h2 {
+  margin: 0;
+  color: var(--story-ink);
+  font-size: clamp(2rem, 4vw, 3.45rem);
+  text-wrap: balance;
+}
+
+.story-chapter .story-prose p:first-child::first-letter {
+  font-size: 3.4em;
+}
+
 .story-content blockquote {
   margin: 55px 0 0;
   padding: 25px 28px;
@@ -539,7 +598,7 @@
 
 .choice-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 14px;
 }
 
@@ -766,6 +825,15 @@
   .story-prose {
     font-size: 1rem;
     line-height: 1.95;
+  }
+
+  .story-full-divider {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .story-chapters {
+    gap: 60px;
   }
 
   .choice-card {

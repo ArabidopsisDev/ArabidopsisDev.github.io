@@ -629,6 +629,129 @@ const nodes = [
   },
 ];
 
+const coherentChoices = {
+  "hard-drive-no-chronology": [
+    { to: "lost-commit", kind: "continue", label: "继续档案线：补不回来的提交", note: "从硬盘走进仓库，追查日期为何会说谎。" },
+    { to: "toy-government", kind: "branch", label: "转向规则线：玩具世界中央政府", note: "看看保存冲动如何变成制定秩序的冲动。" },
+  ],
+  "lost-commit": [
+    { to: "camera-remembers-home", kind: "continue", label: "继续档案线：镜头记住的家", note: "离开提交记录，回到家庭影像和缺失原件。" },
+    { to: "missing-dialogue", kind: "branch", label: "转向朋友线：缺失的和好对白", note: "比较仓库缺口与关系里的缺口。" },
+  ],
+  "camera-remembers-home": [
+    { to: "life-does-not-archive", kind: "continue", label: "继续档案线：没有被记录的日子", note: "从被拍下的动作走向镜头共同漏掉的生活。" },
+    { to: "same-ppt", kind: "branch", label: "转向媒介线：同一本 PPT", note: "让影像、生活与程序进入同一个文件。" },
+  ],
+  "life-does-not-archive": [
+    { to: "old-drive-no-answer", kind: "continue", label: "继续档案线：硬盘没有答案", note: "接受空白，学习更谨慎地继续追问。" },
+    { to: "six-to-ten-thirty", kind: "branch", label: "转向评价线：安静的高中三年", note: "进入六点到校、十点半放学的重复日常。" },
+  ],
+  "old-drive-no-answer": [
+    { to: "tide-before-sunset", kind: "continue", label: "抵达潮水线：不再强求答案", note: "让档案在风与日落面前暂时停下。" },
+    { to: "screen-not-shop-window", kind: "branch", label: "转向规则线：第一扇窗口", note: "从谨慎回望重新回到第一次动手。" },
+  ],
+  "toy-government": [
+    { to: "screen-not-shop-window", kind: "continue", label: "继续规则线：屏幕不只是橱窗", note: "把纸面条例写进真正会运行的窗口。" },
+    { to: "camera-remembers-home", kind: "branch", label: "转向档案线：放下条例拿起相机", note: "让家庭以动作而不是规则留下。" },
+  ],
+  "screen-not-shop-window": [
+    { to: "folders-before-git", kind: "continue", label: "继续规则线：Git 以前的工程", note: "跟着窗口进入混乱文件夹和早期 Bug。" },
+    { to: "exam-as-final-battle", kind: "branch", label: "转向评价线：第一次决战", note: "当屏幕工坊与考场争夺同一段时间。" },
+  ],
+  "folders-before-git": [
+    { to: "exam-machine-user", kind: "continue", label: "继续规则线：一台考试机", note: "从能运行的代码走向想象中的产品与用户。" },
+    { to: "try-many-voices", kind: "branch", label: "转向媒介线：试遍许多声音", note: "把错误、教程和整活变成公开视频。" },
+  ],
+  "exam-machine-user": [
+    { to: "rules-with-exit", kind: "continue", label: "继续规则线：给规则留下出口", note: "真实用户出现后，流程必须允许拒绝与修正。" },
+    { to: "meritocracy-cost", kind: "branch", label: "转向评价线：考试为何支配选择", note: "从出题规则进入评价制度。" },
+  ],
+  "rules-with-exit": [
+    { to: "zero-choice", kind: "continue", label: "进入土地线：规则之外的新现场", note: "带着规则意识走进提前批、校园与农田。" },
+    { to: "integration-0410", kind: "branch", label: "转向朋友线：凌晨集成测试", note: "让接口在六个人的协作里接受检验。" },
+  ],
+  "exam-as-final-battle": [
+    { to: "six-to-ten-thirty", kind: "continue", label: "继续评价线：被占满的三年", note: "离开考试标题，进入真正漫长的日常。" },
+    { to: "try-many-voices", kind: "branch", label: "转向媒介线：把压力重新命名", note: "诗、教材与视频如何拆解考试格式。" },
+  ],
+  "six-to-ten-thirty": [
+    { to: "meritocracy-cost", kind: "continue", label: "继续评价线：与优绩主义混战", note: "从时间被占满，走向价值如何被评分。" },
+    { to: "life-does-not-archive", kind: "branch", label: "转向档案线：硬盘为什么安静", note: "把没有更新的年份当作一种证据。" },
+  ],
+  "meritocracy-cost": [
+    { to: "awards-without-rule", kind: "continue", label: "继续评价线：奖牌回到抽屉", note: "不假装不在乎结果，也不让结果垄断解释。" },
+    { to: "saturday-field", kind: "branch", label: "转向土地线：周日仍要下地", note: "让没有掌声的工作打断答辩叙事。" },
+  ],
+  "awards-without-rule": [
+    { to: "not-a-rising-curve", kind: "continue", label: "继续评价线：十年并非上升曲线", note: "把奖项放回失败、退出和停顿之间。" },
+    { to: "integration-0410", kind: "branch", label: "转向朋友线：回到奖项背后", note: "重新经过六个人的现场与共同劳动。" },
+  ],
+  "not-a-rising-curve": [
+    { to: "zero-choice", kind: "continue", label: "进入土地线：答案没有到来", note: "高中结束后，从一条意外志愿重新出发。" },
+    { to: "hard-drive-no-chronology", kind: "branch", label: "转向档案线：重新检查曲线", note: "回到文件、日期和不可靠的年表。" },
+  ],
+  "zero-choice": [
+    { to: "strange-major", kind: "continue", label: "继续土地线：先把陌生专业演出来", note: "从提前批进入植物、宿舍和新课程。" },
+    { to: "meritocracy-cost", kind: "branch", label: "转向评价线：大学没有自动自由", note: "新现场仍然带着旧评分体系。" },
+  ],
+  "strange-major": [
+    { to: "saturday-field", kind: "continue", label: "继续土地线：从教室走到田里", note: "让陌生知识变成身体、路线与天气。" },
+    { to: "many-media", kind: "branch", label: "转向媒介线：用旧方法理解新专业", note: "表演、排版与程序如何进入农学。" },
+  ],
+  "saturday-field": [
+    { to: "field-enters-data", kind: "continue", label: "继续土地线：田块进入数据结构", note: "把区组、小区与处理写进领域模型。" },
+    { to: "friends-different-schedules", kind: "branch", label: "转向朋友线：不同课表的协作", note: "项目如何在食堂、群聊与异地朋友之间发生。" },
+  ],
+  "field-enters-data": [
+    { to: "explore-not-memorize", kind: "continue", label: "继续土地线：为什么选择农学", note: "从领域模型回到探索世界的愿望。" },
+    { to: "rules-with-exit", kind: "branch", label: "转向规则线：领域边界如何形成", note: "检查抽象、框架与规则何时开始失效。" },
+  ],
+  "explore-not-memorize": [
+    { to: "tide-before-sunset", kind: "continue", label: "抵达潮水线：自然离开课程表", note: "去看一场不必产生作品的日落。" },
+    { to: "one-person-studio", kind: "branch", label: "转向朋友线：从一个人重新开始", note: "比较专业归属与早期组织幻想。" },
+  ],
+  "one-person-studio": [
+    { to: "friends-different-schedules", kind: "continue", label: "继续朋友线：朋友从不同城市抵达", note: "从空荡部门表走向真实的人。" },
+    { to: "folders-before-git", kind: "branch", label: "转向规则线：独自维护的工程", note: "回到只有一个人承担所有复杂度的时期。" },
+  ],
+  "friends-different-schedules": [
+    { to: "missing-dialogue", kind: "continue", label: "继续朋友线：没有留下的和好对白", note: "长期关系先经过裂隙与沉默。" },
+    { to: "saturday-field", kind: "branch", label: "转向土地线：课表与生活", note: "看看距离如何被考试、下地与工作具体占据。" },
+  ],
+  "missing-dialogue": [
+    { to: "integration-0410", kind: "continue", label: "继续朋友线：重新连接以后", note: "关系进入高压协作，接受新的检验。" },
+    { to: "lost-commit", kind: "branch", label: "转向档案线：承认缺失记录", note: "截图与提交都不能替过去补造完整。" },
+  ],
+  "integration-0410": [
+    { to: "repository-after-podium", kind: "continue", label: "继续朋友线：仓库离开奖台", note: "从凌晨集成走向长期维护。" },
+    { to: "awards-without-rule", kind: "branch", label: "转向评价线：如何接受季军", note: "停在领奖一刻，重新理解认可。" },
+  ],
+  "repository-after-podium": [
+    { to: "tide-before-sunset", kind: "continue", label: "抵达潮水线：朋友回到各自生活", note: "让项目、关系与身体重新共享空间。" },
+    { to: "old-drive-no-answer", kind: "branch", label: "转向档案线：项目会留下什么", note: "仓库继续移动，意义却没有固定版本。" },
+  ],
+  "same-ppt": [
+    { to: "try-many-voices", kind: "continue", label: "继续媒介线：试遍许多种声音", note: "从一份拥挤 PPT 进入视频、方言与教程。" },
+    { to: "camera-remembers-home", kind: "branch", label: "转向档案线：退出时间线看原片", note: "恢复镜头里更缓慢的家庭动作。" },
+  ],
+  "try-many-voices": [
+    { to: "many-media", kind: "continue", label: "继续媒介线：形式不断换手", note: "追踪文字、影像、程序与游戏如何互相改写。" },
+    { to: "exam-as-final-battle", kind: "branch", label: "转向评价线：把考试格式拆下来", note: "道观、试卷与伪教材共享同一压力来源。" },
+  ],
+  "many-media": [
+    { to: "real-user-feedback", kind: "continue", label: "继续媒介线：公开以后", note: "作品离开电脑，反馈开始改变作者。" },
+    { to: "strange-major", kind: "branch", label: "转向土地线：媒介进入农学", note: "用熟悉形式接近新的领域与生活。" },
+  ],
+  "real-user-feedback": [
+    { to: "tide-before-sunset", kind: "continue", label: "继续媒介线：暂时离开公共数字", note: "在反馈、星标与排名之外停下来。" },
+    { to: "exam-machine-user", kind: "branch", label: "转向规则线：第一位想象用户", note: "回看产品口气怎样早于真实需求。" },
+  ],
+  "tide-before-sunset": [
+    { to: "hard-drive-no-chronology", kind: "continue", label: "重新开始：打开旧硬盘", note: "换一条主线，再次进入十年材料。" },
+    { to: "exam-as-final-battle", kind: "branch", label: "重新开始：回到第一张评分表", note: "从考试与评价线重新阅读。" },
+  ],
+};
+
 const trackById = Object.fromEntries(tracks.map((track) => [track.id, track]));
 
 export default {
@@ -637,6 +760,6 @@ export default {
   description: "取材于 Arabidopsis 过去五年的真实经历，并回望更早个人档案的互动非虚构故事。",
   years: "2017—2026",
   tracks,
-  nodes: nodes.map((node) => ({ ...node, trackInfo: trackById[node.track] })),
+  nodes: nodes.map((node) => ({ ...node, choices: coherentChoices[node.slug], trackInfo: trackById[node.track] })),
   nodeCount: nodes.length,
 };

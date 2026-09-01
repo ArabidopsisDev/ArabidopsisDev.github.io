@@ -23,8 +23,17 @@ eleventyComputed:
       <p class="eyebrow">{{ story.trackInfo.title }} / {{ story.era }}</p>
       <h1>{{ story.title }}</h1>
       <p class="story-deck">{{ story.deck }}</p>
-      <div class="story-prose">
+      <div class="story-prose story-prologue">
         {% for paragraph in story.paragraphs %}<p>{{ paragraph }}</p>{% endfor %}
+      </div>
+      <div class="story-full-divider"><span>完整叙事</span><p>以下内容由原书短章按这条主线重新排列，保留场景、过程和原有语气。</p></div>
+      <div class="story-chapters">
+        {% for chapter in rearrangeContent[story.slug] %}
+        <section class="story-chapter" id="chapter-{{ chapter.sourceIndex }}">
+          <header><p>原书 {{ chapter.section }} · 书页 {{ chapter.bookPage }}</p><h2>{{ chapter.title }}</h2></header>
+          <div class="story-prose">{% for paragraph in chapter.paragraphs %}<p>{{ paragraph }}</p>{% endfor %}</div>
+        </section>
+        {% endfor %}
       </div>
       <blockquote><p>{{ story.deck }}</p><cite>由原书 {{ story.sourcePages }} 重新编排</cite></blockquote>
     </div>
@@ -36,7 +45,7 @@ eleventyComputed:
       <div class="choice-grid">
         {% for choice in story.choices %}
         <a class="choice-card" href="{{ ('/stories/rearrange/' ~ choice.to ~ '/') | relativeUrl(page.url) }}" data-story-choice="{{ choice.to }}">
-          <span>选择 0{{ loop.index }}</span>
+          <span>{{ '继续当前主线' if choice.kind == 'continue' else '转入交叉主线' }}</span>
           <strong>{{ choice.label }}</strong>
           <p>{{ choice.note }}</p>
           <b>→</b>
