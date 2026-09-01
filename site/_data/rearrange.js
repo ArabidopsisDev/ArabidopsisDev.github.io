@@ -634,7 +634,7 @@ const trackById = Object.fromEntries(tracks.map((track) => [track.id, track]));
 export default {
   title: "把世界重新编排",
   subtitle: "与优绩主义混战与认识自我的这十年",
-  description: "把 136 页书稿重新拆成六条可交叉进入的互动故事线。",
+  description: "取材于 Arabidopsis 过去五年的真实经历，并回望更早个人档案的互动非虚构故事。",
   years: "2017—2026",
   tracks,
   nodes: nodes.map((node) => ({ ...node, trackInfo: trackById[node.track] })),
