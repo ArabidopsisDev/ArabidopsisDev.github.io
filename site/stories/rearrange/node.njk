@@ -1,0 +1,49 @@
+---
+layout: layouts/rearrange.njk
+pagination:
+  data: rearrange.nodes
+  size: 1
+  alias: story
+permalink: "/stories/rearrange/{{ story.slug }}/index.html"
+eleventyExcludeFromCollections: true
+eleventyComputed:
+  title: "{{ story.title }}"
+  description: "{{ story.deck }}"
+---
+<article class="story-node" data-story-node="{{ story.slug }}">
+  <div class="shell story-node-grid">
+    <aside class="story-meta reveal">
+      <p class="story-node-number">NODE {{ story.number }}</p>
+      <div class="story-track-mark"><span>{{ story.trackInfo.number }}</span><strong>{{ story.trackInfo.title }}</strong></div>
+      <dl><div><dt>时间</dt><dd>{{ story.era }}</dd></div><div><dt>来源</dt><dd>{{ story.sourcePages }}</dd></div></dl>
+      <p class="story-progress" data-story-progress>正在记录这条路径。</p>
+      <div class="story-tools"><button type="button" data-story-back>返回上一步</button><a href="{{ '/stories/rearrange/' | relativeUrl(page.url) }}">打开线路图</a></div>
+    </aside>
+    <div class="story-content reveal">
+      <p class="eyebrow">{{ story.trackInfo.title }} / {{ story.era }}</p>
+      <h1>{{ story.title }}</h1>
+      <p class="story-deck">{{ story.deck }}</p>
+      <div class="story-prose">
+        {% for paragraph in story.paragraphs %}<p>{{ paragraph }}</p>{% endfor %}
+      </div>
+      <blockquote><p>{{ story.deck }}</p><cite>由原书 {{ story.sourcePages }} 重新编排</cite></blockquote>
+    </div>
+  </div>
+
+  <section class="story-choices">
+    <div class="shell">
+      <header><p class="eyebrow">MAKE A CHOICE</p><h2>{% if story.ending %}潮水之后，你想从哪里重新进入？{% else %}接下来，你要沿哪条线走？{% endif %}</h2></header>
+      <div class="choice-grid">
+        {% for choice in story.choices %}
+        <a class="choice-card" href="{{ ('/stories/rearrange/' ~ choice.to ~ '/') | relativeUrl(page.url) }}" data-story-choice="{{ choice.to }}">
+          <span>选择 0{{ loop.index }}</span>
+          <strong>{{ choice.label }}</strong>
+          <p>{{ choice.note }}</p>
+          <b>→</b>
+        </a>
+        {% endfor %}
+      </div>
+      <div class="choice-footer"><a href="{{ '/stories/rearrange/' | relativeUrl(page.url) }}">返回六条主线</a><button type="button" data-story-reset>清空记录并重新开始</button></div>
+    </div>
+  </section>
+</article>

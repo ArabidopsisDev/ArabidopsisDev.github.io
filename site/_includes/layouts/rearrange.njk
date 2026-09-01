@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{ description or rearrange.description }}">
+  <meta name="theme-color" content="#173a2b">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ title }} — {{ rearrange.title }}">
+  <meta property="og:description" content="{{ description or rearrange.description }}">
+  <meta property="og:url" content="{{ page.url | absoluteUrl }}">
+  <meta property="og:image" content="{{ '/stories/rearrange/assets/og.jpg' | absoluteUrl }}">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="{{ page.url | absoluteUrl }}">
+  <link rel="icon" href="{{ '/assets/images/arabidopsis-mark.png' | relativeUrl(page.url) }}" type="image/png">
+  <link rel="stylesheet" href="{{ '/assets/css/site.css' | relativeUrl(page.url) }}">
+  <link rel="stylesheet" href="{{ '/assets/css/rearrange.css' | relativeUrl(page.url) }}">
+  <title>{{ title }} — {{ rearrange.title }}</title>
+</head>
+<body class="rearrange-page{% if story %} story-node-page{% else %} story-entry-page{% endif %}" data-story-entry="{{ '/stories/rearrange/' | relativeUrl(page.url) }}"{% if story %} data-story-slug="{{ story.slug }}" data-story-track="{{ story.track }}" style="--track-color: {{ story.trackInfo.color }}"{% endif %}>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <header class="rearrange-header" data-header>
+    <div class="rearrange-nav-shell">
+      <a class="rearrange-brand" href="{{ '/stories/rearrange/' | relativeUrl(page.url) }}" aria-label="返回互动故事线路图">
+        <img src="{{ '/assets/images/arabidopsis-mark.png' | relativeUrl(page.url) }}" alt="" width="32" height="32">
+        <span>把世界重新编排</span>
+      </a>
+      <nav aria-label="互动故事导航">
+        <a href="{{ '/stories/rearrange/' | relativeUrl(page.url) }}">线路图</a>
+        <a href="{{ '/' | relativeUrl(page.url) }}">主页</a>
+        <a href="{{ '/blog/' | relativeUrl(page.url) }}">Blog</a>
+        <button class="theme-toggle" type="button" aria-label="切换深色模式" data-theme-toggle>明 / 暗</button>
+      </nav>
+    </div>
+  </header>
+  <main id="main">{{ content | safe }}</main>
+  <footer class="rearrange-footer">
+    <div class="shell">
+      <div><strong>{{ rearrange.title }}</strong><p>{{ rearrange.years }} · 由 136 页书稿重新编排</p></div>
+      <div><a href="{{ '/stories/rearrange/' | relativeUrl(page.url) }}">线路图</a><a href="{{ '/blog/' | relativeUrl(page.url) }}">Blog</a><a href="{{ '/' | relativeUrl(page.url) }}">主页</a></div>
+    </div>
+  </footer>
+  <script src="{{ '/assets/js/site.js' | relativeUrl(page.url) }}" defer></script>
+  <script src="{{ '/assets/js/rearrange.js' | relativeUrl(page.url) }}" defer></script>
+</body>
+</html>

@@ -24,6 +24,13 @@ bodyClass: blog-page
   </div>
 </section>
 
+<section class="shell blog-story-gateway reveal" aria-label="互动书稿入口">
+  <a href="{{ '/stories/rearrange/' | relativeUrl(page.url) }}">
+    <img src="{{ '/stories/rearrange/assets/og.jpg' | relativeUrl(page.url) }}" alt="把世界重新编排互动故事封面" loading="lazy">
+    <div><p class="eyebrow">INTERACTIVE NONFICTION</p><h2>把世界重新编排</h2><p>将 136 页书稿重新拆成档案、规则、评价、土地、朋友与媒介六条故事线。每页末尾做出选择，进入不同的下一页。</p><strong>从线路图进入 ↗</strong></div>
+  </a>
+</section>
+
 <section class="shell blog-list" aria-label="文章列表" data-blog-results>
   {% for post in collections.posts %}
   <article class="blog-list-card reveal" data-blog-card data-url="{{ post.url }}" data-tags="{{ post.data.tags | publicTags | join(',') }}">

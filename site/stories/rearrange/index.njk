@@ -1,0 +1,75 @@
+---
+layout: layouts/rearrange.njk
+title: 把世界重新编排
+description: 将 136 页书稿重新梳理成六条可以交叉进入的互动故事线。
+permalink: /stories/rearrange/index.html
+eleventyExcludeFromCollections: true
+---
+<section class="rearrange-hero">
+  <div class="shell rearrange-hero-grid">
+    <div class="rearrange-hero-copy reveal">
+      <p class="eyebrow">INTERACTIVE NONFICTION / 2017—2026</p>
+      <h1>把世界<br>重新编排</h1>
+      <p class="rearrange-subtitle">与优绩主义混战与认识自我的这十年</p>
+      <p class="rearrange-lead">原书按照时间与六部结构前进。这里把 128 个正文短章与 8 个尾声重新拆成六条主线：你可以从旧硬盘、考场、农田、工作室、家庭镜头或一页混乱的 PPT 进入，并在每个节点重新选择方向。</p>
+      <div class="rearrange-actions"><a class="button button-primary" href="#tracks">选择第一条线</a><a class="button button-ghost" href="#how">阅读方式</a></div>
+    </div>
+    <div class="rearrange-orbit reveal" aria-label="书稿重组规模">
+      <div class="orbit-center"><strong>30</strong><span>互动节点</span></div>
+      <div class="orbit-stat one"><strong>136</strong><span>原书页</span></div>
+      <div class="orbit-stat two"><strong>06</strong><span>主线</span></div>
+      <div class="orbit-stat three"><strong>128+8</strong><span>短章与尾声</span></div>
+      <i></i><i></i><i></i>
+    </div>
+  </div>
+</section>
+
+<section class="rearrange-overview shell" id="how">
+  <header class="rearrange-section-heading reveal">
+    <p class="eyebrow">HOW TO READ</p>
+    <h2>没有唯一顺序，<br>每个选择都会暴露另一种联系。</h2>
+  </header>
+  <div class="reading-rules reveal">
+    <article><span>01</span><h3>先选一个入口</h3><p>六条主线不是六个互不相干的分类，而是同一批动作在不同问题中的回声。</p></article>
+    <article><span>02</span><h3>在页尾决定下一步</h3><p>每个节点提供三种去向：继续当前线、转入交叉线，或回到更早的问题。</p></article>
+    <article><span>03</span><h3>允许自己走回头路</h3><p>访问记录只保存在当前浏览器。线路图会显示已经经过多少节点，随时可以清空重来。</p></article>
+  </div>
+</section>
+
+<section class="track-section" id="tracks">
+  <div class="shell">
+    <header class="rearrange-section-heading reveal">
+      <p class="eyebrow">CHOOSE A THREAD</p>
+      <h2>你先碰到什么？</h2>
+      <p class="track-progress" data-story-progress>尚未进入任何节点。</p>
+    </header>
+    <div class="track-grid">
+      {% for track in rearrange.tracks %}
+      <article class="track-card reveal" style="--track-color: {{ track.color }}" data-track-card="{{ track.id }}">
+        <div class="track-top"><span>{{ track.number }}</span><b data-track-visited="{{ track.id }}">0 / 5</b></div>
+        <h3>{{ track.title }}</h3>
+        <p class="track-subtitle">{{ track.subtitle }}</p>
+        <p>{{ track.description }}</p>
+        <a href="{{ ('/stories/rearrange/' ~ track.start ~ '/') | relativeUrl(page.url) }}">从这里进入 ↗</a>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="rearrange-map shell">
+  <header class="rearrange-section-heading reveal"><p class="eyebrow">THE MAP</p><h2>六条线，三十个节点。</h2><p>地图展示归属，不规定阅读顺序。节点底部的选择会不断跨线。</p></header>
+  <div class="map-lines reveal">
+    {% for track in rearrange.tracks %}
+    <section style="--track-color: {{ track.color }}" data-map-track="{{ track.id }}">
+      <h3><span>{{ track.number }}</span>{{ track.title }}</h3>
+      <ol>
+        {% for node in rearrange.nodes %}{% if node.track == track.id %}
+        <li data-map-node="{{ node.slug }}"><a href="{{ ('/stories/rearrange/' ~ node.slug ~ '/') | relativeUrl(page.url) }}"><span>{{ node.number }}</span>{{ node.title }}</a></li>
+        {% endif %}{% endfor %}
+      </ol>
+    </section>
+    {% endfor %}
+  </div>
+  <button class="reset-story" type="button" data-story-reset>清空访问记录，重新开始</button>
+</section>
