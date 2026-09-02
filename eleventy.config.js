@@ -5,6 +5,7 @@ import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 
 const SITE_URL = "https://arabid.top";
 const excludedTags = new Set(["posts", "all"]);
+const normalizeTag = (value) => String(value || "").trim().toLocaleLowerCase("zh-CN");
 
 function toDate(value) {
   return value instanceof Date ? value : new Date(value);
@@ -76,13 +77,14 @@ export default function (eleventyConfig) {
       .sort((a, b) => b.date - a.date)
   );
   eleventyConfig.addCollection("tagList", (collectionApi) => {
-    const tags = new Set();
+    const tags = new Map();
     for (const post of collectionApi.getFilteredByGlob("./site/blog/posts/*.md")) {
       for (const tag of post.data.tags || []) {
-        if (!excludedTags.has(tag)) tags.add(tag);
+        const key = normalizeTag(tag);
+        if (key && !excludedTags.has(key) && !tags.has(key)) tags.set(key, tag);
       }
     }
-    return [...tags].sort((a, b) => a.localeCompare(b, "zh-CN"));
+    return [...tags.values()].sort((a, b) => a.localeCompare(b, "zh-CN"));
   });
 
   eleventyConfig.addFilter("dateDisplay", (value) =>
@@ -109,10 +111,11 @@ export default function (eleventyConfig) {
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&apos;"));
   eleventyConfig.addFilter("tagSlug", (value) => eleventyConfig.getFilter("slugify")(value));
-  eleventyConfig.addFilter("postsByTag", (posts, tag) =>
-    posts.filter((post) => (post.data.tags || []).includes(tag))
-  );
-  eleventyConfig.addFilter("publicTags", (tags = []) => tags.filter((tag) => !excludedTags.has(tag)));
+  eleventyConfig.addFilter("postsByTag", (posts, tag) => {
+    const wanted = normalizeTag(tag);
+    return posts.filter((post) => (post.data.tags || []).some((item) => normalizeTag(item) === wanted));
+  });
+  eleventyConfig.addFilter("publicTags", (tags = []) => tags.filter((tag) => !excludedTags.has(normalizeTag(tag))));
   eleventyConfig.addFilter("readingTime", (content = "") => {
     const plain = content.replace(/<[^>]*>/gu, " ");
     const cjk = (plain.match(/[\u3400-\u9fff]/gu) || []).length;
