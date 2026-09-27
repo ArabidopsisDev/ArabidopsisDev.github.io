@@ -17,6 +17,7 @@
   <link rel="icon" href="{{ '/assets/images/arabidopsis-mark.png' | relativeUrl(page.url) }}" type="image/png">
   <link rel="manifest" href="{{ '/site.webmanifest' | relativeUrl(page.url) }}">
   <link rel="stylesheet" href="{{ '/assets/css/site.css' | relativeUrl(page.url) }}">
+  {% if type == 'article' %}<link rel="stylesheet" href="{{ '/assets/vendor/katex/katex.min.css' | relativeUrl(page.url) }}">{% endif %}
   <title>{{ title }} — {{ site.shortTitle }}</title>
 </head>
 <body class="{{ bodyClass or 'blog-page' }}">

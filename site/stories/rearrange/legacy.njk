@@ -1,0 +1,19 @@
+---
+pagination:
+  data: rearrangeRedirects
+  size: 1
+  alias: old
+permalink: "/stories/rearrange/{{ old.slug }}/index.html"
+eleventyExcludeFromCollections: true
+---
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="refresh" content="0; url={{ ('/stories/rearrange/' ~ old.target ~ '/') | relativeUrl(page.url) }}">
+  <meta name="robots" content="noindex">
+  <title>{{ old.title }} · 把世界重新编排</title>
+</head>
+<body><p>此章节已重新编排。<a href="{{ ('/stories/rearrange/' ~ old.target ~ '/') | relativeUrl(page.url) }}">继续阅读新的场景</a>。</p></body>
+</html>

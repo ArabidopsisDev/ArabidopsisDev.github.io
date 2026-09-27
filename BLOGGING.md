@@ -32,6 +32,27 @@ draft: true
 - 发布时改为 `draft: false`。
 - Markdown 二、三级标题会自动生成文章目录。
 - 代码围栏会生成语法高亮和复制按钮。
+- 公式使用 KaTeX 在构建时渲染，阅读页不需要额外脚本。
+
+## 公式
+
+行内公式用单个 `$` 包裹，独立公式用 `$$` 包裹（KaTeX 服务端渲染，输出 HTML + MathML）：
+
+```markdown
+质能方程 $E = mc^2$ 描述质量与能量的关系。
+
+$$
+\int_0^1 x^2 \, dx = \frac{1}{3}
+$$
+```
+
+- 也支持 `\begin{aligned} … \end{aligned}` 这类独立块，以及 ```` ```math ```` 围栏。
+- 货币写法如 `100$`、`200$` 不会被误判为公式（`$` 两侧需要符合公式定界规则）。
+- 公式语法错误不会中断构建：出错处会渲染成红色的 `katex-error` 片段，同时保留原始公式文本。
+- KaTeX 样式表在文章页按需加载：`assets/vendor/katex/katex.min.css`（由 `eleventy.config.js` 从 `node_modules/katex/dist` 复制）。
+- 需要 KaTeX 不支持的宏时，在 `eleventy.config.js` 的 markdown-it KaTeX 选项里补充 `macros`。
+
+支持的语法以 [KaTeX 支持列表](https://katex.org/docs/supported.html) 为准。
 
 ## 本地预览
 

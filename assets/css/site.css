@@ -321,6 +321,13 @@ h3 { color: var(--ink); }
 .prose code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
 .prose :not(pre) > code { padding: 2px 5px; border-radius: 5px; background: var(--surface-soft); color: var(--ink); }
 .prose hr { margin: 48px 0; border: 0; border-top: 1px solid var(--line); }
+.prose .katex { font-size: 1.06em; color: var(--ink-2); }
+.prose .katex-block { max-width: 100%; margin: 2em 0; overflow-x: auto; overflow-y: hidden; padding: 4px 2px; }
+.prose .katex-display { margin: 0; }
+.prose .katex-display > .katex { white-space: normal; }
+.prose .katex-error { padding: 2px 6px; border-radius: 6px; background: var(--accent-soft); color: #a8412b; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .86em; }
+[data-theme="dark"] .prose .katex-error { color: #f0a48f; }
+[data-theme="dark"] .prose .katex { color: var(--ink-2); }
 .code-copy { position: absolute; top: 10px; right: 10px; border: 1px solid rgba(255,255,255,.2); border-radius: 7px; padding: 5px 9px; background: rgba(255,255,255,.08); color: #d8e4df; cursor: pointer; font-size: .68rem; }
 .code-copy:hover { background: rgba(255,255,255,.15); }
 .token.comment, .token.prolog, .token.doctype, .token.cdata { color: #89a29a; }

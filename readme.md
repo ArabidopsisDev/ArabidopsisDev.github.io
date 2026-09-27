@@ -12,4 +12,6 @@ Arabidopsis 的个人主页与 Markdown 博客，部署于 GitHub Pages，并通
 
 博客使用 Eleventy 构建，GitHub Actions 会在推送 `main` 后自动部署。所有站内资源使用相对路径，以兼容自定义域名、GitHub 用户页和本地预览。
 
-写作、草稿、标签与发布说明见 [`BLOGGING.md`](./BLOGGING.md)。
+文章支持 KaTeX 公式：行内 `$…$`、独立 `$$…$$`，在构建时渲染为 HTML 与 MathML，阅读页不需要额外脚本。
+
+写作、草稿、标签、公式与发布说明见 [`BLOGGING.md`](./BLOGGING.md)。

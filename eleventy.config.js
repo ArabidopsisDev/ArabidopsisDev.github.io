@@ -1,7 +1,11 @@
 import path from "node:path";
 import markdownIt from "markdown-it";
 import markdownItAnchor from "markdown-it-anchor";
+import markdownItKatexModule from "@vscode/markdown-it-katex";
 import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
+
+// @vscode/markdown-it-katex ships CommonJS, so the plugin lives on `default`.
+const markdownItKatex = markdownItKatexModule.default ?? markdownItKatexModule;
 
 const SITE_URL = "https://arabid.top";
 const excludedTags = new Set(["posts", "all"]);
@@ -9,6 +13,17 @@ const normalizeTag = (value) => String(value || "").trim().toLocaleLowerCase("zh
 
 function toDate(value) {
   return value instanceof Date ? value : new Date(value);
+}
+
+// KaTeX emits the same formula twice: a visual HTML tree plus a MathML copy.
+// Drop the MathML half so plain-text views (search index, reading time) do not
+// count every formula twice.
+function stripMathMarkup(html) {
+  return String(html)
+    .replace(/<span class="katex-mathml">[\s\S]*?<\/math><\/span>/gu, " ")
+    .replace(/<math[\s\S]*?<\/math>/gu, " ")
+    .replace(/<annotation[\s\S]*?<\/annotation>/gu, " ")
+    .replace(/<span class="katex-html"[^>]*>/gu, " ");
 }
 
 function relativeUrl(target, from) {
@@ -34,6 +49,13 @@ export default function (eleventyConfig) {
   }).use(markdownItAnchor, {
     level: [2, 3],
     slugify: (value) => eleventyConfig.getFilter("slugify")(value),
+  }).use(markdownItKatex, {
+    throwOnError: false,
+    errorColor: "#b5462f",
+    strict: "ignore",
+    trust: false,
+    enableBareBlocks: true,
+    enableFencedBlocks: true,
   });
   eleventyConfig.setLibrary("md", markdown);
 
@@ -60,6 +82,8 @@ export default function (eleventyConfig) {
     "./stories/rearrange/assets": "stories/rearrange/assets",
     "./certificates": "certificates",
     "./CNAME": "CNAME",
+    "./node_modules/katex/dist/katex.min.css": "assets/vendor/katex/katex.min.css",
+    "./node_modules/katex/dist/fonts": "assets/vendor/katex/fonts",
     "./robots.txt": "robots.txt",
     "./site.webmanifest": "site.webmanifest",
     "./.nojekyll": ".nojekyll"
@@ -103,7 +127,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("relativeUrl", relativeUrl);
   eleventyConfig.addFilter("absoluteUrl", (value) => new URL(value, SITE_URL).toString());
   eleventyConfig.addFilter("json", (value) => JSON.stringify(value));
-  eleventyConfig.addFilter("stripHtml", (value = "") => value.replace(/<[^>]*>/gu, " ").replace(/\s+/gu, " ").trim());
+  eleventyConfig.addFilter("stripHtml", (value = "") => stripMathMarkup(value).replace(/<[^>]*>/gu, " ").replace(/\s+/gu, " ").trim());
   eleventyConfig.addFilter("xmlEscape", (value = "") => String(value)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
@@ -117,7 +141,7 @@ export default function (eleventyConfig) {
   });
   eleventyConfig.addFilter("publicTags", (tags = []) => tags.filter((tag) => !excludedTags.has(normalizeTag(tag))));
   eleventyConfig.addFilter("readingTime", (content = "") => {
-    const plain = content.replace(/<[^>]*>/gu, " ");
+    const plain = stripMathMarkup(content).replace(/<[^>]*>/gu, " ");
     const cjk = (plain.match(/[\u3400-\u9fff]/gu) || []).length;
     const words = (plain.replace(/[\u3400-\u9fff]/gu, " ").match(/[\p{L}\p{N}_-]+/gu) || []).length;
     return Math.max(1, Math.ceil((cjk + words) / 300));

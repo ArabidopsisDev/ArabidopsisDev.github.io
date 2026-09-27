@@ -1,75 +1,38 @@
 ---
 layout: layouts/rearrange.njk
 title: 把世界重新编排
-description: 取材于 Arabidopsis 过去五年的真实经历，并回望更早个人档案的互动非虚构故事。
+description: 由回忆录书稿重新编排的三重叙事。沿未知、放手与成为三条星路，寻找同一段经历的不同回声。
 permalink: /stories/rearrange/index.html
 eleventyExcludeFromCollections: true
 ---
-<section class="rearrange-hero">
-  <div class="shell rearrange-hero-grid">
-    <div class="rearrange-hero-copy reveal">
-      <p class="eyebrow">INTERACTIVE NONFICTION / 2017—2026</p>
-      <h1>把世界<br>重新编排</h1>
-      <p class="rearrange-subtitle">与优绩主义混战与认识自我的这十年</p>
-      <p class="rearrange-lead">这是一组以我过去五年真实经历为主体、并回望更早个人档案的互动非虚构故事。原书按照时间与六部结构前进；这里把 128 个正文短章与 8 个尾声重新拆成六条主线，你可以从旧硬盘、考场、农田、工作室、家庭镜头或一页混乱的 PPT 进入。</p>
-      <div class="rearrange-actions"><a class="button button-primary" href="#tracks">选择第一条线</a><a class="button button-ghost" href="#how">阅读方式</a></div>
-    </div>
-    <div class="rearrange-orbit reveal" aria-label="书稿重组规模">
-      <div class="orbit-center"><strong>30</strong><span>互动节点</span></div>
-      <div class="orbit-stat one"><strong>136</strong><span>原书页</span></div>
-      <div class="orbit-stat two"><strong>06</strong><span>主线</span></div>
-      <div class="orbit-stat three"><strong>128+8</strong><span>短章与尾声</span></div>
-      <i></i><i></i><i></i>
-    </div>
+<section class="universe-hero" aria-labelledby="universe-title">
+  <div class="cosmos-stars" aria-hidden="true"></div><div class="universe-glow" aria-hidden="true"></div>
+  <div class="shell universe-hero-inner">
+    <p class="universe-kicker">AN INTERACTIVE MEMOIR · 2017—2026</p>
+    <h1 id="universe-title">把世界<br><em>重新编排</em></h1>
+    <p class="universe-intro">十年并非一条向上的曲线。同一份旧硬盘，可以通向技术、失去与家人；同一次失败，也可能是另一种生活的起点。</p>
+    <div class="universe-invite"><span class="invite-line"></span><p>选择一颗星进入。三条路彼此交错，没有必须完成的顺序。</p><a href="#constellations">探索星图 <span aria-hidden="true">↓</span></a></div>
+    <div class="universe-coordinate" aria-hidden="true">ARCHIVE / MEMORY / POSSIBILITY</div>
   </div>
 </section>
-
-<section class="rearrange-overview shell" id="how">
-  <header class="rearrange-section-heading reveal">
-    <p class="eyebrow">HOW TO READ</p>
-    <h2>没有唯一顺序，<br>每个选择都会暴露另一种联系。</h2>
-  </header>
-  <div class="reading-rules reveal">
-    <article><span>01</span><h3>先选一个入口</h3><p>六条主线不是六个互不相干的分类，而是同一批动作在不同问题中的回声。</p></article>
-    <article><span>02</span><h3>在页尾决定下一步</h3><p>每个节点只保留两种明确去向：继续当前主线，或转入一条有具体联系的交叉线。</p></article>
-    <article><span>03</span><h3>允许自己走回头路</h3><p>访问记录只保存在当前浏览器。线路图会显示已经经过多少节点，随时可以清空重来。</p></article>
-  </div>
-</section>
-
-<section class="track-section" id="tracks">
+<section class="constellation-section" id="constellations" aria-labelledby="constellation-title">
   <div class="shell">
-    <header class="rearrange-section-heading reveal">
-      <p class="eyebrow">CHOOSE A THREAD</p>
-      <h2>你先碰到什么？</h2>
-      <p class="track-progress" data-story-progress>尚未进入任何节点。</p>
-    </header>
-    <div class="track-grid">
-      {% for track in rearrange.tracks %}
-      <article class="track-card reveal" style="--track-color: {{ track.color }}" data-track-card="{{ track.id }}">
-        <div class="track-top"><span>{{ track.number }}</span><b data-track-visited="{{ track.id }}">0 / 5</b></div>
-        <h3>{{ track.title }}</h3>
-        <p class="track-subtitle">{{ track.subtitle }}</p>
-        <p>{{ track.description }}</p>
-        <a href="{{ ('/stories/rearrange/' ~ track.start ~ '/') | relativeUrl(page.url) }}">从这里进入 ↗</a>
+    <div class="section-heading constellation-heading"><p class="eyebrow">THREE WAYS THROUGH ONE LIFE</p><h2 id="constellation-title">从哪里开始？</h2><p>这三部分是反复出现的行动，不是人生的三个阶段。沿一条线读下去，或在故事中的交叉处换一条路。</p><p class="constellation-progress" data-story-progress>星图正在等待第一个足迹。</p></div>
+    <div class="constellation-grid">
+      {% for movement in rearrangeEdition.movements %}
+      <article class="constellation-card" data-movement="{{ movement.id }}" style="--movement-color: {{ movement.color }}">
+        <div class="constellation-card-top"><span>{{ movement.number }} / Ⅲ</span><span class="movement-symbol" aria-hidden="true">{{ movement.symbol }}</span></div>
+        <p class="constellation-english">{{ movement.english }}</p><h3>{{ movement.title }}</h3><p class="constellation-quote">{{ movement.quote }}</p><p class="constellation-description">{{ movement.description }}</p>
+        <div class="mini-constellation" aria-label="{{ movement.title }}的五个场景"><span class="constellation-thread" aria-hidden="true"></span>
+          {% for scene in rearrangeEdition.scenes %}{% if scene.movement == movement.id %}
+          <a class="star-stop" href="{{ ('/stories/rearrange/' ~ scene.slug ~ '/') | relativeUrl(page.url) }}" data-map-node="{{ scene.slug }}" aria-label="{{ scene.title }}：{{ scene.question }}"><span class="star-point" aria-hidden="true"></span><span class="star-label"><b>{{ scene.number }}</b>{{ scene.title }}</span></a>
+          {% endif %}{% endfor %}
+        </div>
+        <a class="movement-enter" href="{{ ('/stories/rearrange/' ~ movement.start ~ '/') | relativeUrl(page.url) }}">从这条路进入 <span aria-hidden="true">↗</span></a>
       </article>
       {% endfor %}
     </div>
+    <div class="map-colophon"><p>取材于《把世界重新编排》136 页书稿。每一站由原书片段重新交织，场景末尾保留来源页码。</p><button type="button" data-story-reset>清空本机足迹</button></div>
   </div>
 </section>
-
-<section class="rearrange-map shell">
-  <header class="rearrange-section-heading reveal"><p class="eyebrow">THE MAP</p><h2>六条线，三十个节点。</h2><p>地图展示归属，不规定阅读顺序。节点底部的选择会不断跨线。</p></header>
-  <div class="map-lines reveal">
-    {% for track in rearrange.tracks %}
-    <section style="--track-color: {{ track.color }}" data-map-track="{{ track.id }}">
-      <h3><span>{{ track.number }}</span>{{ track.title }}</h3>
-      <ol>
-        {% for node in rearrange.nodes %}{% if node.track == track.id %}
-        <li data-map-node="{{ node.slug }}"><a href="{{ ('/stories/rearrange/' ~ node.slug ~ '/') | relativeUrl(page.url) }}"><span>{{ node.number }}</span>{{ node.title }}</a></li>
-        {% endif %}{% endfor %}
-      </ol>
-    </section>
-    {% endfor %}
-  </div>
-  <button class="reset-story" type="button" data-story-reset>清空访问记录，重新开始</button>
-</section>
+<section class="reading-note shell"><span class="reading-note-mark" aria-hidden="true">✧</span><div><p class="eyebrow">A NOTE ON THE THREE WAYS</p><h2>故事不会替过去补出确定的答案。</h2><p>三条星路受 T. S. Eliot《四个四重奏》中《东库克》的三句诗启发：经过未知、松开占有、走向尚未成为的自己。你读到的选择改变阅读视角，不会改写已经发生的人生。</p></div></section>

@@ -1,13 +1,13 @@
 ---
-title: 黑客松里的微服务边界
-description: 时间有限、技术栈不同、还要路演：千知万理如何在可运行与可协作之间做架构选择。
+title: "\u9ED1\u5BA2\u677E\u91CC\u7684\u5FAE\u670D\u52A1\u8FB9\u754C"
+description: "\u65F6\u95F4\u6709\u9650\u3001\u6280\u672F\u6808\u4E0D\u540C\u3001\u8FD8\u8981\u8DEF\u6F14\uFF1A\u5343\u77E5\u4E07\u7406\u5982\u4F55\u5728\u53EF\u8FD0\u884C\u4E0E\u53EF\u534F\u4F5C\u4E4B\u95F4\u505A\u67B6\u6784\u9009\u62E9\u3002"
 date: 2026-08-29T09:30:00+08:00
-updated: 2026-08-29T09:30:00+08:00
+updated: 2026-08-29T20:14:47+08:00
 tags:
   - architecture
   - product
   - open-source
-draft: false
+draft: true
 ---
 
 黑客松最容易出现两种极端：一种是为了赶时间，把所有代码塞进一个仓库和一个进程；另一种是为了展示“高级架构”，把系统切得过碎，最后大家都在修通信问题。

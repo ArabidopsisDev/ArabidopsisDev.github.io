@@ -1,15 +1,15 @@
 ---
-title: 把 AI 隐藏在学习流程里
-description: 为什么 ReciteHelper 没有从聊天框开始，以及学习闭环如何反过来决定软件架构。
+title: "\u628A AI \u9690\u85CF\u5728\u5B66\u4E60\u6D41\u7A0B\u91CC"
+description: "\u4E3A\u4EC0\u4E48 ReciteHelper \u6CA1\u6709\u4ECE\u804A\u5929\u6846\u5F00\u59CB\uFF0C\u4EE5\u53CA\u5B66\u4E60\u95ED\u73AF\u5982\u4F55\u53CD\u8FC7\u6765\u51B3\u5B9A\u8F6F\u4EF6\u67B6\u6784\u3002"
 date: 2026-08-29T10:00:00+08:00
-updated: 2026-08-29T10:00:00+08:00
+updated: 2026-08-29T20:14:58+08:00
 tags:
   - product
   - architecture
   - ai
   - learning
   - desktop
-draft: false
+draft: true
 ---
 
 很多 AI 产品的第一反应，是在界面右下角放一个聊天框。它看起来聪明，也很容易演示。学习任务还包含更多部分：资料从哪里来、知识如何组织、题目怎样生成、答案怎样评价、复习节奏如何安排，以及用户下一次打开软件时能否接着上次继续。
