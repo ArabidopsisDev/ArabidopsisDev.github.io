@@ -1,4 +1,6 @@
 import path from "node:path";
+import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import markdownIt from "markdown-it";
 import markdownItAnchor from "markdown-it-anchor";
 import markdownItKatexModule from "@vscode/markdown-it-katex";
@@ -26,6 +28,15 @@ function stripMathMarkup(html) {
     .replace(/<span class="katex-html"[^>]*>/gu, " ");
 }
 
+function slugifyHeading(value) {
+  return String(value)
+    .normalize("NFKC")
+    .toLocaleLowerCase("zh-CN")
+    .replace(/<[^>]*>/gu, "")
+    .replace(/[^\p{L}\p{N}]+/gu, "-")
+    .replace(/^-+|-+$/gu, "") || "section";
+}
+
 function relativeUrl(target, from) {
   if (!target || /^(?:[a-z]+:)?\/\//i.test(target) || target.startsWith("mailto:")) return target;
   const [pathname, suffix = ""] = target.split(/(?=[?#])/u, 2);
@@ -38,6 +49,12 @@ function relativeUrl(target, from) {
   return result + suffix;
 }
 
+function versionedAssetUrl(target, from) {
+  const source = path.resolve(process.cwd(), target.replace(/^\/+/, ""));
+  const digest = createHash("sha256").update(readFileSync(source)).digest("hex").slice(0, 10);
+  return `${relativeUrl(target, from)}?v=${digest}`;
+}
+
 export default function (eleventyConfig) {
   eleventyConfig.addPlugin(syntaxHighlight);
   eleventyConfig.setDataDeepMerge(true);
@@ -47,8 +64,8 @@ export default function (eleventyConfig) {
     linkify: true,
     typographer: false,
   }).use(markdownItAnchor, {
-    level: [2, 3],
-    slugify: (value) => eleventyConfig.getFilter("slugify")(value),
+    level: [2, 3, 4],
+    slugify: slugifyHeading,
   }).use(markdownItKatex, {
     throwOnError: false,
     errorColor: "#b5462f",
@@ -125,6 +142,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("rfc3339", (value) => toDate(value).toISOString());
   eleventyConfig.addFilter("rssDate", (value) => toDate(value).toUTCString());
   eleventyConfig.addFilter("relativeUrl", relativeUrl);
+  eleventyConfig.addFilter("versionedAssetUrl", versionedAssetUrl);
   eleventyConfig.addFilter("absoluteUrl", (value) => new URL(value, SITE_URL).toString());
   eleventyConfig.addFilter("json", (value) => JSON.stringify(value));
   eleventyConfig.addFilter("stripHtml", (value = "") => stripMathMarkup(value).replace(/<[^>]*>/gu, " ").replace(/\s+/gu, " ").trim());

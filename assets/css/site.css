@@ -311,6 +311,7 @@ h3 { color: var(--ink); }
 .article-aside a { display: block; margin: 8px 0; line-height: 1.45; }
 .article-aside a:hover { color: var(--ink); }
 .article-aside .toc-level-3 { padding-left: 13px; font-size: .7rem; }
+.article-aside .toc-level-4 { padding-left: 26px; font-size: .68rem; }
 .prose { font-size: 1.04rem; overflow-wrap: anywhere; }
 .prose h2 { margin: 2.7em 0 .7em; font-size: 2rem; letter-spacing: -.025em; }
 .prose h3 { margin-top: 2.1em; font-size: 1.25rem; }

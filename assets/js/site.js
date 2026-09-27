@@ -88,7 +88,7 @@
   const toc = document.querySelector('[data-toc]');
   const tocList = document.querySelector('[data-toc-list]');
   if (articleBody && toc && tocList) {
-    const headings = [...articleBody.querySelectorAll('h2[id], h3[id]')];
+    const headings = [...articleBody.querySelectorAll('h2[id], h3[id], h4[id]')];
     if (headings.length) {
       const fragment = document.createDocumentFragment();
       headings.forEach(heading => {
@@ -96,6 +96,7 @@
         link.href = `#${heading.id}`;
         link.textContent = heading.textContent;
         if (heading.tagName === 'H3') link.className = 'toc-level-3';
+        if (heading.tagName === 'H4') link.className = 'toc-level-4';
         fragment.appendChild(link);
       });
       tocList.appendChild(fragment);
