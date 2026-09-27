@@ -19,14 +19,14 @@ eleventyComputed:
     <div class="scene-scroll-cue">往下读，线索会在故事中打开 <span aria-hidden="true">↓</span></div>
   </header>
   <div class="scene-reading-shell shell">
-    <aside class="scene-rail" aria-label="本场景导航"><div class="scene-rail-inner"><p>READING / {{ scene.number }}</p><span>{{ scene.movementInfo.title }}</span><ol>{% for passage in scene.passages %}<li><a href="#fragment-{{ loop.index }}">{{ passage.heading }}</a></li>{% endfor %}</ol><div class="scene-rail-progress" data-scene-progress>01 / 04</div></div></aside>
-    <div class="scene-reading">
-      {% for passage in scene.passages %}
-      <section class="scene-fragment" id="fragment-{{ loop.index }}" data-fragment><header><span>0{{ loop.index }} <i aria-hidden="true">/</i> 04</span><h2>{{ passage.heading }}</h2></header>{% for paragraph in passage.paragraphs %}<p>{{ paragraph }}</p>{% endfor %}</section>
-      {% if loop.index == scene.crossing.after %}
+    <aside class="scene-rail" aria-label="阅读进度"><div class="scene-rail-inner"><p>READING / {{ scene.number }}</p><span>{{ scene.movementInfo.title }}</span><div class="scene-rail-rule" aria-hidden="true"></div><small>{{ scene.question }}</small><div class="scene-rail-progress" data-scene-progress>01 / {{ scene.narrative.paragraphs.length }}</div></div></aside>
+    <div class="scene-reading scene-narrative">
+      {% for paragraph in scene.narrative.paragraphs %}
+      <p data-fragment>{{ paragraph }}</p>
+      {% if loop.index == scene.narrative.hingeAfter %}
       <aside class="crossing" aria-label="交叉线索"><div class="crossing-glyph" aria-hidden="true">✧</div><div><p>另一条路在这里交会</p><h3>{{ scene.crossing.label }}</h3><span>{{ scene.crossing.note }}</span></div><a href="{{ ('/stories/rearrange/' ~ scene.crossing.to ~ '/') | relativeUrl(page.url) }}" aria-label="{{ scene.crossing.label }}：{{ scene.crossTitle }}">前往 {{ scene.crossTitle }} ↗</a></aside>
       {% endif %}{% endfor %}
-      <details class="source-note"><summary>这段故事从哪里来？</summary><p>正文摘取自原书不同位置，按本场景的问题重新排列；段落保留原书叙述并修正 PDF 提取造成的字间空格。</p><ul>{% for passage in scene.passages %}<li>书页 {{ passage.page }} · {{ passage.title }}</li>{% endfor %}</ul></details>
+      <details class="source-note"><summary>这段故事从哪里来？</summary><p>这段叙事依据原书不同位置的内容重写并串联。以下是主要来源页码；不确定之处仍以原书材料为界。</p><ul>{% for passage in scene.passages %}<li>书页 {{ passage.page }} · {{ passage.title }}</li>{% endfor %}</ul></details>
     </div>
   </div>
   <section class="scene-exit"><div class="shell scene-exit-inner"><div class="scene-exit-heading"><p class="eyebrow">THE STORY CONTINUES</p><h2>同一片星空，<br>还有别的走法。</h2><p>下一站沿着当前线前进；另一站从刚才的线索进入别的视角。</p></div><div class="scene-exit-routes"><a class="route-primary" href="{{ ('/stories/rearrange/' ~ scene.next ~ '/') | relativeUrl(page.url) }}"><span>沿 {{ scene.movementInfo.title }} 继续</span><strong>{{ scene.nextTitle }}</strong><b>→</b></a><a class="route-secondary" href="{{ ('/stories/rearrange/' ~ scene.crossing.to ~ '/') | relativeUrl(page.url) }}"><span>在交叉处转向</span><strong>{{ scene.crossTitle }}</strong><b>↗</b></a><a class="route-map" href="{{ '/stories/rearrange/' | relativeUrl(page.url) }}">回到星图，选择任意一站</a></div></div></section>

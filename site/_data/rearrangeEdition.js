@@ -1,4 +1,6 @@
 import source from "./rearrangeContent.json" with { type: "json" };
+import narratives from "./rearrangeNarratives.json" with { type: "json" };
+import narrativeOverrides from "./rearrangeNarrativeOverrides.js";
 
 const byIndex = new Map(Object.values(source).flat().map((chapter) => [chapter.sourceIndex, chapter]));
 
@@ -12,19 +14,19 @@ const complete = (value) => /[。！？][”’」』）】]?$/u.test(value)
 const movements = [
   {
     id: "unknown", number: "I", title: "走向未知", english: "THE WAY OF IGNORANCE",
-    quote: "为了抵达尚不知道的地方，先承认自己不知道。",
+    quote: "为了抵达你所不知道的地方，你必须走一条通往无知的路。",
     description: "旧硬盘、第一扇窗口、考场和农田。知道得越多，越能看见证据与经验之间的空白。",
     color: "#b8c7ff", symbol: "✦", start: "archive-seams",
   },
   {
     id: "release", number: "II", title: "练习放手", english: "THE WAY OF DISPOSSESSION",
-    quote: "为了拥有未曾拥有的东西，先松开紧握的部分。",
+    quote: "为了拥有你未曾拥有的东西，你必须走一条放弃拥有之路。",
     description: "规则、时间、成绩和关系。放下掌控的幻觉之后，人与作品才有继续生长的空间。",
     color: "#f1c39b", symbol: "◌", start: "toy-constitution",
   },
   {
     id: "becoming", number: "III", title: "成为尚未成为的我", english: "THE WAY IN WHICH YOU ARE NOT",
-    quote: "要成为尚未成为的自己，必须穿过现在还不是自己的地方。",
+    quote: "为了抵达你目前未抵达的地方，你必须走一条你目前未曾走过之路。",
     description: "视频、陌生专业、真实用户和共同完成的项目。身份不是答案，而是在行动里渐渐改变的东西。",
     color: "#a5e4d6", symbol: "✧", start: "many-voices",
   },
@@ -100,6 +102,13 @@ const sceneBySlug = Object.fromEntries(scenes.map((scene) => [scene.slug, scene]
 
 for (const scene of scenes) {
   scene.movementInfo = movementById[scene.movement];
+  scene.narrative = narrativeOverrides[scene.slug] || narratives[scene.slug];
+  if (!scene.narrative || !Array.isArray(scene.narrative.paragraphs)
+      || scene.narrative.paragraphs.length < 6
+      || scene.narrative.hingeAfter < 2
+      || scene.narrative.hingeAfter >= scene.narrative.paragraphs.length) {
+    throw new Error(`Missing continuous narrative for ${scene.slug}`);
+  }
   scene.passages = scene.beats.map(([sourceIndex, paragraphIndex, heading]) => {
     const chapter = byIndex.get(sourceIndex);
     if (!chapter?.paragraphs[paragraphIndex]) throw new Error(`Missing passage ${sourceIndex}:${paragraphIndex}`);

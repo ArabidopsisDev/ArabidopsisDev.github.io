@@ -31,7 +31,7 @@
         if (!entry.isIntersecting) continue;
         const index = fragments.indexOf(entry.target);
         rail.forEach((link, linkIndex) => link.classList.toggle("is-current", linkIndex === index));
-        if (progress) progress.textContent = `${String(index + 1).padStart(2, "0")} / 04`;
+        if (progress) progress.textContent = `${String(index + 1).padStart(2, "0")} / ${String(fragments.length).padStart(2, "0")}`;
       }
     }, { rootMargin: "-12% 0px -60% 0px" });
     fragments.forEach((fragment) => observer.observe(fragment));

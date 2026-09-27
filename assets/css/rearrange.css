@@ -134,6 +134,12 @@
 .scene-rail a { color: var(--paper-muted); line-height: 1.5; }
 .scene-rail a:hover, .scene-rail a.is-current { color: var(--ink); }
 .scene-rail-progress { margin-top: 32px; color: var(--ink); }
+.scene-rail-rule { width: 50px; height: 1px; margin: 30px 0 24px; background: color-mix(in srgb, var(--movement-color) 70%, var(--ink)); }
+.scene-rail small { display: block; color: var(--paper-muted); font: .78rem/1.75 "Noto Serif SC", "Songti SC", serif; }
+.scene-narrative > p { margin: 0 0 2em; color: var(--ink); font: 1.05rem/2.18 "Noto Serif SC", "Songti SC", serif; letter-spacing: .01em; text-wrap: pretty; }
+.scene-narrative > p:first-of-type::first-letter { color: color-mix(in srgb, var(--movement-color) 65%, var(--ink)); font-size: 1.2em; font-weight: 700; }
+.scene-narrative .crossing { margin: 42px 0 58px; }
+.scene-narrative .source-note { margin-top: 50px; }
 .scene-fragment { scroll-margin-top: 110px; margin-bottom: 72px; }
 .scene-fragment header { display: flex; align-items: baseline; gap: 22px; border-bottom: 1px solid color-mix(in srgb, var(--ink) 16%, transparent); padding-bottom: 15px; margin-bottom: 27px; }
 .scene-fragment header span { color: var(--paper-muted); font-size: .68rem; white-space: nowrap; }
@@ -215,6 +221,7 @@
   .scene-fragment header span { display: block; margin-bottom: 10px; }
   .scene-fragment h2 { font-size: 1.8rem; }
   .scene-fragment > p { font-size: .96rem; line-height: 2.05; }
+  .scene-narrative > p { font-size: .98rem; line-height: 2.08; margin-bottom: 1.75em; }
   .crossing { padding: 20px; grid-template-columns: 24px 1fr; gap: 10px; }
   .crossing-glyph { font-size: 1.45rem; }
   .scene-exit { padding-block: 70px; }
