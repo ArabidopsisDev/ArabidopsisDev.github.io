@@ -42,7 +42,9 @@
       });
       points.forEach((star) => star.classList.toggle("is-connected", related.has(star.dataset.mapNode)));
       if (captionTitle) captionTitle.textContent = point?.dataset.atlasTitle || "从一个让你在意的问题出发";
-      if (captionNote) captionNote.textContent = point?.dataset.atlasNote || "将鼠标移到一颗星上，或用键盘聚焦它，看看它和哪里相连。";
+      if (captionNote) captionNote.textContent = point
+        ? point.dataset.atlasNote + (point.dataset.atlasReading ? " 当前回看：" + point.dataset.atlasReading : "")
+        : "拖动图面探索；也可以从上方目录找到一段经历。";
     };
     points.forEach((point) => {
       point.addEventListener("pointerenter", () => highlight(point));
@@ -59,7 +61,7 @@
       });
       points.forEach((point) => point.classList.toggle("is-dim", lens !== "all" && !point.dataset.lenses.split(",").includes(lens)));
       if (status) status.textContent = lens === "all"
-        ? "三句话是阅读视角；同一段经历可以同时回应不止一句。"
+        ? "这里显示当前回看时的归属；新的经历到来后，它也可以改变。"
         : "亮起的故事回应这个视角。其余的经历仍在原处，也可以随时走过去。";
     }));
   }

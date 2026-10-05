@@ -31,10 +31,20 @@ for (const file of pages) {
     }
   }
 }
-for (const entry of diary.excerpts) {
+for (const entry of diary.episodes) {
     for (const connection of entry.connections) {
       if (!atlas.bySlug[connection.to]) failures.push("Diary refers to retired scene: " + connection.to);
     }
+}
+if (atlas.bookCount < 25) failures.push("Manuscript expansion is incomplete");
+if (new Set(atlas.ids).size !== atlas.ids.length) failures.push("Duplicate story IDs");
+for (const node of atlas.mapNodes) {
+  if (!Number.isFinite(node.x) || !Number.isFinite(node.y)) failures.push("Invalid world position: " + node.slug);
+  if (node.currentReading.lenses.join(",") !== node.lenses.join(",")) failures.push("Current classification is stale: " + node.slug);
+}
+for (let i = 0; i < atlas.mapNodes.length; i++) for (let j = i + 1; j < atlas.mapNodes.length; j++) {
+  const a = atlas.mapNodes[i], b = atlas.mapNodes[j];
+  if (Math.abs(a.x - b.x) < 235 && Math.abs(a.y - b.y) < 110) failures.push("Overlapping labels: " + a.slug + ", " + b.slug);
 }
 for (const archive of ["diary/index.html", "diary/2026-09-29/index.html"]) {
   const html = fs.readFileSync(path.join(root, "stories/rearrange", archive), "utf8");
@@ -47,5 +57,5 @@ if (failures.length) {
   failures.forEach((failure) => console.error(failure));
   process.exitCode = 1;
 } else {
-  console.log(`Checked ${pages.length} pages: links, selected excerpts, archive withdrawal, retired routes, and original quotations pass.`);
+  console.log(`Checked ${pages.length} pages: links, manuscript expansion, rewritten diary, current readings, and world layout pass.`);
 }

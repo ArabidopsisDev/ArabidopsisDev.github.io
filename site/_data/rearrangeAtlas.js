@@ -1,5 +1,8 @@
 import edition from "./rearrangeEdition.js";
 import diary from "./rearrangeDiary.json" with { type: "json" };
+import expansion from "./rearrangeExpansion.js";
+import readings from "./rearrangeReadings.json" with { type: "json" };
+import { layoutAtlas } from "../_lib/atlasLayout.js";
 
 const pageUrl = (slug) => `/stories/rearrange/${slug}/`;
 const sceneRoute = (slug, label, note) => ({ slug, href: pageUrl(slug), label, note });
@@ -103,13 +106,17 @@ const encounters = Object.entries(arrangement).map(([slug, config]) => {
   if (!original) throw new Error("Missing manuscript scene: " + slug);
   return { ...original, ...config, narrative: { ...original.narrative, paragraphs: [...original.narrative.paragraphs] }, turn: config.routes[0] };
 });
-for (const excerpt of diary.excerpts) {
+for (const chapter of expansion) {
+  const routes = chapter.links.map((slug, index) => sceneRoute(slug, index === 0 ? chapter.turnLabel : "再看一段相连的经历", index === 0 ? chapter.turnNote : ""));
+  encounters.push({ ...chapter, kind: "memoir", movement: chapter.lenses[0], movementInfo: edition.movementById[chapter.lenses[0]], routes, turn: routes[0] });
+}
+for (const excerpt of diary.episodes) {
   const routes = excerpt.connections.map((link) => sceneRoute(link.to, link.label, link.note));
   encounters.push({
     ...excerpt, movement: "release", movementInfo: edition.movementById.release,
-    era: excerpt.date, question: "一个可选功能，能否给两种期待留出边界？", lead: excerpt.intro, kind: "diary",
+    era: excerpt.date, question: excerpt.intro, lead: "依据这一周相关日记与书稿材料，重新串联的后续经历。", kind: "diary",
     x: 66, y: 39, routes, turn: routes[0], passages: [],
-    narrative: { paragraphs: [...excerpt.paragraphs], hingeAfter: -1 }
+    narrative: { paragraphs: [...excerpt.paragraphs], hingeAfter: Math.floor(excerpt.paragraphs.length / 2) }
   });
 }
 const bySlug = Object.fromEntries(encounters.map((scene) => [scene.slug, scene]));
@@ -158,6 +165,17 @@ bySlug["zero-choice"].narrative = {
 const natural = bySlug["natural-history"].narrative.paragraphs;
 natural[natural.length - 1] = "农学把向往变得更麻烦，也变得更具体。我仍不知道最后会走向哪个方向；看过演化史、保存过航天消息、愿意在山路上停下，都不能替我学会一门专业。它们只让我知道，在课程和评价之外，好奇心曾经出现过，也还可以继续出现。下一次走到田里，就让这些向往接受泥土、天气和实际问题的检验。";
 
+for (const scene of encounters) {
+  scene.readings = readings[scene.slug] || [{ label: "当前回看", asOf: "2026-10-05", lenses: [...scene.lenses] }];
+  scene.currentReading = scene.readings.at(-1);
+  scene.lenses = [...scene.currentReading.lenses];
+  scene.movement = scene.lenses[0];
+  scene.movementInfo = edition.movementById[scene.movement];
+  scene.readings = scene.readings.map((reading) => ({ ...reading, lensNames: reading.lenses.map((id) => edition.movementById[id].title) }));
+}
+bySlug["collective-night"].era = "2026 年黑客松";
+const world = layoutAtlas(encounters);
+for (const scene of encounters) Object.assign(scene, world.positions[scene.slug]);
 const mapNodes = encounters.map((scene) => ({ ...scene, href: pageUrl(scene.slug), kind: scene.kind || "memoir" }));
 const mapById = Object.fromEntries(mapNodes.map((node) => [node.slug, node]));
 const edgeIds = new Set();
@@ -172,12 +190,19 @@ for (const node of mapNodes) {
   }
 }
 for (const scene of encounters) {
-  scene.routes = scene.routes.map((route) => ({ ...route, title: mapById[route.slug]?.title || route.label, kind: mapById[route.slug]?.kind, range: mapById[route.slug]?.era }));
+  scene.routes = scene.routes.map((route) => {
+    const destination = mapById[route.slug];
+    if (!destination) throw new Error("Missing story route: " + scene.slug + " -> " + route.slug);
+    return { ...route, title: destination.title, label: route.label === "再看一段相连的经历" ? destination.title : route.label, note: route.note || destination.question, kind: destination.kind, range: destination.era };
+  });
   scene.turn = scene.routes[0];
 }
 const lenses = edition.movements.map((movement) => ({
   ...movement,
   count: encounters.filter((scene) => scene.lenses.includes(movement.id)).length
 }));
+const releaseNodes = encounters.filter((scene) => scene.lenses[0] === "release");
+const initialNodes = releaseNodes.length ? releaseNodes : encounters;
+const initialView = { x: initialNodes.reduce((sum, node) => sum + node.x, 0) / initialNodes.length, y: initialNodes.reduce((sum, node) => sum + node.y, 0) / initialNodes.length };
 
-export default { encounters, bySlug, retired, lenses, mapNodes, edges, ids: mapNodes.map((node) => node.slug) };
+export default { encounters, bySlug, retired, lenses, mapNodes, edges, ids: mapNodes.map((node) => node.slug), world, initialView, initialFocus: diary.episodes.at(-1)?.slug || encounters[0].slug, bookCount: encounters.filter((node) => node.kind !== "diary").length, diaryCount: diary.episodes.length };
