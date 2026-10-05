@@ -2,6 +2,7 @@
   const key = "arabidopsis-rearrange-edition-v2";
   const allStops = [...document.querySelectorAll("[data-map-node]")];
   const slug = document.body.dataset.storySlug;
+  const knownIds = new Set((document.body.dataset.storyIds || "").split(",").filter(Boolean));
   let visited = [];
   try {
     const saved = JSON.parse(localStorage.getItem(key) || "[]");
@@ -13,14 +14,55 @@
   }
   for (const stop of allStops) stop.classList.toggle("is-visited", visited.includes(stop.dataset.mapNode));
   document.querySelectorAll("[data-story-progress]").forEach((element) => {
-    element.textContent = visited.length ? `已走过 ${visited.length} / 15 颗星。足迹只留在当前浏览器。` : "星图正在等待第一个足迹。足迹只留在当前浏览器。";
+    const count = visited.filter((id) => knownIds.has(id)).length;
+    element.textContent = count ? `在这里回看过 ${count} 段生活。足迹留在当前浏览器。` : "还没有留下足迹。从任何一处进入都可以。";
   });
   document.querySelectorAll("[data-story-reset]").forEach((button) => button.addEventListener("click", () => {
     visited = [];
     try { localStorage.removeItem(key); } catch { /* Continue without persistence. */ }
     for (const stop of allStops) stop.classList.remove("is-visited");
-    document.querySelectorAll("[data-story-progress]").forEach((element) => { element.textContent = "星图正在等待第一个足迹。足迹只留在当前浏览器。"; });
+    document.querySelectorAll("[data-story-progress]").forEach((element) => { element.textContent = "还没有留下足迹。从任何一处进入都可以。"; });
   }));
+
+  const atlas = document.querySelector("[data-atlas-map]");
+  if (atlas) {
+    const points = [...atlas.querySelectorAll("[data-map-node]")];
+    const edges = [...atlas.querySelectorAll("[data-atlas-edge]")];
+    const controls = [...document.querySelectorAll("[data-atlas-lens]")];
+    const status = document.querySelector("[data-lens-status]");
+    const captionTitle = document.querySelector("[data-atlas-caption-title]");
+    const captionNote = document.querySelector("[data-atlas-caption-note]");
+    const highlight = (point) => {
+      const id = point?.dataset.mapNode;
+      const related = new Set();
+      edges.forEach((edge) => {
+        const active = !!id && (edge.dataset.from === id || edge.dataset.to === id);
+        edge.classList.toggle("is-active", active);
+        if (active) { related.add(edge.dataset.from); related.add(edge.dataset.to); }
+      });
+      points.forEach((star) => star.classList.toggle("is-connected", related.has(star.dataset.mapNode)));
+      if (captionTitle) captionTitle.textContent = point?.dataset.atlasTitle || "从一个让你在意的问题出发";
+      if (captionNote) captionNote.textContent = point?.dataset.atlasNote || "将鼠标移到一颗星上，或用键盘聚焦它，看看它和哪里相连。";
+    };
+    points.forEach((point) => {
+      point.addEventListener("pointerenter", () => highlight(point));
+      point.addEventListener("focus", () => highlight(point));
+      point.addEventListener("pointerleave", () => highlight(points.find((star) => star === document.activeElement)));
+      point.addEventListener("blur", () => highlight(null));
+    });
+    controls.forEach((button) => button.addEventListener("click", () => {
+      const lens = button.dataset.atlasLens;
+      controls.forEach((control) => {
+        const selected = control === button;
+        control.classList.toggle("is-selected", selected);
+        control.setAttribute("aria-pressed", String(selected));
+      });
+      points.forEach((point) => point.classList.toggle("is-dim", lens !== "all" && !point.dataset.lenses.split(",").includes(lens)));
+      if (status) status.textContent = lens === "all"
+        ? "三句话是阅读视角；同一段经历可以同时回应不止一句。"
+        : "亮起的故事回应这个视角。其余的经历仍在原处，也可以随时走过去。";
+    }));
+  }
 
   const fragments = [...document.querySelectorAll("[data-fragment]")];
   if (fragments.length && "IntersectionObserver" in window) {

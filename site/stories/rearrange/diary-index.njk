@@ -1,0 +1,12 @@
+---
+layout: layouts/rearrange.njk
+title: 日记本
+description: 想到什么记什么。每周留下当时的想法，也给旧故事留下新的回声。
+permalink: /stories/rearrange/diary/index.html
+eleventyExcludeFromCollections: true
+---
+<section class="diary-archive shell">
+  <p class="universe-kicker">AN ONGOING NOTEBOOK</p><h1>日记本</h1><p class="diary-archive-intro">想到什么记什么。每周留下当时的想法；结果没有到来时，就让问题先留在这一页。</p>
+  <div class="diary-week-list">{% for week in rearrangeDiary.weeks | reverse %}<a href="{{ ('/stories/rearrange/diary/' ~ week.slug ~ '/') | relativeUrl(page.url) }}"><time>{{ week.range }}</time><h2>{{ week.title }}</h2><p>{{ week.intro }}</p><span>读这一周 ↗</span></a>{% endfor %}</div>
+  <a class="diary-back" href="{{ '/stories/rearrange/' | relativeUrl(page.url) }}">← 回到星图</a>
+</section>

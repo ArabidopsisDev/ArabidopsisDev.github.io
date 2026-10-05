@@ -1,5 +1,5 @@
 import previous from "./rearrange.js";
-import edition from "./rearrangeEdition.js";
+import atlas from "./rearrangeAtlas.js";
 
 const target = {
   "hard-drive-no-chronology": "archive-seams",
@@ -31,6 +31,16 @@ const target = {
   "tide-before-sunset": "sunset",
 };
 
-export default previous.nodes
-  .filter((node) => !edition.sceneBySlug[node.slug])
-  .map((node) => ({ slug: node.slug, title: node.title, target: target[node.slug] }));
+const redirects = previous.nodes
+  .filter((node) => !atlas.bySlug[node.slug])
+  .map((node) => {
+    const destination = target[node.slug] || atlas.retired[node.slug];
+    return { slug: node.slug, title: node.title, target: atlas.retired[destination] || destination };
+  });
+for (const [slug, destination] of Object.entries(atlas.retired)) {
+  if (!redirects.some((item) => item.slug === slug)) redirects.push({ slug, title: "已重新编排的回忆", target: destination });
+}
+for (const redirect of redirects) {
+  if (!atlas.bySlug[redirect.target]) throw new Error("Missing redirect target: " + redirect.slug);
+}
+export default redirects;

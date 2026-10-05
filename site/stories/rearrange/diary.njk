@@ -1,0 +1,33 @@
+---
+layout: layouts/rearrange.njk
+pagination:
+  data: rearrangeDiary.weeks
+  size: 1
+  alias: diary
+permalink: "/stories/rearrange/diary/{{ diary.slug }}/index.html"
+eleventyExcludeFromCollections: true
+eleventyComputed:
+  title: "{{ diary.title }}"
+  description: "{{ diary.intro }}"
+---
+<article class="diary-week">
+  <header class="diary-hero shell">
+    <p class="universe-kicker">WEEKLY DIARY / {{ diary.range }}</p>
+    <h1>{{ diary.title }}</h1><p>{{ diary.intro }}</p>
+    <div class="diary-note">正文保留当日原文，小标题用于索引。日期里的判断也属于当时，时间仍然往前走。</div>
+  </header>
+  <div class="diary-layout shell">
+    <aside class="diary-dates" aria-label="本周日期"><p>这一周</p><nav>{% for entry in diary.entries %}<a href="#{{ entry.anchor }}">{{ entry.date }}<span>{{ entry.title }}</span></a>{% endfor %}</nav><a class="diary-back" href="{{ '/stories/rearrange/' | relativeUrl(page.url) }}">← 回到星图</a></aside>
+    <div class="diary-body">
+      {% for entry in diary.entries %}
+      <section class="diary-entry" id="{{ entry.anchor }}">
+        <header><p>DIARY / <time>{{ entry.date }}</time></p><h2>{{ entry.title }}</h2></header>
+        <div class="diary-prose">{% for paragraph in entry.paragraphs %}<p>{{ paragraph }}</p>{% endfor %}</div>
+        {% if entry.note %}<p class="diary-entry-note">{{ entry.note }}</p>{% endif %}
+        <aside class="diary-resonance" aria-label="与书稿的联系"><p class="diary-resonance-label">在书稿里，听见另一处回声</p>{% for connection in entry.connections %}<a href="{{ ('/stories/rearrange/' ~ connection.to ~ '/') | relativeUrl(page.url) }}"><strong>{{ connection.label }} <span aria-hidden="true">↗</span></strong><span>{{ connection.note }}</span></a>{% endfor %}</aside>
+      </section>
+      {% endfor %}
+      <div class="diary-open-end"><span aria-hidden="true">✧</span><p>这一周暂时记到这里。下一页，还没有发生。</p><a href="{{ '/stories/rearrange/diary/' | relativeUrl(page.url) }}">回到日记本 ↗</a></div>
+    </div>
+  </div>
+</article>

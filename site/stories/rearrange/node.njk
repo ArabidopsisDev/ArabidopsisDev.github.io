@@ -1,7 +1,7 @@
 ---
 layout: layouts/rearrange.njk
 pagination:
-  data: rearrangeEdition.scenes
+  data: rearrangeAtlas.encounters
   size: 1
   alias: scene
 permalink: "/stories/rearrange/{{ scene.slug }}/index.html"
@@ -13,21 +13,21 @@ eleventyComputed:
 <article class="edition-scene" data-story-node="{{ scene.slug }}" data-movement="{{ scene.movement }}" style="--movement-color: {{ scene.movementInfo.color }}">
   <div class="scene-sky" aria-hidden="true"><div class="cosmos-stars"></div><div class="scene-orbit"></div></div>
   <header class="scene-hero shell">
-    <div class="scene-route"><a href="{{ '/stories/rearrange/' | relativeUrl(page.url) }}">← 返回星图</a><span>{{ scene.movementInfo.number }} / Ⅲ · {{ scene.movementInfo.title }}</span><span>{{ scene.number }} / 15</span></div>
+    <div class="scene-route"><a href="{{ '/stories/rearrange/' | relativeUrl(page.url) }}">← 返回星图</a><span>{% for lens in rearrangeAtlas.lenses %}{% if lens.id in scene.lenses %}{{ lens.title }} · {% endif %}{% endfor %}{{ scene.era }}</span></div>
     <p class="scene-symbol" aria-hidden="true">{{ scene.movementInfo.symbol }}</p><p class="scene-era">{{ scene.era }} · {{ scene.movementInfo.english }}</p>
     <h1>{{ scene.title }}</h1><p class="scene-question">{{ scene.question }}</p><p class="scene-lead">{{ scene.lead }}</p>
     <div class="scene-scroll-cue">往下读，线索会在故事中打开 <span aria-hidden="true">↓</span></div>
   </header>
   <div class="scene-reading-shell shell">
-    <aside class="scene-rail" aria-label="阅读进度"><div class="scene-rail-inner"><p>READING / {{ scene.number }}</p><span>{{ scene.movementInfo.title }}</span><div class="scene-rail-rule" aria-hidden="true"></div><small>{{ scene.question }}</small><div class="scene-rail-progress" data-scene-progress>01 / {{ scene.narrative.paragraphs.length }}</div></div></aside>
+    <aside class="scene-rail" aria-label="阅读进度"><div class="scene-rail-inner"><p>MEMOIR / {{ scene.era }}</p><span>{{ scene.title }}</span><div class="scene-rail-rule" aria-hidden="true"></div><small>{{ scene.question }}</small><div class="scene-rail-progress" data-scene-progress></div></div></aside>
     <div class="scene-reading scene-narrative">
       {% for paragraph in scene.narrative.paragraphs %}
       <p data-fragment>{{ paragraph }}</p>
       {% if loop.index == scene.narrative.hingeAfter %}
-      <aside class="crossing" aria-label="交叉线索"><div class="crossing-glyph" aria-hidden="true">✧</div><div><p>另一条路在这里交会</p><h3>{{ scene.crossing.label }}</h3><span>{{ scene.crossing.note }}</span></div><a href="{{ ('/stories/rearrange/' ~ scene.crossing.to ~ '/') | relativeUrl(page.url) }}" aria-label="{{ scene.crossing.label }}：{{ scene.crossTitle }}">前往 {{ scene.crossTitle }} ↗</a></aside>
+      <aside class="crossing{% if scene.turn.kind == 'diary' %} crossing-present{% endif %}" aria-label="交叉线索"><div class="crossing-glyph" aria-hidden="true">✧</div><div><p>{{ '这一周，又写到这里' if scene.turn.kind == 'diary' else '还有一段经历与这里相连' }}</p><h3>{{ scene.turn.label }}</h3><span>{{ scene.turn.note }}</span></div><a href="{{ scene.turn.href | relativeUrl(page.url) }}">去读这一段 ↗</a></aside>
       {% endif %}{% endfor %}
       <details class="source-note"><summary>这段故事从哪里来？</summary><p>这段叙事依据原书不同位置的内容重写并串联。以下是主要来源页码；不确定之处仍以原书材料为界。</p><ul>{% for passage in scene.passages %}<li>书页 {{ passage.page }} · {{ passage.title }}</li>{% endfor %}</ul></details>
     </div>
   </div>
-  <section class="scene-exit"><div class="shell scene-exit-inner"><div class="scene-exit-heading"><p class="eyebrow">THE STORY CONTINUES</p><h2>同一片星空，<br>还有别的走法。</h2><p>下一站沿着当前线前进；另一站从刚才的线索进入别的视角。</p></div><div class="scene-exit-routes"><a class="route-primary" href="{{ ('/stories/rearrange/' ~ scene.next ~ '/') | relativeUrl(page.url) }}"><span>沿 {{ scene.movementInfo.title }} 继续</span><strong>{{ scene.nextTitle }}</strong><b>→</b></a><a class="route-secondary" href="{{ ('/stories/rearrange/' ~ scene.crossing.to ~ '/') | relativeUrl(page.url) }}"><span>在交叉处转向</span><strong>{{ scene.crossTitle }}</strong><b>↗</b></a><a class="route-map" href="{{ '/stories/rearrange/' | relativeUrl(page.url) }}">回到星图，选择任意一站</a></div></div></section>
+  <section class="scene-exit"><div class="shell scene-exit-inner"><div class="scene-exit-heading"><p class="eyebrow">FOLLOW THE RESONANCE</p><h2>这个问题，<br>还出现在哪里？</h2><p>这些联系通向不同年份，也通向正在写的生活。</p></div><div class="scene-exit-routes">{% for route in scene.routes %}<a href="{{ route.href | relativeUrl(page.url) }}"><span>{{ '日记 · ' ~ route.range if route.kind == 'diary' else '回忆录' }}</span><strong>{{ route.label }}</strong><p>{{ route.note }}</p><b aria-hidden="true">↗</b></a>{% endfor %}<a class="route-map" href="{{ '/stories/rearrange/' | relativeUrl(page.url) }}">回到星图，从别处进入</a></div></div></section>
 </article>

@@ -233,3 +233,144 @@
   .constellation-card, .star-label, .scene-exit-routes a { transition: none !important; }
   .constellation-card:hover, .scene-exit-routes a:not(.route-map):hover { transform: none; }
 }
+
+/* A connected archive: the poems illuminate overlapping stories. */
+.hero-diary-link { display: grid; grid-template-columns: 1fr auto; gap: 8px 30px; max-width: 590px; margin-top: 38px; padding: 19px 23px; border: 1px solid rgba(241,195,155,.24); border-radius: 12px; background: rgba(241,195,155,.045); color: #f1c39b; }
+.hero-diary-link span { font-size: .68rem; color: #c5b5ae; }
+.hero-diary-link strong { font: 1.12rem "Noto Serif SC", "Songti SC", serif; }
+.hero-diary-link b { grid-column: 2; grid-row: 1 / 3; align-self: center; font-size: 1.35rem; }
+.hero-diary-link:hover { border-color: #f1c39b; }
+.atlas-section { padding-bottom: 80px; }
+.atlas-lenses { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.atlas-lenses button { cursor: pointer; color: #bec9da; background: rgba(255,255,255,.018); border: 1px solid var(--space-line); border-radius: 12px; text-align: left; }
+.atlas-lenses .lens-all { grid-column: 1 / -1; justify-self: start; font-size: .72rem; padding: 9px 17px; border-radius: 100px; }
+.lens-choice { padding: 23px 22px; display: grid; gap: 15px; }
+.lens-label { color: var(--movement-color); font-size: .74rem; letter-spacing: .06em; }
+.lens-quote { font: .96rem/1.9 "Noto Serif SC", "Songti SC", serif; }
+.atlas-lenses .is-selected { border-color: rgba(207,218,249,.65); background: rgba(207,218,249,.07); color: #f7f4ee; }
+.atlas-lenses .lens-choice.is-selected { border-color: var(--movement-color); }
+.atlas-lenses button:hover { background: rgba(207,218,249,.06); }
+.atlas-lens-status { color: #8e9fbb; font-size: .74rem; margin: 22px 0 0; line-height: 1.8; }
+.atlas-map { height: 800px; position: relative; margin-top: 40px; border: 1px solid rgba(207,218,249,.1); border-radius: 22px; overflow: hidden; background: radial-gradient(ellipse at 65% 40%, rgba(184,117,87,.09), transparent 35%), radial-gradient(ellipse at 24% 71%, rgba(101,154,188,.1), transparent 43%), #0a1222; }
+.atlas-map .cosmos-stars { opacity: .33; }
+.atlas-edges { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.atlas-edges line { stroke: #a9bdd8; stroke-width: .7; opacity: .14; transition: opacity .2s ease, stroke-width .2s ease; }
+.atlas-edges line.is-active { opacity: .78; stroke-width: 1.2; stroke: #f1c39b; }
+.atlas-star { position: absolute; left: var(--x); top: var(--y); width: 210px; transform: translate(-50%, -6px); display: grid; justify-items: center; gap: 15px; z-index: 1; color: #dae3ef; text-align: center; padding: 0 7px 10px; border-radius: 10px; transition: opacity .22s ease; }
+.atlas-star-dot { width: 9px; height: 9px; border-radius: 50%; background: #c0d2f1; box-shadow: 0 0 0 4px rgba(192,210,241,.07), 0 0 20px rgba(192,210,241,.2); }
+.atlas-star-text { display: grid; gap: 5px; text-shadow: 0 1px 12px #08101f; }
+.atlas-star-text small { color: #849bb8; font: .57rem "DM Mono", Consolas, monospace; letter-spacing: .04em; }
+.atlas-star-text strong { font: .94rem/1.6 "Noto Serif SC", "Songti SC", serif; }
+.atlas-star:hover, .atlas-star.is-connected { color: #fff6e5; }
+.atlas-star:hover .atlas-star-dot, .atlas-star.is-connected .atlas-star-dot { background: #f1c39b; box-shadow: 0 0 0 6px rgba(241,195,155,.1), 0 0 30px rgba(241,195,155,.5); }
+.atlas-star.is-visited .atlas-star-text small::after { content: " · 回看过"; color: #adbcd1; }
+.atlas-star.is-dim { opacity: .27; }
+.atlas-star.is-dim:hover, .atlas-star.is-dim:focus { opacity: 1; }
+.atlas-star-diary { width: 250px; }
+.atlas-star-diary .atlas-star-dot { width: 13px; height: 13px; background: #f1c39b; box-shadow: 0 0 0 9px rgba(241,195,155,.07), 0 0 42px rgba(241,195,155,.4); }
+.atlas-star-diary strong { color: #f1c39b; font-size: 1.1rem; }
+.atlas-caption { display: flex; justify-content: space-between; gap: 35px; min-height: 100px; padding: 28px 5px 0; color: #ccd8ea; }
+.atlas-caption strong { font: 1.04rem "Noto Serif SC", "Songti SC", serif; }
+.atlas-caption p { color: #8f9fb9; font-size: .77rem; line-height: 1.85; max-width: 660px; margin-top: 10px; }
+.atlas-caption > p { max-width: 230px; }
+.diary-current { padding-block: 90px; display: grid; grid-template-columns: 1fr 1fr; gap: 90px; color: #b2bfd3; }
+.diary-current .eyebrow { font-size: .65rem; color: #f1c39b; }
+.diary-current h2 { color: #f5f0e7; font: 2.7rem/1.3 "Noto Serif SC", "Songti SC", serif; margin: 14px 0 20px; }
+.diary-current p { line-height: 1.9; font-size: .94rem; }
+.diary-current .diary-current-range { font: .68rem "DM Mono", Consolas, monospace; color: #af9a88; }
+.diary-current a, .reading-note a { color: #d8b896; font-size: .79rem; line-height: 1.7; }
+.diary-current-echo { border-left: 1px solid rgba(241,195,155,.2); padding-left: 35px; align-self: center; display: grid; gap: 20px; }
+.diary-current blockquote { color: #ede2d2; margin: 0 0 10px; font: 1.55rem/1.8 "Noto Serif SC", "Songti SC", serif; }
+.scene-exit-routes a > p { font-size: .79rem; line-height: 1.7; color: #aebccd; max-width: 92%; margin: 0; }
+.scene-exit-routes a:not(.route-map) { min-height: 160px; }
+.crossing-present { border-left-color: #ab7a53; background: #efe7d9; }
+
+/* Diary dates hold the original words; editorial links sit outside them. */
+.diary-week { --diary-ink: #293832; --diary-muted: #73766c; background: #f5f1e7; color: var(--diary-ink); }
+.diary-hero { padding-block: 105px 78px; border-bottom: 1px solid #d8d8c9; }
+.diary-hero .universe-kicker { color: #867a67; margin-bottom: 27px; }
+.diary-hero h1 { color: #293832; font: 700 clamp(2.6rem, 6vw, 5.3rem)/1.3 "Noto Serif SC", "Songti SC", serif; letter-spacing: -.04em; margin-bottom: 25px; }
+.diary-hero > p:not(.universe-kicker) { max-width: 690px; color: #687369; font: 1.03rem/2 "Noto Serif SC", "Songti SC", serif; }
+.diary-note { max-width: 730px; color: #8e8679; font-size: .73rem; line-height: 1.9; margin-top: 32px; }
+.diary-layout { display: grid; grid-template-columns: 205px minmax(0, 720px); justify-content: center; gap: 90px; padding-block: 85px 105px; }
+.diary-dates { position: sticky; top: 96px; align-self: start; color: #7e796c; }
+.diary-dates > p { color: #414f43; font-size: .8rem; }
+.diary-dates nav { display: grid; gap: 21px; padding: 17px 0 10px; }
+.diary-dates nav a { color: #846e54; font: .72rem "DM Mono", Consolas, monospace; }
+.diary-dates nav span { display: block; color: #7b8379; font: .73rem/1.7 "Noto Serif SC", "Songti SC", serif; margin-top: 6px; }
+.diary-dates nav a:hover span, .diary-dates nav a:focus span { color: #23382f; }
+.diary-back { display: inline-block; color: #8e795b; font-size: .74rem; margin-top: 30px; }
+.diary-entry { scroll-margin-top: 100px; padding-bottom: 75px; margin-bottom: 75px; border-bottom: 1px solid #d7d7ca; }
+.diary-entry header > p { font: .69rem "DM Mono", Consolas, monospace; color: #967957; letter-spacing: .08em; }
+.diary-entry h2 { color: #2b3a30; font: 600 clamp(1.6rem, 3vw, 2.7rem)/1.5 "Noto Serif SC", "Songti SC", serif; margin: 16px 0 36px; }
+.diary-prose p { color: #293832; font: 1.02rem/2.2 "Noto Serif SC", "Songti SC", serif; margin-bottom: 1.7em; overflow-wrap: anywhere; }
+.diary-entry-note { color: #8b806f; font-size: .74rem; line-height: 1.9; border-left: 2px solid #b7a082; padding-left: 17px; margin-top: 32px; }
+.diary-resonance { display: grid; gap: 14px; margin-top: 36px; padding: 25px 27px; background: #eceadd; border-radius: 10px; }
+.diary-resonance-label { margin: 0 0 6px; color: #8f816a; font-size: .64rem; letter-spacing: .05em; }
+.diary-resonance a { display: grid; gap: 6px; }
+.diary-resonance a > strong { color: #445749; font-size: .84rem; line-height: 1.6; font-weight: 600; }
+.diary-resonance a > span { color: #7d8577; font-size: .74rem; line-height: 1.8; }
+.diary-resonance a:hover strong { color: #9a623e; }
+.diary-open-end { text-align: center; padding-block: 12px 35px; color: #7e8272; }
+.diary-open-end > span { color: #9e8466; font: 2.4rem Georgia, serif; }
+.diary-open-end > p { font: .95rem/2 "Noto Serif SC", "Songti SC", serif; margin: 22px 0; }
+.diary-open-end a { font-size: .75rem; color: #987858; }
+.diary-archive { padding-block: 110px; min-height: 75vh; }
+.diary-archive h1 { color: #f0ede5; font: 600 4rem "Noto Serif SC", "Songti SC", serif; margin: 15px 0 30px; }
+.diary-archive-intro { color: #a3b4c9; max-width: 650px; font: 1rem/2 "Noto Serif SC", "Songti SC", serif; }
+.diary-week-list { margin-top: 55px; display: grid; gap: 22px; max-width: 900px; }
+.diary-week-list > a { padding: 34px; border: 1px solid var(--space-line); border-radius: 14px; background: rgba(241,195,155,.025); }
+.diary-week-list time { color: #c6a787; font: .68rem "DM Mono", Consolas, monospace; }
+.diary-week-list h2 { color: #efe8dc; margin: 16px 0 15px; font: 1.85rem "Noto Serif SC", "Songti SC", serif; }
+.diary-week-list p { color: #9aacbe; line-height: 1.8; font-size: .89rem; }
+.diary-week-list span { color: #d8b08c; font-size: .75rem; }
+.diary-week-list > a:hover { border-color: #ac947d; }
+
+@media (max-width: 960px) {
+  .atlas-map { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; height: auto; padding: 26px; }
+  .atlas-edges, .atlas-map > .cosmos-stars { display: none; }
+  .atlas-star { position: relative; left: auto; top: auto; transform: none; width: auto; text-align: left; display: flex; align-items: center; justify-items: start; gap: 17px; min-height: 94px; padding: 16px; background: rgba(207,218,249,.025); border: 1px solid rgba(207,218,249,.1); }
+  .atlas-star-dot { flex: none; }
+  .atlas-star-diary { grid-column: 1 / -1; border-color: rgba(241,195,155,.3); }
+  .atlas-star-text strong { font-size: .89rem; }
+  .diary-current { gap: 35px; }
+  .diary-layout { grid-template-columns: minmax(0, 720px); gap: 40px; }
+  .diary-dates { position: static; border-bottom: 1px solid #d7d7ca; padding-bottom: 25px; }
+  .diary-dates nav { grid-template-columns: 1fr 1fr; gap: 20px; }
+  .diary-dates .diary-back { display: none; }
+}
+@media (max-width: 640px) {
+  .hero-diary-link { padding: 16px 17px; }
+  .hero-diary-link span { font-size: .6rem; line-height: 1.7; }
+  .atlas-lenses { grid-template-columns: 1fr; }
+  .lens-choice { gap: 9px; padding: 18px; }
+  .lens-quote { font-size: .88rem; }
+  .atlas-map { grid-template-columns: 1fr; padding: 16px; }
+  .atlas-star { min-height: 82px; }
+  .atlas-caption { flex-direction: column; gap: 0; padding-inline: 0; }
+  .atlas-caption > p { max-width: none; }
+  .diary-current { grid-template-columns: 1fr; padding-block: 65px; }
+  .diary-current h2 { font-size: 2rem; }
+  .diary-current-echo { padding-left: 22px; }
+  .diary-current blockquote { font-size: 1.3rem; }
+  .diary-hero { padding-block: 75px 55px; }
+  .diary-hero h1 { font-size: 2.5rem; }
+  .diary-hero > p:not(.universe-kicker) { font-size: .93rem; }
+  .diary-layout { padding-block: 35px 65px; }
+  .diary-entry { margin-bottom: 50px; padding-bottom: 50px; }
+  .diary-entry h2 { margin-bottom: 27px; }
+  .diary-prose p { font-size: .97rem; line-height: 2.1; }
+  .diary-resonance { padding: 21px; }
+  .diary-archive { padding-block: 75px; }
+  .diary-archive h1 { font-size: 3.1rem; }
+  .diary-week-list > a { padding: 24px; }
+}
+@media (max-width: 420px) {
+  .rearrange-header nav .rearrange-nav-home { display: none; }
+  .rearrange-nav-shell { gap: 12px; }
+  .rearrange-header nav { gap: 10px; }
+  .rearrange-brand span { font-size: .67rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .atlas-star, .atlas-edges line { transition: none; }
+}
