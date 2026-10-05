@@ -26,7 +26,7 @@ eleventyComputed:
       {% if loop.index == scene.narrative.hingeAfter %}
       <aside class="crossing{% if scene.turn.kind == 'diary' %} crossing-present{% endif %}" aria-label="交叉线索"><div class="crossing-glyph" aria-hidden="true">✧</div><div><p>{{ '这一周，又写到这里' if scene.turn.kind == 'diary' else '还有一段经历与这里相连' }}</p><h3>{{ scene.turn.label }}</h3><span>{{ scene.turn.note }}</span></div><a href="{{ scene.turn.href | relativeUrl(page.url) }}">去读这一段 ↗</a></aside>
       {% endif %}{% endfor %}
-      <details class="source-note"><summary>这段故事从哪里来？</summary><p>这段叙事依据原书不同位置的内容重写并串联。以下是主要来源页码；不确定之处仍以原书材料为界。</p><ul>{% for passage in scene.passages %}<li>书页 {{ passage.page }} · {{ passage.title }}</li>{% endfor %}</ul></details>
+      {% if scene.kind == 'diary' %}<p class="source-note">日记选段 · {{ scene.era }} · 保留原文</p>{% else %}<details class="source-note"><summary>这段故事从哪里来？</summary><p>这段叙事依据原书不同位置的内容重写并串联。以下是主要来源页码；不确定之处仍以原书材料为界。</p><ul>{% for passage in scene.passages %}<li>书页 {{ passage.page }} · {{ passage.title }}</li>{% endfor %}</ul></details>{% endif %}
     </div>
   </div>
   <section class="scene-exit"><div class="shell scene-exit-inner"><div class="scene-exit-heading"><p class="eyebrow">FOLLOW THE RESONANCE</p><h2>这个问题，<br>还出现在哪里？</h2><p>这些联系通向不同年份，也通向正在写的生活。</p></div><div class="scene-exit-routes">{% for route in scene.routes %}<a href="{{ route.href | relativeUrl(page.url) }}"><span>{{ '日记 · ' ~ route.range if route.kind == 'diary' else '回忆录' }}</span><strong>{{ route.label }}</strong><p>{{ route.note }}</p><b aria-hidden="true">↗</b></a>{% endfor %}<a class="route-map" href="{{ '/stories/rearrange/' | relativeUrl(page.url) }}">回到星图，从别处进入</a></div></div></section>

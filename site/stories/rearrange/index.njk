@@ -1,18 +1,17 @@
 ---
 layout: layouts/rearrange.njk
 title: 把世界重新编排
-description: 书稿与每周日记交织成一张没有固定顺序的星图。经过未知、放手与未曾走过的路，回看生活里仍在变化的问题。
+description: 书稿与日记选段交织成一张没有固定顺序的星图。经过未知、放手与未曾走过的路，回看生活里仍在变化的问题。
 permalink: /stories/rearrange/index.html
 eleventyExcludeFromCollections: true
 ---
 <section class="universe-hero" aria-labelledby="universe-title">
   <div class="cosmos-stars" aria-hidden="true"></div><div class="universe-glow" aria-hidden="true"></div>
   <div class="shell universe-hero-inner">
-    <p class="universe-kicker">MEMOIR & WEEKLY DIARY · 2017—NOW</p>
+    <p class="universe-kicker">AN OPEN MEMOIR · 2017—NOW</p>
     <h1 id="universe-title">把世界<br><em>重新编排</em></h1>
-    <p class="universe-intro">过去没有说完的话，会在新的一周里回来。奖学金名单、一个软件功能、一场游戏，还有回家路上的墙角，都可以成为入口。</p>
-    <div class="universe-invite"><span class="invite-line"></span><p>世界那么大，我想去看看。</p><a href="#constellations">进入星图 <span aria-hidden="true">↓</span></a></div>
-    <a class="hero-diary-link" href="{{ rearrangeAtlas.weekUrl | relativeUrl(page.url) }}"><span>正在写的生活 · {{ rearrangeAtlas.latest.range }}</span><strong>{{ rearrangeAtlas.latest.title }}</strong><b aria-hidden="true">↗</b></a>
+    <p class="universe-intro">过去没有说完的话，也会在新的经历里回来。一个窗口、一张评分表、一块田，或软件里的一个可选功能，都可以成为入口。</p>
+    <div class="universe-invite"><span class="invite-line"></span><p>从一个让你在意的问题出发。</p><a href="#constellations">进入星图 <span aria-hidden="true">↓</span></a></div>
   </div>
 </section>
 <section class="constellation-section atlas-section" id="constellations" aria-labelledby="atlas-title">
@@ -31,15 +30,11 @@ eleventyExcludeFromCollections: true
         {% for edge in rearrangeAtlas.edges %}<line x1="{{ edge.x1 }}%" y1="{{ edge.y1 }}%" x2="{{ edge.x2 }}%" y2="{{ edge.y2 }}%" data-atlas-edge data-from="{{ edge.from }}" data-to="{{ edge.to }}"/>{% endfor %}
       </svg>
       {% for point in rearrangeAtlas.mapNodes %}
-      <a class="atlas-star{% if point.kind == 'diary' %} atlas-star-diary{% endif %}" href="{{ point.href | relativeUrl(page.url) }}" style="--x: {{ point.x }}%; --y: {{ point.y }}%" data-map-node="{{ point.slug }}" data-lenses="{{ point.lenses | join(',') }}" data-atlas-title="{{ point.title }}" data-atlas-note="{{ point.question }}" aria-label="{{ point.title }}：{{ point.question }}"><span class="atlas-star-dot" aria-hidden="true"></span><span class="atlas-star-text"><small>{{ '正在发生' if point.kind == 'diary' else point.era }}</small><strong>{{ point.title }}</strong></span></a>
+      <a class="atlas-star{% if point.kind == 'diary' %} atlas-star-diary{% endif %}" href="{{ point.href | relativeUrl(page.url) }}" style="--x: {{ point.x }}%; --y: {{ point.y }}%" data-map-node="{{ point.slug }}" data-lenses="{{ point.lenses | join(',') }}" data-atlas-title="{{ point.title }}" data-atlas-note="{{ point.question }}" aria-label="{{ point.title }}：{{ point.question }}"><span class="atlas-star-dot" aria-hidden="true"></span><span class="atlas-star-text"><small>{{ '日记选段 · ' ~ point.era if point.kind == 'diary' else point.era }}</small><strong>{{ point.title }}</strong></span></a>
       {% endfor %}
     </div>
     <div class="atlas-caption"><div><strong data-atlas-caption-title>从一个让你在意的问题出发</strong><p data-atlas-caption-note>将鼠标移到一颗星上，或用键盘聚焦它，看看它和哪里相连。</p></div><p data-story-progress></p></div>
-    <div class="map-colophon"><p>书稿里的经历经过删并与重排。日记按当时的文字保留，新的记录会继续进入这张图。</p><button type="button" data-story-reset>清空本机足迹</button></div>
+    <div class="map-colophon"><p>书稿里的经历经过删并与重排，日记中与故事相连的片段也可以成为一个新的入口。</p><button type="button" data-story-reset>清空本机足迹</button></div>
   </div>
 </section>
-<section class="diary-current shell" aria-labelledby="diary-current-title">
-  <div><p class="eyebrow">A WEEK STILL IN MOTION</p><h2 id="diary-current-title">{{ rearrangeAtlas.latest.title }}</h2><p class="diary-current-range">{{ rearrangeAtlas.latest.range }}</p><p>{{ rearrangeAtlas.latest.intro }}</p><a href="{{ rearrangeAtlas.weekUrl | relativeUrl(page.url) }}">读这一周的完整日记 ↗</a></div>
-  <div class="diary-current-echo"><blockquote>{{ rearrangeAtlas.latestQuote }}</blockquote><a href="{{ (rearrangeAtlas.weekUrl ~ '#' ~ rearrangeAtlas.quoteAnchor) | relativeUrl(page.url) }}">回到写下这句话的那一天 ↗</a>{% for entry in rearrangeAtlas.latest.entries %}{% if loop.last %}<a href="{{ (rearrangeAtlas.weekUrl ~ '#' ~ entry.anchor) | relativeUrl(page.url) }}">{{ entry.date }} · {{ entry.title }} ↗</a>{% endif %}{% endfor %}</div>
-</section>
-<section class="reading-note shell"><span class="reading-note-mark" aria-hidden="true">✧</span><div><p class="eyebrow">AN OPEN ARCHIVE</p><h2>生活还在继续，路径也可以改变。</h2><p>三句话出自 T. S. Eliot《四个四重奏》的《东库克》。它们与书稿、日记放在一起，由每次回看产生新的联系。这里的选择改变阅读路径，事件本身仍按它发生时的样子留下。</p><a href="{{ '/stories/rearrange/diary/' | relativeUrl(page.url) }}">打开日记本 ↗</a></div></section>
+<section class="reading-note shell"><span class="reading-note-mark" aria-hidden="true">✧</span><div><p class="eyebrow">AN OPEN ARCHIVE</p><h2>生活还在继续，路径也可以改变。</h2><p>三句话出自 T. S. Eliot《四个四重奏》的《东库克》。它们与书稿、新的日记选段放在一起，由每次回看产生新的联系。这里的选择改变阅读路径，事件本身仍按它发生时的样子留下。</p></div></section>

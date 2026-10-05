@@ -27,7 +27,6 @@
       </a>
       <nav aria-label="互动故事导航">
         <a href="{{ '/stories/rearrange/' | relativeUrl(page.url) }}">星图</a>
-        <a href="{{ '/stories/rearrange/diary/' | relativeUrl(page.url) }}">日记</a>
         <a class="rearrange-nav-home" href="{{ '/' | relativeUrl(page.url) }}">主页</a>
         <a href="{{ '/blog/' | relativeUrl(page.url) }}">Blog</a>
         <button class="ambient-toggle" type="button" aria-label="播放空灵背景音乐" aria-pressed="false" data-ambient-toggle>♫ 氛围音：关</button>
@@ -37,7 +36,7 @@
   <main id="main">{{ content | safe }}</main>
   <footer class="rearrange-footer">
     <div class="shell">
-      <div><strong>{{ rearrange.title }}</strong><p>136 页书稿 · 每周日记 · 仍在变化的阅读路径</p></div>
+      <div><strong>{{ rearrange.title }}</strong><p>136 页书稿 · 日记选段 · 仍在变化的阅读路径</p></div>
       <div><a href="{{ '/stories/rearrange/' | relativeUrl(page.url) }}">星图</a><a href="{{ '/blog/' | relativeUrl(page.url) }}">Blog</a><a href="{{ '/' | relativeUrl(page.url) }}">主页</a></div>
     </div>
   </footer>

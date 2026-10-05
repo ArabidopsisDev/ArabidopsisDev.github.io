@@ -31,12 +31,14 @@ for (const file of pages) {
     }
   }
 }
-for (const week of diary.weeks) {
-  for (const entry of week.entries) {
+for (const entry of diary.excerpts) {
     for (const connection of entry.connections) {
       if (!atlas.bySlug[connection.to]) failures.push("Diary refers to retired scene: " + connection.to);
     }
-  }
+}
+for (const archive of ["diary/index.html", "diary/2026-09-29/index.html"]) {
+  const html = fs.readFileSync(path.join(root, "stories/rearrange", archive), "utf8");
+  if (!html.includes('http-equiv="refresh"') || html.includes('class="diary-entry"')) failures.push("Full diary archive remains: " + archive);
 }
 const home = fs.readFileSync(path.join(root, "stories/rearrange/index.html"), "utf8");
 for (const lens of atlas.lenses) if (!home.includes(lens.quote)) failures.push("Missing exact quotation: " + lens.id);
@@ -45,5 +47,5 @@ if (failures.length) {
   failures.forEach((failure) => console.error(failure));
   process.exitCode = 1;
 } else {
-  console.log(`Checked ${pages.length} pages: links, diary anchors, retired routes, and original quotations pass.`);
+  console.log(`Checked ${pages.length} pages: links, selected excerpts, archive withdrawal, retired routes, and original quotations pass.`);
 }
