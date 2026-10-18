@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="650" viewBox="0 0 1000 650">
+  <title>KI 过量时 AgI 胶团的结构示意图</title>
+  <desc>黑白胶团结构图。碘化银胶核吸附碘离子，吸附层还含有部分钾离子，胶核与吸附层组成带负电的胶粒；其外为含钾离子的扩散层，整个胶团电中性。图中示意取 n 等于 8、x 等于 4，底部给出一般结构式。</desc>
+  <rect x="0" y="0" width="1000" height="650" fill="white" />
+  <g font-family="sans-serif" fill="#222" stroke="none">
+    <text x="500" y="39" text-anchor="middle" font-size="25" font-weight="bold">AgI 胶团结构（KI 过量）</text>
+    <text x="500" y="67" text-anchor="middle" font-size="16">优先吸附 I<tspan dy="-6" font-size="12">−</tspan><tspan dy="6">，形成带负电的胶粒</tspan></text>
+  </g>
+
+  <g fill="none" stroke="#555" stroke-width="1.6">
+    <circle cx="310" cy="321" r="237" stroke-dasharray="7 6" />
+    <circle cx="310" cy="321" r="179" stroke-width="2" />
+    <circle cx="310" cy="321" r="78" fill="#f3f3f3" />
+  </g>
+
+  <g font-family="sans-serif" fill="#222" text-anchor="middle">
+    <text x="310" y="309" font-size="21" font-weight="bold">胶核</text>
+    <text x="310" y="341" font-size="24">(AgI)<tspan dy="6" font-size="16">m</tspan></text>
+  </g>
+
+  <g fill="white" stroke="#333" stroke-width="1.4">
+    <circle cx="310" cy="210" r="18" />
+    <circle cx="389" cy="242" r="18" />
+    <circle cx="421" cy="321" r="18" />
+    <circle cx="389" cy="400" r="18" />
+    <circle cx="310" cy="432" r="18" />
+    <circle cx="231" cy="400" r="18" />
+    <circle cx="199" cy="321" r="18" />
+    <circle cx="231" cy="242" r="18" />
+  </g>
+  <g font-family="sans-serif" fill="#222" text-anchor="middle" font-size="19">
+    <text x="310" y="217">I<tspan dy="-7" font-size="13">−</tspan></text>
+    <text x="389" y="249">I<tspan dy="-7" font-size="13">−</tspan></text>
+    <text x="421" y="328">I<tspan dy="-7" font-size="13">−</tspan></text>
+    <text x="389" y="407">I<tspan dy="-7" font-size="13">−</tspan></text>
+    <text x="310" y="439">I<tspan dy="-7" font-size="13">−</tspan></text>
+    <text x="231" y="407">I<tspan dy="-7" font-size="13">−</tspan></text>
+    <text x="199" y="328">I<tspan dy="-7" font-size="13">−</tspan></text>
+    <text x="231" y="249">I<tspan dy="-7" font-size="13">−</tspan></text>
+  </g>
+
+  <g font-family="sans-serif" fill="#222" text-anchor="middle" font-size="21">
+    <text x="310" y="169">K<tspan dy="-8" font-size="14">+</tspan></text>
+    <text x="467" y="328">K<tspan dy="-8" font-size="14">+</tspan></text>
+    <text x="310" y="485">K<tspan dy="-8" font-size="14">+</tspan></text>
+    <text x="153" y="328">K<tspan dy="-8" font-size="14">+</tspan></text>
+
+    <text x="159" y="177">K<tspan dy="-8" font-size="14">+</tspan></text>
+    <text x="461" y="177">K<tspan dy="-8" font-size="14">+</tspan></text>
+    <text x="461" y="479">K<tspan dy="-8" font-size="14">+</tspan></text>
+    <text x="159" y="479">K<tspan dy="-8" font-size="14">+</tspan></text>
+  </g>
+
+  <g fill="none" stroke="#555" stroke-width="1.4">
+    <polyline points="516,204 601,204 601,151 629,151" />
+    <polyline points="433,209 580,209 580,252 629,252" />
+    <polyline points="402,255 558,255 558,350 629,350" />
+    <polyline points="485,359 579,359 579,449 629,449" />
+  </g>
+  <g font-family="sans-serif" fill="#222">
+    <text x="646" y="143" font-size="21" font-weight="bold">扩散层</text>
+    <text x="646" y="174" font-size="18">含 x 个 K<tspan dy="-7" font-size="13">+</tspan><tspan dy="7">（反离子）</tspan></text>
+
+    <text x="646" y="244" font-size="21" font-weight="bold">吸附层</text>
+    <text x="646" y="275" font-size="18">电位离子 + 吸附的反离子</text>
+
+    <text x="646" y="342" font-size="21" font-weight="bold">电位离子：n 个 I<tspan dy="-8" font-size="14">−</tspan></text>
+    <text x="646" y="373" font-size="18">与胶核组成中的离子相同</text>
+
+    <text x="646" y="441" font-size="21" font-weight="bold">吸附的反离子</text>
+    <text x="646" y="472" font-size="18">(n − x) 个 K<tspan dy="-7" font-size="13">+</tspan></text>
+
+    <text x="646" y="524" font-size="18">胶粒 = 胶核 + 吸附层，带 x 个负电荷</text>
+    <text x="646" y="553" font-size="18">胶团 = 胶粒 + 扩散层，整体电中性</text>
+  </g>
+
+  <text x="310" y="582" text-anchor="middle" font-family="sans-serif" font-size="15" fill="#555">层界为示意；图示取 n = 8、x = 4，离子位置不固定</text>
+  <line x1="45" y1="595" x2="955" y2="595" stroke="#ccc" stroke-width="1" />
+  <text x="500" y="629" text-anchor="middle" font-family="sans-serif" font-size="25" fill="#222">{(AgI)<tspan dy="6" font-size="17">m</tspan><tspan dy="-6"> · nI</tspan><tspan dy="-9" font-size="17">−</tspan><tspan dy="9"> · (n − x)K</tspan><tspan dy="-9" font-size="17">+</tspan><tspan dy="9">}</tspan><tspan dy="-10" font-size="17">x−</tspan><tspan dy="10"> · xK</tspan><tspan dy="-9" font-size="17">+</tspan></text>
+</svg>

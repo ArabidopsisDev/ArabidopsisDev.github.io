@@ -11,14 +11,23 @@ eleventyComputed:
   description: "{{ scene.question }}"
 ---
 <article class="edition-scene" data-story-node="{{ scene.slug }}" data-movement="{{ scene.movement }}" style="--movement-color: {{ scene.movementInfo.color }}">
-  <div class="scene-sky" aria-hidden="true"><div class="cosmos-stars"></div><div class="scene-orbit"></div></div>
-  <header class="scene-hero shell">
-    <div class="scene-route"><a href="{{ '/stories/rearrange/' | relativeUrl(page.url) }}">← 返回星图</a><span>{% for lens in rearrangeAtlas.lenses %}{% if lens.id in scene.lenses %}{{ lens.title }} · {% endif %}{% endfor %}{{ scene.era }}</span></div>
-    <p class="scene-symbol" aria-hidden="true">{{ scene.movementInfo.symbol }}</p><p class="scene-era">{{ scene.era }} · {{ scene.movementInfo.english }}</p>
-    <h1>{{ scene.title }}</h1><p class="scene-question">{{ scene.question }}</p><p class="scene-lead">{{ scene.lead }}</p>
-    <div class="scene-scroll-cue">往下读，线索会在故事中打开 <span aria-hidden="true">↓</span></div>
+  <header class="scene-hero">
+    <div class="scene-sky" aria-hidden="true"><div class="cosmos-stars"></div><div class="scene-orbit"></div></div>
+    <div class="scene-hero-inner shell">
+      <div class="scene-route"><a href="{{ '/stories/rearrange/' | relativeUrl(page.url) }}">← 返回星图</a><span>把世界重新编排</span></div>
+      <div class="scene-title-page">
+        <div class="scene-lenses" aria-label="阅读视角">{% for lens in rearrangeAtlas.lenses %}{% if lens.id in scene.lenses %}<span>{{ lens.title }}</span>{% endif %}{% endfor %}</div>
+        <p class="scene-movement-name" lang="en">{{ scene.movementInfo.english }}</p>
+        <div class="scene-title-ornament" aria-hidden="true"><span>{{ scene.movementInfo.symbol }}</span></div>
+        <h1{% if scene.title.length > 14 %} class="scene-title-long"{% endif %}>{% for part in scene.title.split('，') %}<span class="scene-title-part">{{ part }}{% if not loop.last %}，{% endif %}</span>{% endfor %}</h1>
+        <p class="scene-question">{{ scene.question }}</p>
+        <p class="scene-lead">{{ scene.lead }}</p>
+        <p class="scene-era">{{ scene.era }}</p>
+      </div>
+      <a class="scene-scroll-cue" href="#scene-reading"><span>向下阅读</span><span aria-hidden="true">↓</span></a>
+    </div>
   </header>
-  <div class="scene-reading-shell shell">
+  <div class="scene-reading-shell shell" id="scene-reading">
     <aside class="scene-rail" aria-label="阅读进度"><div class="scene-rail-inner"><p>MEMOIR / {{ scene.era }}</p><span>{{ scene.title }}</span><div class="scene-rail-rule" aria-hidden="true"></div><small>{{ scene.question }}</small><div class="scene-rail-progress" data-scene-progress></div></div></aside>
     <div class="scene-reading scene-narrative">
       {% for paragraph in scene.narrative.paragraphs %}

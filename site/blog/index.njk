@@ -32,6 +32,17 @@ bodyClass: blog-page
 </section>
 
 <section class="shell blog-list" aria-label="文章列表" data-blog-results>
+  {% if collections.projects.length %}
+  <h2 id="projects">持续更新的项目</h2>
+  {% for project in collections.projects %}
+  <article class="blog-list-card reveal" data-blog-card data-url="{{ project.url }}" data-tags="{{ project.data.tags | publicTags | join(',') }}">
+    <time datetime="{{ project.date | rfc3339 }}">{{ project.date | dateDisplay }}</time>
+    <div><p class="post-meta">项目 · 多文档与科学图片</p><h2><a href="{{ project.url | relativeUrl(page.url) }}">{{ project.data.title }}</a></h2><p>{{ project.data.description }}</p></div>
+    <a class="arrow" href="{{ project.url | relativeUrl(page.url) }}" aria-label="打开项目《{{ project.data.title }}》">↗</a>
+  </article>
+  {% endfor %}
+  <h2>单篇文章</h2>
+  {% endif %}
   {% for post in collections.posts %}
   <article class="blog-list-card reveal" data-blog-card data-url="{{ post.url }}" data-tags="{{ post.data.tags | publicTags | join(',') }}">
     <time datetime="{{ post.date | rfc3339 }}">{{ post.date | dateDisplay }}</time>

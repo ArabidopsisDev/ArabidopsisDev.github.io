@@ -3,10 +3,10 @@ permalink: /blog/search.json
 eleventyExcludeFromCollections: true
 ---
 [
-{% for post in collections.posts %}
+{% for post in collections.searchableContent %}
   {
     "title": {{ post.data.title | json | safe }},
-    "description": {{ post.data.description | json | safe }},
+    "description": {{ (post.data.description or '') | json | safe }},
     "date": {{ (post.date | rfc3339) | json | safe }},
     "url": {{ post.url | json | safe }},
     "tags": {{ (post.data.tags | publicTags) | json | safe }},

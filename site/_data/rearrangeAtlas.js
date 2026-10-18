@@ -13,6 +13,7 @@ const arrangement = {
   "no-final-score": {
     lenses: ["release", "becoming"], x: 36, y: 35,
     routes: [
+      sceneRoute("after-the-awards", "奖项到手以后，再看它的分量", "新的日记让放手不再只从失落出发。"),
       sceneRoute("software-for-whom", "想用一个项目证明自己时", "奖学金的失落，怎样进入了软件的新功能。"),
       sceneRoute("collective-night", "把奖项放回共同完成的夜晚", "结果很短，合作的过程很长。"),
       sceneRoute("zero-choice", "一次分数没有替我选完人生", "536 分与提前批，让问题进入另一个现场。")
@@ -21,6 +22,7 @@ const arrangement = {
   "real-users": {
     lenses: ["unknown", "release", "becoming"], x: 83, y: 17,
     routes: [
+      sceneRoute("questions-without-answers", "当赞助方继续追问项目的价值", "真实交流让使用理由与资源边界变得具体。"),
       sceneRoute("software-for-whom", "软件到底服务于谁？", "情感识别插件，把旧问题带回正在做的项目。"),
       sceneRoute("field-questions", "从通用功能走向一块具体的田", "领域里谁来填数据，比漂亮的架构更早提出问题。"),
       sceneRoute("first-window", "回到想象中的第一位使用者", "产品口吻曾经比真实顾客更早出现。")
@@ -114,7 +116,7 @@ for (const excerpt of diary.episodes) {
   const routes = excerpt.connections.map((link) => sceneRoute(link.to, link.label, link.note));
   encounters.push({
     ...excerpt, movement: "release", movementInfo: edition.movementById.release,
-    era: excerpt.date, question: excerpt.intro, lead: "依据这一周相关日记与书稿材料，重新串联的后续经历。", kind: "diary",
+    era: excerpt.date, question: excerpt.intro, lead: "依据相关日记与书稿材料，重新串联的后续经历。", kind: "diary",
     x: 66, y: 39, routes, turn: routes[0], passages: [],
     narrative: { paragraphs: [...excerpt.paragraphs], hingeAfter: Math.floor(excerpt.paragraphs.length / 2) }
   });

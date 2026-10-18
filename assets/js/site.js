@@ -1,31 +1,50 @@
 (() => {
   const root = document.documentElement;
   root.classList.add('js');
-  const savedTheme = localStorage.getItem('theme');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  if (savedTheme === 'dark' || (!savedTheme && prefersDark)) root.dataset.theme = 'dark';
+  let activeTheme = 'light';
+  try { if (localStorage.getItem('theme') === 'dark') activeTheme = 'dark'; } catch {}
+  root.dataset.theme = activeTheme;
+  let menuOpen = false;
+  const visibleReveals = new WeakSet();
+  let revealObserver;
 
-  const themeButton = document.querySelector('[data-theme-toggle]');
-  themeButton?.addEventListener('click', () => {
-    const dark = root.dataset.theme === 'dark';
-    root.dataset.theme = dark ? 'light' : 'dark';
-    localStorage.setItem('theme', dark ? 'light' : 'dark');
-    themeButton.setAttribute('aria-label', dark ? '切换深色模式' : '切换浅色模式');
+  function restoreRuntimeUI() {
+    // Eleventy morphs server HTML and removes runtime root attributes. Restore
+    // them before paint so mobile navigation never falls into its no-JS layout.
+    if (!root.classList.contains('js')) root.classList.add('js');
+    if (root.dataset.theme !== activeTheme) root.dataset.theme = activeTheme;
+    const nav = document.querySelector('[data-nav]');
+    const navButton = document.querySelector('[data-nav-toggle]');
+    if (nav && nav.classList.contains('is-open') !== menuOpen) nav.classList.toggle('is-open', menuOpen);
+    if (navButton && navButton.getAttribute('aria-expanded') !== String(menuOpen)) navButton.setAttribute('aria-expanded', String(menuOpen));
+    const themeButton = document.querySelector('[data-theme-toggle]');
+    const themeLabel = activeTheme === 'dark' ? '切换浅色模式' : '切换深色模式';
+    if (themeButton && themeButton.getAttribute('aria-label') !== themeLabel) themeButton.setAttribute('aria-label', themeLabel);
+    syncHeader();
+    for (const node of document.querySelectorAll('.reveal')) {
+      if (visibleReveals.has(node) || !revealObserver) {
+        if (!node.classList.contains('is-visible')) node.classList.add('is-visible');
+      } else revealObserver.observe(node);
+    }
+  }
+
+  // Delegation also works when a live update replaces a button or navigation link.
+  document.addEventListener('click', event => {
+    if (!(event.target instanceof Element)) return;
+    if (event.target.closest('[data-theme-toggle]')) {
+      activeTheme = activeTheme === 'dark' ? 'light' : 'dark';
+      try { localStorage.setItem('theme', activeTheme); } catch {}
+    } else if (event.target.closest('[data-nav-toggle]')) menuOpen = !menuOpen;
+    else if (event.target.closest('[data-nav] a')) menuOpen = false;
+    else return;
+    restoreRuntimeUI();
   });
 
-  const navButton = document.querySelector('[data-nav-toggle]');
-  const nav = document.querySelector('[data-nav]');
-  navButton?.addEventListener('click', () => {
-    const open = nav?.classList.toggle('is-open');
-    navButton.setAttribute('aria-expanded', String(Boolean(open)));
-  });
-  nav?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
-    nav.classList.remove('is-open');
-    navButton?.setAttribute('aria-expanded', 'false');
-  }));
-
-  const header = document.querySelector('[data-header]');
-  const syncHeader = () => header?.classList.toggle('is-scrolled', window.scrollY > 12);
+  function syncHeader() {
+    const header = document.querySelector('[data-header]');
+    const scrolled = window.scrollY > 12;
+    if (header && header.classList.contains('is-scrolled') !== scrolled) header.classList.toggle('is-scrolled', scrolled);
+  }
   syncHeader();
   window.addEventListener('scroll', syncHeader, { passive: true });
 
@@ -33,18 +52,24 @@
 
   const reveals = [...document.querySelectorAll('.reveal')];
   if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver(entries => {
+    revealObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
+          visibleReveals.add(entry.target);
+          if (!entry.target.classList.contains('is-visible')) entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
         }
       });
     }, { threshold: 0.12 });
-    reveals.forEach(node => observer.observe(node));
+    reveals.forEach(node => revealObserver.observe(node));
   } else {
     reveals.forEach(node => node.classList.add('is-visible'));
   }
+  new MutationObserver(records => {
+    if (records.some(record => record.target === root
+      || (record.type === 'childList' && [...record.addedNodes].some(node => node.nodeType === 1))
+      || record.target.matches?.('[data-nav], [data-nav-toggle], [data-theme-toggle], .reveal'))) restoreRuntimeUI();
+  }).observe(root, { attributes: true, attributeFilter: ['class', 'data-theme', 'aria-expanded', 'aria-label'], childList: true, subtree: true });
 
   const search = document.querySelector('[data-blog-search]');
   const chips = [...document.querySelectorAll('[data-blog-filter]')];

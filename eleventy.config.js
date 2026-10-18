@@ -5,12 +5,14 @@ import markdownIt from "markdown-it";
 import markdownItAnchor from "markdown-it-anchor";
 import markdownItKatexModule from "@vscode/markdown-it-katex";
 import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
+// 题目块：::: question … ::: 与 <question> … </question> 两种写法。
+import questionBlock from "./site/_lib/questionBlock.js";
 
 // @vscode/markdown-it-katex ships CommonJS, so the plugin lives on `default`.
 const markdownItKatex = markdownItKatexModule.default ?? markdownItKatexModule;
 
 const SITE_URL = "https://arabid.top";
-const excludedTags = new Set(["posts", "all"]);
+const excludedTags = new Set(["posts", "all", "project-pages"]);
 const normalizeTag = (value) => String(value || "").trim().toLocaleLowerCase("zh-CN");
 
 function toDate(value) {
@@ -55,10 +57,9 @@ function versionedAssetUrl(target, from) {
   return `${relativeUrl(target, from)}?v=${digest}`;
 }
 
-export default function (eleventyConfig) {
-  eleventyConfig.addPlugin(syntaxHighlight);
-  eleventyConfig.setDataDeepMerge(true);
-
+// Shared by the site build and tools/check-question-blocks.mjs so the question
+// block rendering is verified against the exact pipeline the pages use.
+export function createMarkdown() {
   const markdown = markdownIt({
     html: true,
     linkify: true,
@@ -73,8 +74,31 @@ export default function (eleventyConfig) {
     trust: false,
     enableBareBlocks: true,
     enableFencedBlocks: true,
+  }).use(questionBlock);
+  // Source coordinates let the desktop editor follow the paragraph being edited.
+  markdown.core.ruler.push("editor-source-lines", (state) => {
+    const leadingLines = state.src.match(/^\n*/u)[0].length;
+    for (const token of state.tokens) {
+      if (token.block && token.map && token.nesting !== -1 && token.type !== "inline") {
+        token.attrSet("data-source-line", String(token.map[0] + 1 - leadingLines));
+        token.attrSet("data-source-end", String(token.map[1] - leadingLines));
+      }
+    }
   });
+  return markdown;
+}
+
+export default function (eleventyConfig) {
+  eleventyConfig.addPlugin(syntaxHighlight);
+  eleventyConfig.setDataDeepMerge(true);
+
+  const markdown = createMarkdown();
   eleventyConfig.setLibrary("md", markdown);
+  eleventyConfig.addFilter("editorSourceRevision", (inputPath) => {
+    const text = readFileSync(inputPath, "utf8").replace(/^\uFEFF/u, "").replaceAll("\r\n", "\n");
+    const body = text.replace(/^---\n[\s\S]*?\n---\n?/u, "").replace(/^\n+/u, "");
+    return createHash("sha256").update(body.trimEnd() + "\n").digest("hex");
+  });
 
   const copies = {
     "./index.html": "index.html",
@@ -117,6 +141,17 @@ export default function (eleventyConfig) {
       .filter((post) => !post.data.draft || process.env.ELEVENTY_RUN_MODE === "serve")
       .sort((a, b) => b.date - a.date)
   );
+  const visibleProjectPages = (api) => api.getFilteredByGlob("./site/blog/projects/*/*.md")
+    .filter((page) => page.url && (!page.data.draft || process.env.ELEVENTY_RUN_MODE === "serve"));
+  eleventyConfig.addCollection("projects", (api) => visibleProjectPages(api)
+    .filter((page) => path.basename(page.inputPath) === "index.md").sort((a, b) => b.date - a.date));
+  eleventyConfig.addCollection("projectPages", visibleProjectPages);
+  eleventyConfig.addCollection("searchableContent", (api) => [
+    ...api.getFilteredByGlob("./site/blog/posts/*.md").filter((post) => !post.data.draft || process.env.ELEVENTY_RUN_MODE === "serve"),
+    ...visibleProjectPages(api),
+  ].sort((a, b) => b.date - a.date));
+  eleventyConfig.addFilter("projectDocuments", (pages = [], id) => pages.filter((item) => item.data.projectId === id)
+    .sort((a, b) => (path.basename(b.inputPath) === "index.md") - (path.basename(a.inputPath) === "index.md") || a.date - b.date));
   eleventyConfig.addCollection("tagList", (collectionApi) => {
     const tags = new Map();
     for (const post of collectionApi.getFilteredByGlob("./site/blog/posts/*.md")) {
