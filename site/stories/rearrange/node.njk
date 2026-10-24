@@ -21,8 +21,6 @@ eleventyComputed:
         <div class="scene-title-ornament" aria-hidden="true"><span>{{ scene.movementInfo.symbol }}</span></div>
         <h1{% if scene.title.length > 14 %} class="scene-title-long"{% endif %}>{% for part in scene.title.split('，') %}<span class="scene-title-part">{{ part }}{% if not loop.last %}，{% endif %}</span>{% endfor %}</h1>
         <p class="scene-question">{{ scene.question }}</p>
-        <p class="scene-lead">{{ scene.lead }}</p>
-        <p class="scene-era">{{ scene.era }}</p>
       </div>
       <a class="scene-scroll-cue" href="#scene-reading"><span>向下阅读</span><span aria-hidden="true">↓</span></a>
     </div>

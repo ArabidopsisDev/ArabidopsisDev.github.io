@@ -115,7 +115,7 @@
 .edition-scene[data-movement="becoming"] .scene-sky { background: radial-gradient(ellipse at 68% 44%, rgba(92,170,149,.1), transparent 60%), linear-gradient(145deg, #0e1c21, #1c3433); }
 .scene-sky .cosmos-stars { opacity: .25; }
 .scene-orbit { position: absolute; width: min(940px, 90vw); aspect-ratio: 1; right: -32%; top: 50%; transform: translateY(-50%); border: 1px solid color-mix(in srgb, var(--movement-color) 9%, transparent); border-radius: 50%; box-shadow: 0 0 0 100px color-mix(in srgb, var(--movement-color) 2%, transparent), 0 0 0 200px color-mix(in srgb, var(--movement-color) 1%, transparent); }
-.scene-hero-inner { position: relative; display: flex; flex-direction: column; min-height: 540px; padding-block: 18px; }
+.scene-hero-inner { position: relative; display: flex; flex-direction: column; min-height: 460px; padding-block: 18px; }
 .scene-route { display: flex; gap: 22px; align-items: center; justify-content: space-between; color: #b4b6bd; font-size: .72rem; line-height: 1.8; letter-spacing: .12em; }
 .scene-route a { display: inline-flex; align-items: center; min-height: 44px; color: #d3d4d9; }
 .scene-route a:hover { color: #fffdf7; text-decoration: underline; text-underline-offset: 5px; }
@@ -130,8 +130,6 @@
 .scene-hero h1 { max-width: 16em; margin: 0 auto 26px; color: #f8f5ef; font: 600 clamp(2.8rem, 5.3vw, 5rem)/1.35 "Noto Serif SC", "Songti SC", SimSun, serif; letter-spacing: .035em; text-wrap: balance; overflow-wrap: anywhere; }
 .scene-title-part { display: inline-block; max-width: 100%; }
 .scene-question { max-width: 40em; margin: 0 auto 22px; color: color-mix(in srgb, var(--movement-color) 78%, #f8f5ef); font: 1.16rem/1.9 "Noto Serif SC", "Songti SC", SimSun, serif; text-wrap: balance; }
-.scene-lead { max-width: 39em; margin: 0 auto; color: #c1c2c9; font: .94rem/2 "Noto Serif SC", "Songti SC", SimSun, serif; text-wrap: pretty; }
-.scene-era { margin: 28px 0 0; color: #b4b6bd; font: .76rem/1.8 "Noto Serif SC", "Songti SC", SimSun, serif; letter-spacing: .14em; }
 .scene-scroll-cue { display: flex; flex-direction: column; align-items: center; justify-content: center; align-self: center; gap: 8px; min-width: 72px; min-height: 48px; color: #b4b6bd; font-size: .67rem; letter-spacing: .18em; }
 .scene-scroll-cue span:last-child { color: var(--movement-color); font-size: 1rem; }
 .scene-scroll-cue:hover { color: #fffdf7; }
@@ -216,7 +214,7 @@
   .map-colophon { align-items: start; flex-direction: column; }
   .reading-note { grid-template-columns: 1fr; gap: 0; padding-block: 60px !important; }
   .reading-note-mark { font-size: 3.4rem; }
-  .scene-hero-inner { min-height: 500px; padding-block: 12px 16px; }
+  .scene-hero-inner { min-height: 440px; padding-block: 12px 16px; }
   .scene-route { font-size: .67rem; gap: 12px; }
   .scene-route > span { font-size: .63rem; letter-spacing: .12em; }
   .scene-title-page { padding-block: 18px 16px; }
@@ -228,8 +226,6 @@
   .scene-hero h1 { font-size: clamp(2.1rem, 7vw, 2.8rem); line-height: 1.4; margin-bottom: 24px; }
   .scene-hero h1.scene-title-long { font-size: clamp(1.75rem, 7vw, 2.6rem); }
   .scene-question { font-size: 1.02rem; line-height: 1.85; margin-bottom: 18px; }
-  .scene-lead { font-size: .86rem; line-height: 1.95; }
-  .scene-era { margin-top: 24px; font-size: .72rem; }
   .scene-reading-shell { padding-block: 70px 85px; scroll-margin-top: 60px; }
   .scene-fragment { margin-bottom: 56px; }
   .scene-fragment header { display: block; }
