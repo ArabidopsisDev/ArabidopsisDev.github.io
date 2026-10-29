@@ -2,7 +2,7 @@
 title: "315\u5316\u5B66\u519C\u5168\u7A0B\u5B66\u4E60\u7B14\u8BB0"
 description: "\u6211\u7684 315 \u5316\u5B66\uFF08\u519C\uFF09\u590D\u4E60\u7B14\u8BB0\uFF01"
 date: 2026-09-26T18:57:00+08:00
-updated: 2026-10-24T09:35:19+08:00
+updated: 2026-10-25T20:24:26+08:00
 tags:
   - agriculture
   - chemistry
@@ -749,3 +749,130 @@ $$
 $$
 \boxed{\Delta_r H_m^\ominus = \sum_\text{B} \nu_\text{B} \Delta_f H_m(\text{B})}
 $$
+
+多数有机物因为复杂，其 $\Delta_f H_m^\ominus$ 值很难测定，但是它的燃烧热又比较容易测定，这时候我们可以测定其燃烧时的热效应并计算其标准摩尔燃烧焓 $\Delta_c H_m^\ominus$，由于燃烧是生成的逆过程，所以可以使用
+
+$$
+\boxed{\Delta_r H_m^\ominus = -\sum_\text{B} \nu_\text{B} \Delta_c H_m(\text{B})}
+$$
+
+标准摩尔生成焓来计算反应的焓变 $\Delta_r H_m ^ \ominus$。
+
+### 化学反应的自发性
+
+**影响反应自发性的因素：**
+
+1. 系统倾向于向势能降低（也就是放热）的方向自发进行；
+2. 系统倾向于向系统混乱度更大的方向进行。
+
+使用 $\Delta_r H_m^\ominus$ 标定反应的热量情况，因此我们还需要一个状态函数来描述系统混乱度的大小，这个状态函数称为熵 $S$，当一种纯物质从热力学温度0K上升至温度 $T$，系统熵的增加即为系统在温度 $T$ 时的熵 $S$。同样的，我们用类似定义标准摩尔焓变的方式定义标准摩尔熵 $S_m^\ominus$。
+
+一般地，**状态混乱、结构复杂、温度高**是一个系统熵升高的原因，具体来说：
+1. 同一物质，气态的 $S_m^\ominus$ 大于液态的 $S_m^\ominus$，大于固态的 $S_m^\ominus$。
+2. 同类物质，如卤素，烷烃等，摩尔质量 $M$ 越大，$S_m^\ominus$ 越大。
+3. 气态多原子分子的 $S_m^\ominus$ 大于 气态单原子分子的 $S_m^\ominus$，越多越大。
+4. 同一物质，温度越高，$S_m^\ominus$ 越大。
+
+
+::: question 例题 类型=解答题
+（2015-37）判断下列反应的熵变与 0 的关系。
+
+（1）溶解少量食盐于水中
+（2）活性炭表面吸附氧气
+:::
+
+对于反应（1）而言，食盐溶解于水中，系统的混乱程度成大，因此熵增，$\Delta_r S_m^\ominus > 0$；对于反应（2）而言，氧气被活性炭吸附，系统的混乱程度减小，因此熵减，$\Delta_r S_m^\ominus < 0$。其中 $\Delta_r S_m^\ominus$ 就是反应时的熵变，也可以叫标准摩尔熵变，定义方法跟 $\Delta_f H_m^\ominus$ 相同，就不再赘述了。
+
+化学反应的自发性取决于焓变和熵变的组合，称之为**Gibbs自由能**，定义为 $G=H-TS$，由于每一项都是状态函数，因此 $G$ 是状态函数，在标准状态下的化学反应：
+
+$$
+\Delta_r G_m^\ominus = \Delta_r H_m^\ominus - T\Delta_r S_m^\ominus
+$$
+
+一般地，若 $\Delta_r G_m^\ominus<0$，则反应正向自发进行，若 $\Delta_r G_m^\ominus>0$，则反应逆向自发进行，正向不自发，如果 $\Delta_r G_m^\ominus = 0$，则反应达到平衡状态。
+
+理论来说，由于题目给出物质的 $\Delta_f H_m^\ominus$ 等一般是在 20℃ 条件下的，但是实际反应的温度跟这个给出的温度差得很大，那么可以不可以用20℃ 条件下的这些参数呢？实际上是可以的。我们要计算的 $\Delta_r G_m$ 里面本来就有一个温度参数，这个参数使得温度对 $\Delta_f H_m$ 等的影响已经可以忽略不计了。
+
+::: question 例题 类型=解答题
+（2016-58）查表解决如下问题：
+
+（1）求在 700K 时，反应 $2\text{CuO}(\text{s})+\text{C(s)}=2\text{Cu(s)}+\text{CO}_2(\text{g})$ 的 $\Delta_r G_m^\ominus$；
+
+（2）说明 CuO 在 700K 条件下能否被还原。
+:::
+
+首先查表查得各物质在 298K 的 $\Delta_r H_m^\ominus$ 和 $\Delta_r S_m^\ominus$。因为这两者受温度影响不大，因此可以直接用来计算 700K 时的 $\Delta_r G_m^\ominus$。
+
+$$
+\Delta_r H_m ^\ominus = \sum_B \nu_B \Delta_f H_m^\ominus(B)=-393.5+157×2=-79.5 \text{kJ·mol}^{-1}
+$$
+
+$$
+\Delta_r S_m ^\ominus =\sum_B \nu_B S_m^\ominus(B)= 213.6+2×33.15-5.74-2×42.63= 188.6 \text{J·mol}^{-1}·\text{K}^{-1}
+$$
+
+$$
+\Delta_r G_m^\ominus = \Delta_r H_m - T\Delta_r S_m  = -79.5\text{kJ·mol}^{-1} - 700\text{K} × 188.6 \text{J·mol}^{-1}·\text{K}^{-1} × 10^{-3}=-211.7\text{kJ·mol}^{-1}
+$$
+
+由于 $\Delta_r G_m^\ominus < 0$，因此该反应在 700K 时正向自发进行。
+
+吉布斯自由能非常重要的应用就是求解物质的熔沸点，以及分解温度等。实质上，达到沸点说明液体恰好达到了气-液平衡，而熔点说明固体达到了固-液平衡。
+
+
+::: question 例题 类型=解答题
+查表，近似计算液溴的正常沸腾温度。
+:::
+
+沸腾时，液溴恰好达到了气-液平衡，因此下面反应达到平衡状态，$\Delta_r G_m^\ominus = 0$。
+
+$$
+\text{Br}_2(\text{l}) = \text{Br}_2(\text{g})
+$$
+
+液溴最稳定的状态为 $\text{Br}_2(\text{l})$，因此 $\text{Br}_2(\text{l})$ 的 $\Delta_f H_m^\ominus=0$，并且其 $S_m^\ominus=0$ ...吗？不要忘记了，最稳定单质的熵可不是0，仅仅当其在绝对零度条件下，$S_m^\ominus=0$ 才成立。
+
+$$
+\Delta_r H_m^\ominus = \Delta_f H_m^\ominus(\text{Br}_2,\text{g})
+$$
+
+$$
+\Delta_r S_m^\ominus = S_m^\ominus(\text{Br}_2,\text{g}) - S_m^\ominus(\text{Br}_2,\text{l})
+$$
+
+$$
+\Delta_r G_m^\ominus = 0 \Leftrightarrow \Delta_r H_m^\ominus = T\Delta_r S_m^\ominus
+
+$$
+
+解得 $T=332\text{K}$，与实际相符。
+
+### 等温方程式
+
+我们前面讨论的所有计算，都是在标准状态下进行的，那么如果计算在非标准状态下的 $\Delta_r G_m^\ominus$ 呢？事实上，无需再重新计算焓变和熵变，可以直接使用**化学等温方程式**。
+
+$$
+\Delta_r G_m(T) = \Delta_r G_m(T)^\ominus + RT\ln Q
+$$
+
+其中 $Q$ 为反应商，对于在溶液中发生的反应，$Q$ 定义为
+
+$$
+\boxed{Q = \prod_B (\frac{c_B}{c^\ominus})^{\nu_B}}
+$$
+
+这个式子看起来有点可怕，其实跟焓变的计算有点相似，只不过把加减法变成了乘除法，我们来看看它到底干了什么，以反应
+
+$$
+a\text{A}(\text{aq}) + b\text{B}(\text{aq}) = y\text{Y}(\text{aq}) + z\text{Z}(\text{aq}) \tag*{$\Delta_r H_m^\ominus$}
+$$
+
+为例，首先对于每一种物质，我们首先除以标准量来消掉量纲，这一步主要是为了严谨和方便，对于物质 A 而言，假设浓度是 3mol/L，除以标准浓度 $c^\ominus=1\text{mol/L}$ 之后等于3，这是一个无量纲的数字。之后再对其进行化学计量数的乘方即可，物质 A 在这里计量数是 $-a$，不妨假设 $a=2$，因此 物质 A 的反应商为 $3^{-2}=\frac{1}{3^2} = \frac{1}{9}$。将每个物质的反应商乘起来就是化学反应的反应商。
+
+这个公式可能在这里仅仅能起到一个计算在非标准条件下的反应自发性，用途并不是特别大，但是别急，更加精彩的马上就要到来了。
+
+## 第三章 化学动力学
+
+> 野火烧不尽，春风吹又生。
+
+### 化学平衡
