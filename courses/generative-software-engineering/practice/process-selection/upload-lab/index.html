@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>上传状态实验 / 1.9 实践</title>
+<style>
+:root{color-scheme:light;--ink:#173f35;--paper:#f6f5ed;--line:#ccd4c2}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:#283b32;font:16px/1.85,"Microsoft YaHei","PingFang SC",sans-serif}main{max-width:960px;margin:auto;padding:40px 24px 72px}a{color:var(--ink);text-underline-offset:5px}h1{font-size:clamp(27px,4vw,39px);line-height:1.4;margin:28px 0 18px}h2{font-size:22px;margin:0 0 16px}p{margin:0 0 20px}.intro{max-width:760px;color:#536254}.toolbar{display:flex;gap:20px;align-items:center;justify-content:space-between;border-block:1px solid var(--line);padding:18px 0;margin:28px 0}.toggle{display:flex;gap:10px;align-items:center}input{accent-color:var(--ink);width:20px;height:20px;flex-shrink:0}button{font:inherit;border:1px solid #9eaf95;background:#edf0e5;color:var(--ink);padding:10px 18px;border-radius:5px;cursor:pointer}button:hover{background:#e1e8d7}button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #b88831;outline-offset:4px}.workspace{display:grid;grid-template-columns:1.25fr 1fr;gap:24px;align-items:start}.panel{padding:28px;background:#fffef8;border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 30px #173f3506}.item{display:flex;gap:14px;align-items:center;padding:16px 0;border-top:1px solid #e1e5d9;cursor:pointer}.item:last-child{border-bottom:1px solid #e1e5d9}.summary{font-weight:600;font-size:18px;margin-top:22px}.status{padding:16px 18px;border-left:4px solid #76925b;background:#eef2e5;font-size:15px;margin-bottom:22px}.status[data-state=pending]{border-color:#b38b35;background:#f7efd9}.status[data-state=rejected]{border-color:#b05e41;background:#faeadd}.buttons{display:flex;gap:10px;flex-wrap:wrap}.primary{background:var(--ink);color:#fff}.primary:hover{background:#285947}.result{margin:22px 0 0;min-height:2em;font-size:15px}.other{color:#56624f;font-size:15px}.other summary{cursor:pointer;font-weight:600;color:var(--ink)}.other ul{padding-left:22px;margin:18px 0}.other button{width:100%;margin-top:8px;font-size:15px}.help{margin-top:30px;padding-top:24px;border-top:1px solid var(--line);color:#56624f;font-size:15px}.help ol{padding-left:24px}.help li{margin-bottom:12px}[hidden]{display:none!important}@media(max-width:650px){main{padding:24px 18px 50px}.workspace{grid-template-columns:1fr}.panel{padding:22px}.toolbar{align-items:flex-start;gap:14px}.toolbar button{font-size:14px;padding:6px 12px}.toggle{align-items:flex-start}}
+</style>
+</head>
+<body><main>
+<a href="../../../1-9-process-selection.html#practice">← 返回 1.9</a>
+<h1>页面上的完成状态，已经上传了吗？</h1>
+<p class="intro">在本机勾选“课堂笔记”以后，还需要点击“上传本机修改”，才能让另一台设备读取到这项完成状态。你可以打开或关闭提示，比较页面有没有把手动上传的操作说明白。</p>
+<div class="toolbar"><label class="toggle"><input type="checkbox" id="show-status"><span>显示上传状态提示</span></label><button id="reset" type="button">恢复初始状态</button></div>
+<div class="workspace">
+<section class="panel" aria-labelledby="local-title">
+<h2 id="local-title">本机复习清单</h2>
+<div id="items"></div>
+<p class="summary" id="completion"></p>
+<p class="status" id="upload-status" role="status" hidden></p>
+<div class="buttons"><button class="primary" id="upload" type="button">上传本机修改</button><button id="read" type="button">读取共享进度</button></div>
+<p class="result" id="action-result" role="status"></p>
+</section>
+<details class="panel other" id="shared-panel">
+<summary>查看共享记录与另一台设备</summary>
+<p style="margin-top:18px">这里显示其他设备能够读取的共享记录。每次成功上传，版本号就加 1。例如，第 7 版接受修改以后会成为第 8 版。</p>
+<strong id="shared-version"></strong><ul id="shared-items"></ul>
+<button id="remote" type="button">模拟手机上传练习题进度</button>
+</details>
+</div>
+<section class="help" aria-label="实验操作与范围">
+<p>本机记录与共享记录都保存在当前页面内存中。上传与读取由页面函数执行，刷新页面会恢复初始状态。真实同步服务的网络请求与持久保存需要在原项目中另外验证。</p>
+<ol>
+<li>保持提示关闭，在本机勾选“课堂笔记”。此时本机的“课堂笔记”应显示已完成，共享记录中的“课堂笔记”应保持未完成。展开共享记录核对，再打开提示，查看是否说明了修改尚未上传。</li>
+<li>点击“上传本机修改”。上传成功以后，共享记录中的“课堂笔记”应改为已完成，提示应显示本机当前进度已上传。</li>
+<li>恢复初始状态，在本机勾选“矿物识别”。点击“模拟手机上传练习题进度”以后，再上传本机修改。提交应当被拒绝。本机保留“矿物识别”的勾选，共享记录中只有“练习题”已完成。重新打开“显示上传状态提示”，页面应说明本机修改尚未上传。</li>
+</ol>
+<p>本机还有待上传的修改时，读取操作会停止，以保留本机数据。当前实验尚未提供冲突合并操作；你可以记录需要补充的行为，在原项目中继续实现。</p>
+</section>
+</main><script type="module" src="./lab.js"></script></body></html>
+
+

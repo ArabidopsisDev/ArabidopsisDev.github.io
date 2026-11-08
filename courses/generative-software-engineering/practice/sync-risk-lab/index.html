@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="比较整份覆盖、合并已完成项与版本检查，观察两份设备进度先后提交时的结果。">
+  <title>同步冲突实验 / 生成式软件工程</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 36px 20px 60px; background: #f5f3eb; color: #284639; font: 16px/1.9 "Segoe UI", "Microsoft YaHei", sans-serif; }
+    main { max-width: 1100px; margin: auto; }
+    h1 { margin: 18px 0 12px; font-size: 32px; line-height: 1.5; }
+    h2 { font-size: 20px; margin: 0 0 10px; }
+    p { margin: 0 0 18px; }
+    a { color: #315f45; text-underline-offset: 4px; }
+    .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 24px; border: 1px solid #bdcbb3; background: #fafbf5; margin: 26px 0; }
+    label { display: block; font-weight: 600; }
+    select { width: 100%; font: inherit; padding: 10px; color: inherit; background: white; border: 1px solid #91a785; margin-top: 8px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0 26px; }
+    button { font: inherit; padding: 10px 18px; min-height: 44px; cursor: pointer; border: 1px solid #214b39; background: #214b39; color: #f7f6ed; }
+    button.secondary { color: #214b39; background: transparent; }
+    button:disabled, select:disabled { opacity: .5; cursor: default; }
+    button:focus-visible, select:focus-visible, a:focus-visible { outline: 3px solid #789854; outline-offset: 4px; }
+    .records { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+    .record { min-width: 0; padding: 22px; border: 1px solid #bdcbb3; background: #fafbf5; }
+    .record.shared { background: #e6efdc; border-color: #92ad7a; }
+    .revision { color: #627858; font-size: 13px; margin-bottom: 14px; }
+    .record dl { margin: 0; }
+    .record dl > div { padding: 12px 0; border-top: 1px solid #d3ddc9; }
+    dt { font-size: 14px; }
+    dt small { display: block; color: #75816d; font-size: 12px; }
+    dd { margin: 5px 0 0; font-weight: 600; }
+    dd[data-completed="true"] { color: #315e30; }
+    .result { margin: 26px 0; padding: 20px 24px; border-left: 4px solid #789854; background: #e8efdf; }
+    .result[data-kind="warning"] { border-color: #b17b43; background: #f5e8d4; color: #79532b; }
+    .result[data-kind="blocked"] { border-color: #638080; background: #e2ece8; }
+    .result p:last-child { margin: 0; }
+    .trace { padding: 24px; border: 1px solid #bdcbb3; background: #fafbf5; }
+    .trace ol { margin: 0; padding-left: 24px; }
+    .trace li { padding: 7px 0; }
+    @media (max-width: 760px) { .records, .controls { grid-template-columns: 1fr; } .record { padding: 18px; } h1 { font-size: 27px; } .controls { padding: 18px; gap: 18px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>同步冲突实验</h1>
+    <p>电脑与手机各保留一份进度，提交时由页面中的函数更新共享记录。所有数据都保存在当前页面内存中，与复习清单原有的浏览器存储分开。刷新实验页面后，数据恢复初始状态。</p>
+    <div class="controls">
+      <div><label for="scenario">使用者在两台设备上的操作</label><select id="scenario"><option value="complete">在电脑上完成课堂笔记，在手机上完成矿物识别</option><option value="cancel">在电脑上取消课堂笔记的勾选，在手机上完成矿物识别</option></select></div>
+      <div><label for="strategy">手机提交时怎样处理</label><select id="strategy"><option value="replace">用手机的整份进度覆盖</option><option value="merge">任意一边完成就算完成</option><option value="version">基础版本一致才接受，否则拒绝覆盖</option></select></div>
+    </div>
+    <p id="scenario-description"></p>
+    <div class="actions"><button id="submit-computer" type="button">1. 模拟电脑端修改并提交</button><button id="submit-phone" type="button" disabled>2. 模拟手机端勾选并提交</button><button id="reset" class="secondary" type="button">恢复当前场景</button></div>
+    <section class="result" id="result" data-kind="normal" aria-labelledby="result-title"><h2 id="result-title">当前结果</h2><p id="message" role="status" aria-live="polite"></p></section>
+    <div class="records">
+      <section class="record" aria-labelledby="computer-title"><h2 id="computer-title">电脑本地记录</h2><p class="revision" id="computer-revision"></p><dl id="computer-records"></dl></section>
+      <section class="record" aria-labelledby="phone-title"><h2 id="phone-title">手机本地记录</h2><p class="revision" id="phone-revision"></p><dl id="phone-records"></dl></section>
+      <section class="record shared" aria-labelledby="shared-title"><h2 id="shared-title">共享记录</h2><p class="revision" id="shared-revision"></p><dl id="shared-records"></dl></section>
+    </div>
+    <section class="trace" aria-labelledby="trace-title"><h2 id="trace-title">操作记录</h2><ol id="event-log" aria-live="polite"></ol></section>
+  </main>
+  <script type="module" src="./lab.js"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="330" viewBox="0 0 760 330" font-family="Times New Roman, SimSun" font-size="21" font-style="normal">
+  <title>范特霍夫直线图</title>
+  <desc>横轴为温度倒数，纵轴为标准平衡常数的自然对数。左图反应焓大于零，直线斜率为负；右图反应焓小于零，直线斜率为正。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8 Z" fill="black" />
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="760" height="330" fill="white" />
+  <g fill="none" stroke="black" stroke-width="1.6">
+    <line x1="75" y1="245" x2="75" y2="42" marker-end="url(#arrow)" />
+    <line x1="75" y1="245" x2="340" y2="245" marker-end="url(#arrow)" />
+    <line x1="455" y1="245" x2="455" y2="42" marker-end="url(#arrow)" />
+    <line x1="455" y1="245" x2="720" y2="245" marker-end="url(#arrow)" />
+  </g>
+  <g fill="none" stroke="black" stroke-width="2">
+    <line x1="104" y1="77" x2="302" y2="214" />
+    <line x1="484" y1="214" x2="682" y2="77" />
+  </g>
+  <g fill="black">
+    <text x="75" y="28" text-anchor="middle">ln <tspan font-style="italic">K</tspan><tspan dy="-9" font-size="14">⊖</tspan></text>
+    <text x="455" y="28" text-anchor="middle">ln <tspan font-style="italic">K</tspan><tspan dy="-9" font-size="14">⊖</tspan></text>
+    <text x="290" y="274" text-anchor="middle">1/<tspan font-style="italic">T</tspan> (K<tspan dy="-8" font-size="14">−1</tspan><tspan dy="8">)</tspan></text>
+    <text x="670" y="274" text-anchor="middle">1/<tspan font-style="italic">T</tspan> (K<tspan dy="-8" font-size="14">−1</tspan><tspan dy="8">)</tspan></text>
+    <text x="202" y="314" text-anchor="middle"><tspan font-style="italic">Δ</tspan><tspan dy="5" font-size="14">r</tspan><tspan dy="-5" font-style="italic">H</tspan><tspan dy="5" font-size="14">m</tspan><tspan dy="-14" font-size="14">⊖</tspan><tspan dy="9" font-size="21"> &gt; 0</tspan></text>
+    <text x="582" y="314" text-anchor="middle"><tspan font-style="italic">Δ</tspan><tspan dy="5" font-size="14">r</tspan><tspan dy="-5" font-style="italic">H</tspan><tspan dy="5" font-size="14">m</tspan><tspan dy="-14" font-size="14">⊖</tspan><tspan dy="9" font-size="21"> &lt; 0</tspan></text>
+  </g>
+</svg>

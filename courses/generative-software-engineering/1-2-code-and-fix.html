@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="继续开发复习清单，从只看未完成功能出发，认识边写边改的开发方式、适用条件和局限，并练习检查修改对原有功能的影响。">
+  <meta name="theme-color" content="#173f35">
+  <link rel="canonical" href="https://arabid.top/courses/generative-software-engineering/1-2-code-and-fix.html">
+  <link rel="icon" href="../../assets/images/arabidopsis-mark.png" type="image/png">
+  <link rel="stylesheet" href="./assets/course.css">
+  <title>1.2 从最简单的开发方式开始 / 生成式软件工程</title>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <header class="header wrap"><a class="brand" href="./">生成式软件工程</a><nav aria-label="课程导航"><a href="./#chapter-one">课程目录</a><a href="./warning.html">学习前说明</a></nav></header>
+  <main id="main" class="lesson lesson-continuous wrap">
+    <header class="lesson-heading"><p class="chapter-name">第一章 / 软件过程与过程模型</p><h1>1.2 从最简单的开发方式开始</h1></header>
+    <article class="lesson-body">
+      <p>上一节中，我们开发了一个用来记录复习进度的清单。每项内容都可以勾选完成或取消，刷新页面后也能恢复之前的状态。如果你已经完成了实践，可以继续使用自己的项目；也可以使用本节提供的<a href="./assets/review-checklist-1-2.zip" download>复习清单项目</a>，其中已经具备勾选和保存功能。</p>
+      <p>现在，你已经复习完了一些内容。每次继续复习时，你都要从整个清单中寻找还没完成的条目。如果清单能够只显示待复习内容，就会方便一些。于是，你准备加一个“只看未完成”开关：打开时隐藏已完成的条目，关闭时恢复显示全部条目。</p>
+      <p>你可以直接找到显示清单的代码，增加一个条件，让页面只显示未完成的条目，然后运行网页，试着打开和关闭开关。如果发现显示不对，就继续改代码，再次运行。这种想到要做什么就开始写，运行后发现问题再修改的做法，通常称为<strong>边写边改</strong>。英文资料中也常用 <a href="https://martinfowler.com/articles/newMethodology.html" target="_blank" rel="noreferrer">code and fix</a> 来描述这种开发方式。</p>
+      <figure class="teaching-figure">
+        <div class="edit-cycle" role="img" aria-label="直接编写代码，运行并查看结果，发现问题后继续修改代码，再次运行。">
+          <ol><li><strong>编写代码</strong><span>增加过滤条件和开关</span></li><li><strong>运行查看</strong><span>打开页面，操作新功能</span></li><li><strong>继续修改</strong><span>根据眼前的问题改代码</span></li></ol>
+          <p>修改完成后，再次运行和查看结果。</p>
+        </div>
+        <figcaption>开发者主要通过编写代码和实际运行来决定接下来做什么。</figcaption>
+      </figure>
+      <p>采用这种做法时，你仍然需要决定开关叫什么、打开页面时是否默认隐藏已完成内容，以及代码怎样完成过滤。你可能在写代码时就确定了这些做法，却没有把它们记下来。如果清单只由你自己使用，改动又容易检查，你可以直接操作页面，看看是否符合自己的使用习惯。</p>
+      <p>例如，你想比较开关放在页面上方还是下方更方便，可以先移动它，再打开网页试用。如果不好用，就恢复原来的位置。这项改动涉及的代码较少，打开页面就可以比较位置，保留修改前的代码也方便恢复。你可以先完成这项尝试，再记下最后选定的位置和理由。</p>
+      <p>过滤以后，页面上的位置会改变，勾选操作仍然需要找到正确的条目。程序中的 <code>items</code> 是完整清单数组，包含三项复习内容。假设我们已经把课堂笔记对应的“复习岩石分类”，也就是 <code>r001</code>，勾选为完成，那么第一项已完成，后两项未完成。</p>
+      <p>打开“只看未完成”后，程序从 <code>items</code> 中筛选出后两项，用另一份列表 <code>visibleItems</code> 决定页面显示什么。<strong>过滤后，页面隐藏了 r001，完整清单 items 仍保留它的数据。</strong>此时，两份列表的第一项就不同了。数组下标从 0 开始，所以第一项写作 <code>[0]</code>，第二项写作 <code>[1]</code>：</p>
+      <figure class="teaching-figure">
+        <div class="filter-map" role="img" aria-label="完整清单 items 中，items[0] 为已完成的 r001，items[1] 为 r002，items[2] 为 r003。当前显示列表 visibleItems 只包含未完成项，visibleItems[0] 为 r002，visibleItems[1] 为 r003。两份列表的下标 0 对应不同条目。">
+          <div class="filter-column"><strong>完整清单 / items</strong><ol start="0"><li class="filtered-out"><code>items[0] → r001</code><span>复习岩石分类<small>课堂笔记 / 已完成 / 暂时隐藏</small></span></li><li><code>items[1] → r002</code><span>复习矿物识别<small>观察记录 / 未完成</small></span></li><li><code>items[2] → r003</code><span>复习岩石分类<small>练习题 / 未完成</small></span></li></ol></div>
+          <div class="filter-column"><strong>当前显示的列表 / visibleItems</strong><ol start="0"><li><code>visibleItems[0] → r002</code><span>复习矿物识别<small>页面上的第一项</small></span></li><li><code>visibleItems[1] → r003</code><span>复习岩石分类<small>页面上的第二项</small></span></li></ol></div>
+          <p class="filter-map-note">visibleItems[0] 是 r002，items[0] 是 r001。同样的下标 0，用在不同列表里会找到不同条目。</p>
+        </div>
+        <figcaption>左边保留全部数据，右边决定当前显示什么。r002 在完整清单中排第二，在当前显示的列表中排第一，编号始终是 r002。</figcaption>
+      </figure>
+      <p>现在，你在页面上勾选第一项“复习矿物识别”。程序需要找到这项内容的数据，将 <code>completed</code> 改为 <code>true</code>。假设处理这次勾选事件的函数接收两个参数：<code>visibleIndex</code> 表示条目在当前显示列表中的下标，<code>checked</code> 表示勾选后的状态，勾选时为 <code>true</code>，取消时为 <code>false</code>。下面的函数却使用这个下标修改完整清单：</p>
+      <pre><code>function setCompleted(visibleIndex, checked) {
+  items[visibleIndex].completed = checked;
+}</code></pre>
+      <p>问题出在 <code>items[visibleIndex]</code>：传进来的下标属于 <code>visibleItems</code>，函数却拿它去查找 <code>items</code>。按照刚才的勾选操作，程序会这样执行：</p>
+      <figure class="teaching-figure code-walkthrough">
+        <div><b class="figure-key">1</b><p>你勾选“复习矿物识别”。它是当前显示列表中的第一项，下标为 0，因此调用函数时传入 0 和 true。</p><pre><code>setCompleted(0, true);</code></pre></div>
+        <div><b class="figure-key">2</b><p>在这次调用中，参数 visibleIndex 的值是 0，checked 的值是 true，所以下面的赋值会修改 items[0]。但 items[0] 对应的是 r001，也就是课堂笔记那一项。</p><pre><code>items[0].completed = true;</code></pre></div>
+        <div><b class="figure-key">3</b><p>r001 原本就已完成，这次仍然是已完成。你想勾选的 r002 没有被修改，所以页面重新显示时，“复习矿物识别”仍然是未完成。</p></div>
+        <figcaption>用户操作的是 r002，函数实际找到的却是 r001。错误发生在查找条目时，完成状态没有写到用户选择的那一项上。</figcaption>
+      </figure>
+      <p>我们可以把条目编号传给函数，让它在完整清单中按编号查找。勾选“复习矿物识别”时，传入的就是它自己的编号 <code>r002</code>。这样，无论它在页面上排第几，都能找到同一项数据：</p>
+      <pre><code>function setCompleted(itemId, checked) {
+  const selectedItem = items.find(item =&gt; item.id === itemId);
+  if (!selectedItem) return;
+  selectedItem.completed = checked;
+}</code></pre>
+      <p>这次调用应当写作 <code>setCompleted("r002", true)</code>。其中，<code>itemId</code> 的值是 <code>"r002"</code>，<code>find</code> 会逐项检查 <code>items</code> 中的编号，找到 <code>r002</code> 后把这一项交给 <code>selectedItem</code>。最后一行将它的完成状态改为 <code>true</code>。中间的 <code>if</code> 用来处理没有找到编号的情况，此时直接返回，不再修改数据。</p>
+      <p>修改函数以后，调用它的代码也需要传入条目编号。完成状态更新后，程序再保存数据，并重新显示当前列表。如果此时开着“只看未完成”，刚刚完成的 <code>r002</code> 就会隐藏，只剩下 <code>r003</code>。</p>
+      <p>只操作过滤开关时，你可能发现已完成项能隐藏，也能重新出现。但过滤后的勾选还会调用更新数据的函数，需要另外验证。你可以在过滤后勾选“复习矿物识别”，核对程序实际修改的是 <code>r002</code>，以及重新显示列表时它是否已经隐藏。</p>
+      <p>修复以后，你需要重新检查过滤状态下的勾选，同时再检查取消、刷新恢复和同名条目。这种在修改后检查原有功能是否仍然正常的工作，称为<strong>回归测试</strong>。它可以通过手动操作完成，也可以在合适的时候写成自动化测试。</p>
+      <p>增加过滤功能以后，同一项勾选操作会发生在不同显示状态下。我们需要分别测试显示全部与只看未完成时的勾选，再核对取消后的状态能否保存、刷新后怎样显示。把这些操作记下来，后续修改时就可以按影响范围重新运行，减少遗漏。</p>
+      <p>继续开发这个清单时，你还需要考虑出错后会影响什么。调整开关位置时，你可以在修改后打开页面比较效果，并在位置不合适时恢复原代码。如果清单已经保存了几个月的复习记录，而你准备修改保存格式，就需要先备份数据，确认旧记录能否读取、转换失败后怎样恢复。这两次修改都发生在同一个项目中，所需的准备和检查却有很大区别。</p>
+      <div class="lesson-table-wrap" tabindex="0" role="region" aria-label="不同开发任务中采用边写边改需要考虑的条件">
+        <table class="lesson-table"><thead><tr><th scope="col">正在做的工作</th><th scope="col">可以怎样安排</th><th scope="col">需要注意什么</th></tr></thead><tbody>
+          <tr><td>在自己的复习清单中调整开关位置</td><td>直接修改，运行后比较操作是否方便</td><td>保存修改前的代码，检查主要操作没有受影响</td></tr>
+          <tr><td>给已有清单增加过滤和数量显示</td><td>先确认几种状态下应当怎样显示，再逐项修改</td><td>检查过滤、勾选、数量和保存之间是否一致</td></tr>
+          <tr><td>为已有使用者更换数据保存格式</td><td>先检查旧数据怎样读取、转换失败怎样处理，再实施修改</td><td>分别测试新数据保存、旧记录读取和转换失败后的恢复</td></tr>
+        </tbody></table>
+      </div>
+      <p>如果我们还不知道使用者是否习惯通过勾选安排复习，可以制作一个能操作的原型，邀请使用者尝试。使用者操作以后，我们可以请其指出哪些条目还需要复习，并询问是否需要查看已经完成的内容。取得这些回答以后，再讨论显示方式是否需要修改。账号和同步要解决的是另外的使用问题，需要根据实际需要安排。</p>
+      <p>继续增加功能以前，我们可以把过滤后的勾选、取消和刷新恢复写进检查记录。以后增加数量显示时，开发者就能根据这份记录重新运行原有操作。结合前面出现的错误，当前开发可以采用以下安排：</p>
+      <ol class="lesson-requirements">
+        <li>修改前，用几句话写下这次要实现的行为，特别是它与原有功能的关系。</li>
+        <li>保存一份已经检查过的代码，或者用 Git 提交，便于比较和恢复。</li>
+        <li>每次集中完成一项修改，运行检查后再增加下一项，避免一次改动太多而难以排查。</li>
+        <li>保留主要检查步骤。每次修改后，根据影响范围重新检查相关功能。</li>
+      </ol>
+      <p>例如，我们记录了“刷新后过滤开关恢复关闭”，以后修改代码时，就可以刷新页面并核对开关状态。如果过滤后的勾选经常需要重复验证，还可以将相应操作写成自动化测试。记录与测试按实际需要补充，团队也可以根据使用情况合并重复记录。</p>
+      <p>如果你先让 AI 增加了过滤功能，后来又请它修复勾选、增加数量显示，那么每次修改前，它都需要了解已有功能应该怎样工作。你可以把已经确认的要求写进项目文件，下一次让它先读这些文件。这样，它增加数量显示时，就能同时看到过滤后的勾选、取消和保存需要保留哪些行为。</p>
+      <p>接下来，你可以动手为复习清单增加过滤功能。你可以继续修改上一节完成的项目，也可以<a href="./practice/review-checklist-1-2/" target="_blank" rel="noreferrer">打开本节起始项目</a>，先试着勾选、取消，再刷新页面，确认状态能够恢复。<a href="./assets/review-checklist-1-2.zip" download>下载项目与提示词</a>后，按项目说明通过本地静态服务器运行。它会把进度与上一节项目的记录分开保存，试用时不会读到上一节留下的进度。</p>
+      <p>在开始修改以前，先勾选课堂笔记对应的 <code>r001</code>，保留 <code>r002</code> 和 <code>r003</code> 为未完成，检查刷新后状态仍然正确。这样，后面就可以明确判断过滤结果。接着，把下面的要求交给编程助手：</p>
+      <pre class="practice-prompt" aria-label="实践提示词：增加未完成过滤"><code>在当前复习清单中增加“只看未完成”开关。
+
+打开开关后，只显示未完成项；关闭后，显示全部条目。
+开关打开时，勾选完成的条目应从当前列表中隐藏。
+切回全部条目后，仍然可以取消完成状态。
+刷新页面后，完成状态保留，过滤开关恢复为关闭。
+如果没有未完成项，显示“没有待复习内容”。
+
+保留按条目编号保存状态的做法，以及现有保存失败提示。
+不要加入排序、条目编辑、账号或同步功能。
+
+先阅读现有代码，说明这次修改会影响哪些操作，然后实施。
+检查过滤后的勾选、同名条目、取消、刷新恢复和全部完成的情况。
+报告实际检查结果；无法运行的检查请单独说明。</code></pre>
+      <ol class="lesson-requirements"><li>在 <code>r001</code> 已完成、其余两项未完成的起点打开过滤，页面应只显示 <code>r002</code> 和 <code>r003</code>。</li><li>勾选 <code>r002</code> 后，它应从当前列表中隐藏，只剩 <code>r003</code>。</li><li>关闭过滤，三项应全部出现，其中 <code>r001</code> 与 <code>r002</code> 已完成，<code>r003</code> 未完成。</li><li>刷新页面，完成状态应保持不变，过滤开关应恢复关闭。</li><li>取消 <code>r001</code> 的勾选，再刷新。<code>r001</code> 应保持未完成，<code>r002</code> 仍为已完成。</li><li>把 <code>r001</code> 与 <code>r003</code> 也勾选为完成，再打开过滤，页面应显示“没有待复习内容”。</li></ol>
+      <p>过滤与原有勾选操作符合要求以后，你可以保存代码与运行记录。接着，我们准备显示整个清单中还有多少项未完成。这个数量采用完整清单的数据，所以打开或关闭过滤时，数量都应相同。你可以将下面的要求交给编程助手：</p>
+      <pre class="practice-prompt" aria-label="实践提示词：增加未完成数量并检查原有功能"><code>在页面上显示“待复习 N 项”，N 为全部条目中未完成项的数量。
+勾选、取消或刷新页面后，数量应与完成状态一致。
+打开或关闭“只看未完成”开关，不应改变这个数量。
+
+在 requirements.md 中记录已经确认的勾选、保存、过滤和数量要求；
+如果项目已有相应记录，就更新原来的文件，不要另建一份重复内容。
+在 checks.md 中记录检查步骤和实际结果，保留之前的检查记录。
+
+新增功能以外，请重新检查过滤后的勾选、同名项互不影响、取消、
+刷新恢复、全部完成，以及原有的保存失败提示。
+不要用清空已有数据的方式绕过错误，不要覆盖与本次任务无关的文件。
+完成后解释代码差异，并区分已经运行和仍需手动完成的检查。</code></pre>
+      <p>为了验证数量，你可以重新准备 <code>r001</code> 已完成、<code>r002</code> 与 <code>r003</code> 未完成的状态，页面应显示“待复习 2 项”。打开过滤，数量应保持为 2。勾选 <code>r002</code> 后，数量应变为 1；关闭过滤并取消 <code>r001</code> 后，数量应变回 2。如果结果不同，就需要查看程序是否统计了完整清单中的未完成项，以及页面文字是否采用了这份统计结果。</p>
+      <p>完成以后，你可以对照两次修改留下的记录，看看增加数量显示时有没有重新检查过滤和勾选。如果你又遇到了上次修复过的问题，就把复现步骤补进检查记录；如果你已经忘记刷新后开关应该处于什么状态，就回到功能要求中确认，并补充遗漏的说明。之后继续开发时，这些内容就能供你和编程助手查阅。</p>
+      <aside class="lesson-questions" aria-labelledby="review-title">
+        <h2 id="review-title">复习与思考</h2>
+        <ol>
+          <li>边写边改时，开发者有没有考虑需求和设计？请用过滤开关的例子说明，开发者在编写代码的过程中可能作出了哪些决定。</li>
+          <li>为什么“打开开关后，已完成项隐藏了”还不足以证明过滤功能正确？你还会检查哪些操作？</li>
+          <li>过滤改变了页面上的位置，却没有改变条目编号。这个区别为什么会影响勾选操作？如果以后增加排序功能，还可能遇到什么类似问题？</li>
+          <li>调整一个按钮的位置，与更换已有复习记录的保存格式，为什么需要不同程度的准备和检查？请从出错后的影响、检查难度和恢复办法考虑。</li>
+          <li>回看自己的项目，哪一项简单记录或检查最有帮助？哪一项工作重复很多却帮助不大？如果继续开发，你会保留、增加或简化哪些做法？</li>
+        </ol>
+      </aside>
+      <footer class="lesson-end"><p>接下来，通过进度导出与导入，看看怎样分阶段确定要求、安排实现并检查结果。</p><div class="actions"><a class="button primary" href="./1-3-stages-and-waterfall.html">1.3 将工作划分为阶段 →</a><a class="text-link" href="./#chapter-one">返回课程目录</a></div></footer>
+    </article>
+  </main>
+  <footer class="footer wrap"><span>Arabidopsis / 生成式软件工程</span><a href="./">返回课程首页 ↗</a></footer>
+</body>
+</html>

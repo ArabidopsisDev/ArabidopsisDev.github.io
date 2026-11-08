@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="840" viewBox="0 0 1000 840" role="img" aria-labelledby="title desc">
+<title id="title">待验证与受阻的工作都计入进行中上限</title>
+<desc id="desc">看板分为待开始、开发中、待验证、已完成。开发中一项导入按钮修复，待验证一项受阻的上传提示，合计两项进行中工作，达到上限二。待验证返回开发不改变总数。上传提示验证完成后移入已完成，总数降为一，团队才可以开始日期文件名。</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M1 1 9 5 1 9" fill="none" stroke="#426a54" stroke-width="1.8" stroke-linejoin="round"/></marker>
+<style>text{font-family:"Microsoft YaHei","PingFang SC",sans-serif;fill:#243d31}.title{font-size:25px;font-weight:600}.head{font-size:21px;font-weight:600}.body{font-size:18px}.small{font-size:16px;fill:#5e6e56}.wire{fill:none;stroke:#426a54;stroke-width:2.5;marker-end:url(#arrow);stroke-linecap:round;stroke-linejoin:round}</style></defs>
+<rect width="1000" height="840" rx="14" fill="#f8f7f0"/>
+<text x="35" y="51" class="title">这两项工作都已经开始，还没有完成。</text>
+<text x="35" y="84" class="body">团队约定：开发中与待验证合计最多 2 项，受阻时仍计数。</text>
+<rect x="285" y="121" width="470" height="514" rx="14" fill="#e5edda" stroke="#8aa273" stroke-width="2"/>
+<text x="310" y="158" class="head">进行中 2 / 上限 2</text>
+<text x="310" y="188" class="small">开发中 1 项 + 待验证 1 项</text>
+<g>
+<rect x="35" y="217" width="220" height="418" rx="10" fill="#f0f1e9" stroke="#c7d1bc"/>
+<rect x="300" y="217" width="205" height="328" rx="10" fill="#f6f8ef" stroke="#bcccad"/>
+<rect x="535" y="217" width="205" height="328" rx="10" fill="#f6f8ef" stroke="#bcccad"/>
+<rect x="785" y="217" width="180" height="418" rx="10" fill="#f0f1e9" stroke="#c7d1bc"/>
+<text x="55" y="255" class="head">待开始</text><text x="320" y="255" class="head">开发中</text><text x="555" y="255" class="head">待验证</text><text x="805" y="255" class="head">已完成</text>
+<path d="M256 250H277" class="wire"/><path d="M506 250H526" class="wire"/><path d="M741 250H775" class="wire"/>
+<rect x="52" y="290" width="186" height="125" rx="7" fill="#fffef8" stroke="#c5cfba"/>
+<text x="68" y="325" class="body">导出文件名</text><text x="68" y="354" class="body">显示日期</text><text x="68" y="391" class="small">等待出现可用名额</text>
+<rect x="52" y="435" width="186" height="125" rx="7" fill="#fffef8" stroke="#c5cfba"/>
+<text x="68" y="470" class="body">上传前查看</text><text x="68" y="499" class="body">进度变化</text><text x="68" y="536" class="small">保留在待做工作中</text>
+<rect x="313" y="290" width="179" height="205" rx="7" fill="#fffef8" stroke="#bdcdb0"/>
+<text x="328" y="325" class="body">修复手机上的</text><text x="328" y="354" class="body">导入确认按钮</text>
+<text x="328" y="398" class="small">网页开发者</text><text x="328" y="426" class="small">正在修改代码。</text><text x="328" y="468" class="small">代码改好后需验证。</text>
+<rect x="548" y="290" width="179" height="205" rx="7" fill="#fffef8" stroke="#c7b48a"/>
+<path d="M556 291H719" stroke="#ad693e" stroke-width="4"/>
+<text x="563" y="325" class="body">上传结果提示</text><text x="563" y="362" class="small" style="fill:#9b6535;font-weight:600">受阻 / 等待帮助</text>
+<text x="563" y="398" class="small">等待合作者提供</text><text x="563" y="426" class="small">可访问的测试服务。</text><text x="563" y="468" class="small">仍占用进行中名额。</text>
+<text x="803" y="323" class="body">约定检查通过，</text><text x="803" y="352" class="body">结果已经记录，</text><text x="803" y="381" class="body">才移入这一列。</text>
+<text x="803" y="445" class="small">代码写完以后，</text><text x="803" y="472" class="small">还需要测试配合。</text>
+</g>
+<path d="M635 547V568H400V547" class="wire"/>
+<text x="520" y="609" text-anchor="middle" class="small">验证不通过，返回开发，进行中总数仍为 2。</text>
+<path d="M875 637V690H145V645" class="wire"/>
+<rect x="240" y="666" width="520" height="48" rx="8" fill="#173f35"/>
+<text x="500" y="696" text-anchor="middle" class="body" style="fill:#fffef6">上传提示验证完成后：进行中 2 → 1</text>
+<text x="35" y="763" class="body">有空余名额以后，团队再决定是否开始日期文件名。</text>
+<text x="35" y="798" class="small">当前约定的上限为 2，具体数值需要结合成员时间与实际等待情况调整。</text>
+</svg>

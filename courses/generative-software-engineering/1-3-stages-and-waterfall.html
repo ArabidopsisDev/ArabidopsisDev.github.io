@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="从复习进度的导出与导入出发，理解需求、设计、实现、测试和维护怎样分阶段进行，认识瀑布模型的作用、适用条件与反馈过晚的问题。">
+  <meta name="theme-color" content="#173f35">
+  <link rel="canonical" href="https://arabid.top/courses/generative-software-engineering/1-3-stages-and-waterfall.html">
+  <link rel="icon" href="../../assets/images/arabidopsis-mark.png" type="image/png">
+  <link rel="stylesheet" href="./assets/course.css">
+  <title>1.3 将工作划分为阶段 / 生成式软件工程</title>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <header class="header wrap"><a class="brand" href="./">生成式软件工程</a><nav aria-label="课程导航"><a href="./#chapter-one">课程目录</a><a href="./warning.html">学习前说明</a></nav></header>
+  <main id="main" class="lesson lesson-continuous wrap">
+    <header class="lesson-heading"><p class="chapter-name">第一章 / 软件过程与过程模型</p><h1>1.3 将工作划分为阶段</h1></header>
+    <article class="lesson-body">
+      <p>复习清单现在可以保存完成状态，隐藏已完成项，并显示还有多少项待复习。假设使用者在家里的电脑上完成了一部分复习，接着换到另一台电脑打开清单，却发现三项内容仍然都是未完成。原来的记录保存在家里那台电脑的浏览器中，新电脑无法直接读取，所以没有恢复出原来的进度。</p>
+      <p>为了解决这个问题，我们准备增加导出和导入功能：使用者在原电脑上把复习进度保存成文件，再把文件带到另一台电脑，让清单读取。两台电脑中的条目标题、来源和编号相同，需要迁移的是每项内容的完成状态。因此，文件需要保留条目编号，让程序知道每条状态属于哪项内容。</p>
+      <p>文件中的进度可能与本机已经保存的进度不同。编写导入按钮和读写代码以前，我们需要先确定程序应该怎样处理这种情况，以及选错文件或操作失败时怎样保留原记录：</p>
+      <ol class="lesson-requirements">
+        <li>另一台电脑如果已经有复习记录，导入文件后，是替换这些状态，还是把两边的已完成项合并？</li>
+        <li>使用者选中文件以后，程序是在这时修改记录，还是等待确认后再修改？如果选错了，在哪里取消？</li>
+        <li>文件损坏、编号不匹配，或者浏览器保存失败时，原来的记录会怎样？</li>
+        <li>导入完成以后，待复习数量和当前过滤结果应当在什么时候更新？</li>
+      </ol>
+      <p>这些决定会影响导入时的行为。首先看第一条：如果使用替换策略，程序就用文件中的完成状态覆盖本机原有状态；如果使用合并策略，就需要进一步规定两边状态不一致时怎样处理。例如，本机已经完成、文件中却未完成的一项内容，合并后应该保留哪一个状态？</p>
+      <p>对于第二条，如果允许取消，程序就需要在读取文件后，先把待导入的数据保留在内存中，让使用者查看哪些记录会发生变化。使用者确认以后再保存；如果取消，就放弃这份待导入数据，保留本机原来的进度。</p>
+      <p>第三条包含两种不同的失败。文件损坏或编号不匹配时，程序应当在覆盖原记录以前完成校验，并提示具体问题。例如，文件缺少第三项记录，就不能继续导入，否则这项内容的完成状态没有依据。</p>
+      <p>浏览器保存失败，则发生在文件已经通过校验、使用者也已经确认之后。此时程序还没有成功保存新进度，需要提示保存失败，并继续显示原来的状态，避免页面看起来已经导入成功，刷新后却又恢复旧记录。</p>
+      <p>最后看第四条，导入成功以后，复选框、待复习数量和过滤结果都需要按新状态更新。例如，假如只有第三项从未完成变成已完成，那么待复习数量应减少一项；如果打开了“只看未完成”，这一项也应从当前列表中隐藏。</p>
+      <p>为了确定软件应当提供哪些操作，我们讨论了导入后的完成状态，以及取消或失败时如何保留原记录。这些要求会成为后续工作的依据：我们需要据此选择文件格式和处理步骤，编写相应代码，并用实际操作核对结果。按照这些工作的目的，可以将开发划分为需求、设计、实现和测试等阶段。</p>
+      <p>我们目前要实现的是恢复一份已经保存的进度，让本机的三项状态与文件一致。因此，<strong>我们决定采用替换策略：使用者确认导入后，用文件中的完成状态覆盖本机原有状态。</strong>在确认以前，页面先逐项显示本机状态和文件状态，让使用者看清导入以后每一项会变成什么状态；使用者也可以取消，保留本机进度。</p>
+      <p>我们刚才确定了软件应该怎样处理进度，这属于<strong>需求分析与定义</strong>。我们还要检查这些要求是否符合迁移目的、是否有遗漏。例如，使用者需要在新电脑上接着复习，就必须知道具体完成了哪几项。只导出“已完成两项”这个总数，无法恢复每一项的状态。</p>
+      <p>明确这些行为以后，我们开始<strong>设计</strong>文件结构和处理步骤。JSON 可以把条目编号和完成状态写成带有字段名的数据。我们用 <code>id</code> 保存编号，用 <code>completed</code> 保存完成状态，程序读取以后，就能按编号找到对应条目。</p>
+      <p>确定格式时，还需要考虑用户可能保留旧文件。如果以后把 <code>completed</code> 改成其他字段名，或者改用另一种方式表示完成状态，导入程序就需要知道这份文件按哪套规则读取。为此，我们在文件中增加了 <code>formatVersion</code>，用它标明文件格式的版本。当前使用的格式记为数字 <code>1</code>，程序读到这个版本后，就按下面的字段结构处理：</p>
+      <pre><code>{
+  "formatVersion": 1,
+  "progress": [
+    { "id": "r001", "completed": true },
+    { "id": "r002", "completed": false },
+    { "id": "r003", "completed": true }
+  ]
+}</code></pre>
+      <p>文件中的 <code>progress</code> 是一组进度记录。每条记录用 <code>id</code> 标识复习内容，用 <code>completed</code> 保存完成状态：<code>true</code> 表示已完成，<code>false</code> 表示未完成。上面的数据表示课堂笔记和练习题已完成，矿物识别尚未完成。如果程序读到尚未支持的格式版本，应当提示无法读取；要支持新版本，还需要编写对应的读取或转换代码。</p>
+      <p>由于清单包含固定的三项内容，导出文件需要包含 <code>r001</code>、<code>r002</code> 和 <code>r003</code> 的完成状态。导入时，程序要检查这三个编号是否齐全、是否重复，以及有没有不属于当前清单的编号。每个编号应当对应一条记录，否则程序无法确定这个条目最终应该采用哪一个状态。</p>
+      <p>程序还需要检查字段类型。例如，<code>false</code> 是布尔值，而 <code>"false"</code> 是一段文字，程序需要区分这两种类型。文件如果使用了错误的类型，应当提示错误，交给使用者处理以后再导入。</p>
+      <p>导出要保存整个清单的进度。打开“只看未完成”后，页面会隐藏已完成项，完整清单仍然保留它们的数据。因此，生成文件时需要读取完整清单，把隐藏条目的状态也写进去，这样才能在另一台电脑上恢复全部进度。</p>
+      <figure class="teaching-figure import-flow-figure" id="import-process">
+        <ol class="import-flow" aria-label="进度导入的处理顺序与停止分支">
+          <li>
+            <dl class="import-node">
+              <div class="import-node-heading"><dt>步骤：</dt><dd>读取文件</dd></div>
+              <div class="import-node-field"><dt>输入：</dt><dd>使用者选择的 JSON 文件。</dd></div>
+              <div class="import-node-field"><dt>操作：</dt><dd>读取文件内容，解析为待导入数据，暂存于内存。</dd></div>
+            </dl>
+            <svg class="import-branch-arrow" viewBox="0 0 44 24" aria-hidden="true"><path d="M1 12H40M32 4L40 12L32 20"/></svg>
+            <aside class="import-stop"><dl><div><dt>分支：</dt><dd>读取或解析失败</dd></div></dl><p>显示读取或 JSON 格式错误，停止导入，保留原进度。</p></aside>
+            <div class="import-next"><svg viewBox="0 0 24 28" aria-hidden="true"><path d="M12 1V24M5 17L12 24L19 17"/></svg><span>读取成功，继续校验</span></div>
+          </li>
+          <li>
+            <dl class="import-node">
+              <div class="import-node-heading"><dt>步骤：</dt><dd>校验完整数据</dd></div>
+              <div class="import-node-field"><dt>检查：</dt><dd>格式版本是否支持；编号有无缺漏、重复或未知项；完成状态是否为布尔值。</dd></div>
+              <div class="import-node-field"><dt>结果：</dt><dd>整份数据通过检查后，才允许预览。</dd></div>
+            </dl>
+            <svg class="import-branch-arrow" viewBox="0 0 44 24" aria-hidden="true"><path d="M1 12H40M32 4L40 12L32 20"/></svg>
+            <aside class="import-stop"><dl><div><dt>分支：</dt><dd>校验不通过</dd></div></dl><p>说明版本、编号或类型的具体问题，停止导入，保留原进度。</p></aside>
+            <div class="import-next"><svg viewBox="0 0 24 28" aria-hidden="true"><path d="M12 1V24M5 17L12 24L19 17"/></svg><span>校验通过，显示预览</span></div>
+          </li>
+          <li>
+            <dl class="import-node">
+              <div class="import-node-heading"><dt>步骤：</dt><dd>预览并等待选择</dd></div>
+              <div class="import-node-field"><dt>显示：</dt><dd>逐项对照本机状态与文件状态，让使用者查看哪些记录会改变。</dd></div>
+              <div class="import-node-field"><dt>等待：</dt><dd>使用者确认或取消，此时尚未覆盖原记录。</dd></div>
+            </dl>
+            <svg class="import-branch-arrow" viewBox="0 0 44 24" aria-hidden="true"><path d="M1 12H40M32 4L40 12L32 20"/></svg>
+            <aside class="import-stop import-cancel"><dl><div><dt>分支：</dt><dd>使用者取消</dd></div></dl><p>放弃文件中的待导入数据，保留本机原来的进度。</p></aside>
+            <div class="import-next"><svg viewBox="0 0 24 28" aria-hidden="true"><path d="M12 1V24M5 17L12 24L19 17"/></svg><span>使用者确认，尝试保存</span></div>
+          </li>
+          <li>
+            <dl class="import-node">
+              <div class="import-node-heading"><dt>步骤：</dt><dd>保存全部进度</dd></div>
+              <div class="import-node-field"><dt>写入：</dt><dd>将整份已校验的进度写入浏览器存储。</dd></div>
+              <div class="import-node-field"><dt>顺序：</dt><dd>先确认写入成功，再替换程序当前使用的数据。</dd></div>
+            </dl>
+            <svg class="import-branch-arrow" viewBox="0 0 44 24" aria-hidden="true"><path d="M1 12H40M32 4L40 12L32 20"/></svg>
+            <aside class="import-stop"><dl><div><dt>分支：</dt><dd>保存失败</dd></div></dl><p>显示保存失败，继续使用原进度，不把页面改成导入后的状态。</p></aside>
+            <div class="import-next"><svg viewBox="0 0 24 28" aria-hidden="true"><path d="M12 1V24M5 17L12 24L19 17"/></svg><span>保存成功，采用新进度</span></div>
+          </li>
+          <li>
+            <dl class="import-node import-node-success">
+              <div class="import-node-heading"><dt>步骤：</dt><dd>更新当前数据与界面</dd></div>
+              <div class="import-node-field"><dt>更新：</dt><dd>复选框、待复习数量和过滤结果。</dd></div>
+              <div class="import-node-field"><dt>结果：</dt><dd>当前页面使用新进度，刷新后可以读取已保存的记录。</dd></div>
+            </dl>
+            <svg class="import-branch-arrow import-success-arrow" viewBox="0 0 44 24" aria-hidden="true"><path d="M1 12H40M32 4L40 12L32 20"/></svg>
+            <aside class="import-complete"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12L10 17L20 7"/></svg><strong>导入完成</strong><p>页面中的进度与浏览器保存的记录一致。</p></aside>
+          </li>
+        </ol>
+        <figcaption>图中“保留原进度”表示：程序当前使用的数据和浏览器原来保存的记录都不改动。只有经过确认并成功保存，才采用新进度。</figcaption>
+      </figure>
+      <p>按照图中的步骤，程序先读取并检查整份数据，再让使用者确认，最后才保存。假如程序改成每读到一项就保存这一项，那么前两项可能已经覆盖了旧进度，读到第三项时才发现它的编号重复。导入虽然报错，原记录却已经改动了一部分。把待导入数据与当前进度分开，完成全部校验以后再保存，可以避免这种情况。</p>
+      <p>文件格式和处理步骤明确以后，我们根据方案编写导出、文件读取、校验、预览和保存代码，这部分工作属于<strong>实现</strong>。编写代码的同时，也可以逐个检查其中的函数。</p>
+      <p>例如，我们可以把文件格式检查写成 <code>validateProgress(data)</code>。文件读取代码先把 JSON 解析成数据，再传给这个函数。函数负责检查版本、编号和完成状态，返回检查结果；文件读取、界面显示和本地保存由其他代码负责。</p>
+      <p>对于有效数据，我们要求函数返回“通过”以及三条经过检查的进度记录；对于重复编号、缺少记录等无效数据，要求它返回“未通过”和具体原因。这样，就可以准备几组输入，单独调用这个函数，再将返回结果与预期比较：</p>
+      <div class="lesson-table-wrap" tabindex="0" role="region" aria-label="单独检查进度校验函数的输入与预期结果">
+        <table class="lesson-table"><thead><tr><th scope="col">传给校验函数的数据</th><th scope="col">预期返回结果</th><th scope="col">检查目的</th></tr></thead><tbody>
+          <tr><td>上面的有效数据：三个编号齐全，状态依次为 true、false、true</td><td>通过，并返回相同编号和状态的三条记录</td><td>有效记录没有丢失，false 也没有被改成其他值</td></tr>
+          <tr><td>把第三条编号改成 r001，与第一条重复</td><td>未通过，说明编号重复</td><td>函数能发现重复记录</td></tr>
+          <tr><td>删除 r003 对应的记录</td><td>未通过，说明缺少条目</td><td>函数能发现不完整的进度</td></tr>
+          <tr><td>把 r002 的 completed 改成字符串 <code>"false"</code></td><td>未通过，说明完成状态类型错误</td><td>函数区分布尔值和文字</td></tr>
+        </tbody></table>
+      </div>
+      <p>进行这些检查时，我们直接把准备好的数据传给函数，再比较返回结果。文件选择、预览和确认由其他代码负责，可以在检查完整导入流程时另外操作。把一个函数或一小段程序作为检查对象，并用给定输入核对结果，就是这里的<strong>单元测试</strong>。测试代码可以自动完成这些调用与比较，发现返回结果不符合预期时，就报告失败。</p>
+      <p>单元测试通过以后，我们还需要进行集成与系统测试。集成测试关注各部分接在一起以后能否配合，例如，校验函数返回错误后，页面是否停止导入并显示原因。系统测试则从完整软件的使用过程出发，核对功能要求。对于进度迁移，我们可以这样测试：</p><ol class="lesson-requirements"><li>在原清单中准备一组进度，下载文件，然后在存储相互独立的另一份清单中选择这个文件。确认以前，预览应逐项显示本机状态和文件状态。</li><li>点击取消，核对本机进度是否保持原状。重新选择文件并确认后，核对清单是否采用了文件中的状态；刷新页面以后，这些状态应当仍然保留。</li><li>分别选择损坏或内容不符合要求的文件。程序应说明错误，原进度应保持不变。保存失败发生在确认以后，需要另设一次测试，核对失败提示和原进度。</li><li>在上述操作后查看待复习数量，并切换“只看未完成”，核对它们是否与当前完成状态一致。</li></ol>
+      <p>把功能交给使用者以后，我们还需要了解使用者在实际设备上能否顺利操作。例如，使用者能否找到刚导出的文件，能否在另一台电脑上导入，以及是否知道确认以后哪些记录会被覆盖。如果使用中出现问题，我们就需要根据操作记录排查原因，修复后测试受影响的功能，再提供更新版本。这些工作属于运行与维护。以后增加条目或调整文件结构时，我们还要用使用者已经保存的旧文件测试导入，确认它们仍然可以读取。</p>
+      <p>如果按照上面的安排开发，需求、设计、实现与单元测试、集成与系统测试、运行与维护，就构成了前后相接的阶段。<strong>瀑布模型</strong>强调这种阶段顺序：每个阶段集中完成一类工作，对照要求核对这一阶段的结果，再把结果交给后续阶段使用。</p>
+      <figure class="teaching-figure waterfall-figure" id="waterfall-model">
+        <ol class="waterfall-stages" aria-label="导出导入功能的开发阶段、工作、检查内容与后续依据">
+          <li>
+            <div class="stage-symbol" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3H15L19 7V21H5V3ZM14 3V8H19M8 12H16M8 16H14"/></svg></div>
+            <dl class="stage-panel">
+              <div class="stage-header"><dt>阶段：</dt><dd>需求分析与定义</dd></div>
+              <div class="stage-field"><dt>主要工作：</dt><dd>确定导出范围、替换规则，以及确认与取消后的行为。</dd></div>
+              <div class="stage-field stage-check"><dt>检查内容：</dt><dd>每种操作会怎样改变或保留记录，是否已经说明？</dd></div>
+              <div class="stage-output"><dt>后续依据：</dt><dd>已确认的功能要求和预期结果</dd></div>
+            </dl>
+          </li>
+          <li>
+            <div class="stage-symbol" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 3H15V9H9ZM3 15H9V21H3ZM15 15H21V21H15ZM12 9V12M6 15V12H18V15"/></svg></div>
+            <dl class="stage-panel">
+              <div class="stage-header"><dt>阶段：</dt><dd>设计</dd></div>
+              <div class="stage-field"><dt>主要工作：</dt><dd>确定文件结构、校验规则、预览与保存的步骤。</dd></div>
+              <div class="stage-field stage-check"><dt>检查内容：</dt><dd>文件错误、取消或保存失败时，原进度怎样保留？</dd></div>
+              <div class="stage-output"><dt>后续依据：</dt><dd>文件格式、处理流程和失败处理方案</dd></div>
+            </dl>
+          </li>
+          <li>
+            <div class="stage-symbol" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 6L3 12L8 18M16 6L21 12L16 18M14 3L10 21"/></svg></div>
+            <dl class="stage-panel">
+              <div class="stage-header"><dt>阶段：</dt><dd>实现与单元测试</dd></div>
+              <div class="stage-field"><dt>主要工作：</dt><dd>编写导出、校验、预览和保存代码。</dd></div>
+              <div class="stage-field stage-check"><dt>检查内容：</dt><dd>单独调用各函数，核对给定输入下的返回结果。</dd></div>
+              <div class="stage-output"><dt>后续依据：</dt><dd>可以运行的代码与单元测试结果</dd></div>
+            </dl>
+          </li>
+          <li>
+            <div class="stage-symbol" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5H5V21H19V5H16M9 3H15V7H9ZM8 14L11 17L17 11"/></svg></div>
+            <dl class="stage-panel">
+              <div class="stage-header"><dt>阶段：</dt><dd>集成与系统测试</dd></div>
+              <div class="stage-field"><dt>主要工作：</dt><dd>测试文件迁移，分别尝试确认导入与取消导入。</dd></div>
+              <div class="stage-field stage-check"><dt>检查内容：</dt><dd>刷新后的记录、待复习数量和过滤结果是否正确？</dd></div>
+              <div class="stage-output"><dt>后续依据：</dt><dd>完整操作的实际结果与待处理问题</dd></div>
+            </dl>
+          </li>
+          <li>
+            <div class="stage-symbol" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M19 8A8 8 0 0 0 5 6L3 9M3 4V9H8M5 16A8 8 0 0 0 19 18L21 15M16 15H21V20"/></svg></div>
+            <dl class="stage-panel">
+              <div class="stage-header"><dt>阶段：</dt><dd>运行与维护</dd></div>
+              <div class="stage-field"><dt>主要工作：</dt><dd>在实际设备中使用，处理问题并更新程序。</dd></div>
+              <div class="stage-field stage-check"><dt>检查内容：</dt><dd>能否迁移进度，旧文件是否仍然可以读取？</dd></div>
+              <div class="stage-output"><dt>后续依据：</dt><dd>使用反馈、修复记录和更新后的版本</dd></div>
+            </dl>
+          </li>
+        </ol>
+        <div class="waterfall-feedback"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8H15A5 5 0 0 1 15 18H8M10 3L5 8L10 13"/></svg><p><strong>返工与调整：</strong>发现遗漏或要求变化时，回到相关阶段，更新受影响的要求、方案、代码和检查结果。</p></div>
+        <figcaption>箭头表示各阶段的顺序。开发者需要核对当前阶段的结果，后续阶段才能依据这些结果继续工作。</figcaption>
+      </figure>
+      <p>划分阶段以后，每个阶段仍有需要核对的结果。例如，需求分析与定义阶段应当说明导入是替换还是合并，以及使用者何时可以取消。如果这些要求有遗漏，后续方案就可能采用错误的处理规则。在实现与单元测试阶段，我们要根据设计编写代码，并通过给定输入核对函数的返回结果。到了集成与系统测试阶段，才能进一步核对这些代码接在一起以后，完整操作是否符合要求。</p>
+      <p>如果导出和导入由两位开发者分别编写，他们需要使用同一份格式说明。导出方按照说明写入三个编号和布尔状态，导入方按照相同规则读取和校验，双方才能配合。负责测试的人也可以据此准备输入和预期结果。如果开发暂停几周后再继续，我们也能查到当时确定的替换规则和保存顺序。</p>
+      <p>准备进入下一阶段时，我们需要审阅前一阶段的结果，判断它是否足以支持接下来的工作。例如，需求文件没有说明替换还是合并，设计时就无法确定两边状态不同应当怎样处理。保存失败后的行为如果没有确定，实现代码时也就缺少失败处理的依据。遇到这些遗漏，需要回到相应的需求或设计中补充，后续代码才能按照确定的规则实现。</p>
+      <div class="lesson-table-wrap" tabindex="0" role="region" aria-label="本次修改各阶段完成前需要检查的问题">
+        <table class="lesson-table"><thead><tr><th scope="col">准备进入的工作</th><th scope="col">需要先确认什么</th><th scope="col">如果没有确认</th></tr></thead><tbody>
+          <tr><td>设计文件和导入步骤</td><td>导入替换还是合并？确认前能否取消？</td><td>可能按错误的行为编写后续方案</td></tr>
+          <tr><td>实现导出和导入</td><td>字段、版本、编号规则与失败处理是否明确？</td><td>不同部分可能无法配合，错误文件也可能改动旧数据</td></tr>
+          <tr><td>交给使用者</td><td>正常导入、取消、错误文件和原有功能是否已检查？</td><td>按钮虽然能操作，实际记录仍可能不正确</td></tr>
+        </tbody></table>
+      </div>
+      <p>要求也可能在使用过程中改变。假设使用者最初只想恢复原电脑导出的那份进度，后来开始交替使用两台电脑，两边都产生了新记录，于是希望保留两边已经完成的内容。这时，我们需要与他讨论合并规则，再调整预览和保存前的数据处理，修改相应的测试用例并重新运行。原来的替换功能仍然可以使用，但它无法把两边已经完成的内容合到一起。</p>
+      <p>另一种情况是，使用者从一开始就在两台电脑上复习，但我们讨论需求时没有问清楚，却一直按替换策略编写代码。直到使用者实际操作，我们才发现，使用者原本希望保留两边已经完成的记录。此时，我们就要回头修改已经写好的方案、代码和测试。为了更早发现这种误解，我们可以请使用者尝试导入预览，并在确认前说明自己想保留哪些记录。如果预览结果与这个需要不同，就应当讨论处理规则，再继续编写依赖这些规则的代码。</p>
+      <p>瀑布式安排更容易用于主要要求已经清楚、后续变化较少的工作。例如，导入文件的字段和含义已经确定，使用者也确认了替换规则，我们就可以据此安排设计、实现和检查。如果替换还是合并仍有争议，我们就需要先讨论或试用，确定希望保留哪些进度，再据此安排后续方案和代码。</p>
+      <p>阶段中的检查如果发现遗漏，也需要回到相关工作进行修改。例如，系统测试发现旧文件无法读取，就要重新检查格式要求和读取方案，并更新受影响的代码与测试。<a href="https://www.asabook.cc/en/papers/managing-large-software-systems/" target="_blank" rel="noreferrer">Royce 在 1970 年关于大型软件开发的讨论</a>也指出了关键问题留到后期才被发现的风险，并提出早期试做、持续让客户参与检查等做法。</p>
+      <p>接下来，你可以按需求、设计、实现和检查的顺序，为清单增加进度导出与导入。你可以继续使用上一节完成的项目，也可以<a href="./assets/review-checklist-1-3.zip" download>下载本节起始项目、测试文件与提示词</a>。<a href="./practice/review-checklist-1-3/" target="_blank" rel="noreferrer">起始页面</a>已经支持勾选、保存、未完成过滤和数量显示，还没有导出与导入功能。请通过本地静态服务器打开，并在修改前保存原始代码。</p>
+      <p>你可以让编程助手根据上述讨论草拟功能要求，说明导出范围、替换规则，以及确认、取消和失败时的行为。它写完以后，你需要逐项阅读，核对是否与已经确定的行为一致、是否还有遗漏。例如，文件错误和保存失败发生在不同步骤，要求中也应分别说明。</p>
+      <pre class="practice-prompt" aria-label="实践提示词：确定导出导入要求"><code>阅读当前复习清单，编写或更新 requirements.md，暂不修改程序代码。
+
+导出固定三项内容的全部完成状态，文件格式为：
+formatVersion: 1；progress: 包含 id 和 completed 的条目数组。
+progress 应包含 r001、r002、r003 的记录，拒绝缺少或重复编号；completed 必须是布尔值。
+导出不受“只看未完成”开关影响，不改变当前记录。
+
+导入采用替换规则。选中文件后，先完整检查，再显示每项当前状态
+与文件状态的对照。使用者确认前不修改记录，可以取消。
+拒绝损坏 JSON、不支持的版本、缺少或重复编号、未知编号和错误类型。
+确认后，只有保存成功才更新当前状态与界面；失败时保留原状态并提示。
+保存成功后，按导入数据更新勾选、待复习数量和当前过滤结果。
+
+写出每项要求对应的可观察结果，列出仍无法确定的问题。
+保留原有勾选、取消、保存、过滤与数量要求。</code></pre>
+      <p>阅读它写出的要求时，可以用具体操作核对：选择文件但还没有确认，原进度应保持什么状态？第三条记录的编号重复时，前两条能否已经写入？确认后保存失败，页面应该显示原进度还是新进度？如果要求中没有说明这些情况，就先补充清楚，再继续后面的工作。</p>
+      <p>确认这些要求与前面确定的行为一致以后，你可以让编程助手据此准备设计和测试计划：</p>
+      <pre class="practice-prompt" aria-label="实践提示词：制定处理方案与检查计划"><code>根据 requirements.md 编写或更新 design.md 和 checks.md，暂不实现功能。
+
+说明导出文件怎样从全部条目生成，导入文件怎样完整检查。
+区分从文件读出的待导入数据、程序当前使用的数据和浏览器已保存的记录。
+写清读取、检查、预览、取消、确认、保存及更新界面的先后顺序。
+尤其说明怎样避免检查失败或保存失败时只更新一部分记录。
+
+为每项要求准备检查步骤和预期结果。使用 fixtures 中的有效文件
+及各类无效文件，覆盖取消导入、保存失败，以及原有功能的回归检查。
+预期结果应标为尚未执行，不能写成已经通过。</code></pre>
+      <p>阅读方案时，你可以分别查看文件错误和保存失败两条处理路径。文件编号重复时，程序在哪一步停止，原进度是否已经被修改？有效文件经过确认以后，程序又在哪一步保存，保存失败时怎样保留原来的内存数据和浏览器记录？如果方案还没有说明，就先补充这些步骤。</p>
+      <pre class="practice-prompt" aria-label="实践提示词：实现进度导出与导入"><code>按照 requirements.md 和 design.md 实现导出与导入。
+保留固定条目编号、已有完成记录和原有功能，不增加账号或同步服务。
+导出全部三项的完成状态，生成可下载的 JSON 文件。
+导入时使用正常的文件选择和预览界面，分别提供确认与取消操作。
+按照 requirements.md 中的规则校验整个文件，确认前不写入，保存成功后才更新当前状态。
+
+为进度校验函数准备具体输入和预期结果，先单独调用并核对返回值，
+再通过页面检查文件选择、校验、预览和保存是否正确衔接。
+如发现方案与现有程序不兼容，先说明具体问题并更新相应记录，
+不要删除要求或用清空已有数据的办法让程序表面上通过。
+说明实际修改了哪些代码，并记录已经执行的检查结果。</code></pre>
+      <p>实现完成后，你需要查看代码差异，并通过页面测试导入功能。测试前，将本机进度准备为只有 <code>r002</code> 已完成，<code>r001</code> 和 <code>r003</code> 未完成。<code>fixtures/valid-progress.json</code> 中则只有 <code>r001</code> 和 <code>r003</code> 已完成。选择这个文件后，预览应显示这两组不同的状态。点击取消，本机应仍然只有 <code>r002</code> 已完成。重新选择文件并确认后，本机应改为只有 <code>r001</code> 和 <code>r003</code> 已完成，刷新后仍保留这组状态。</p>
+      <p>对于无效文件，你需要逐个选择并尝试导入。每次都核对错误提示、复选框和待复习数量，再刷新页面，确认原有记录没有改变。测试保存失败时，还要让本机进度与文件不同，否则难以从结果看出程序有没有错误地采用新进度。你可以按下面的步骤测试：</p><ol class="lesson-requirements"><li>把本机三项内容都改为未完成，并刷新页面，确认这组状态已经保存。</li><li>启用一个可以撤销的临时故障，让下一次保存报告失败。选择有效文件，完成校验并点击确认。</li><li>程序应提示保存失败，页面仍应显示三项未完成。刷新后，这组状态也应保持不变。</li><li>移除临时故障，再次选择同一个文件并确认。保存成功后，页面和刷新后的记录应与文件一致。</li></ol>
+      <pre class="practice-prompt" aria-label="实践提示词：完成检查与使用说明"><code>对照 checks.md 执行能够完成的检查，逐项填写实际结果。
+使用有效文件检查预览、取消、替换、刷新恢复和过滤后的显示。
+逐个检查 fixtures 中的无效文件，确认内存状态和保存记录都没有改变。
+通过可撤销的临时办法模拟保存失败，保留原有数据，检查失败处理；
+检查完成后移除临时故障，再确认正常操作。
+
+检查导出文件包含全部三项，尤其是当前过滤掉的已完成项。
+在另一份独立存储的页面中导入导出文件，检查迁移结果。
+无法实际完成的检查明确记录为待确认，不要当作通过。
+更新使用说明，说明导入会替换哪些状态、如何取消，以及失败后怎么办。</code></pre>
+      <p>检查文件迁移时，可以把项目放到另一台电脑上运行。也可以先在两个终端中分别执行 <code>python -m http.server 8000</code> 和 <code>python -m http.server 8001</code>，通过两个端口访问同一项目。浏览器会分别保存这两个地址的记录，因此可以在一边导出、另一边导入，核对迁移结果。同一地址下的两个标签页会共用本地存储，不能用来完成这项检查。之后仍需要在实际使用的另一台设备上确认操作是否正常。</p>
+      <p>完成以后，请保留功能要求、处理方案、代码和实际检查结果。如果实现时发现原来的规则需要改变，也要更新相关说明和预期结果。例如，从替换改为合并以后，r001 在两边状态不同的情况下可能有不同结果，需要重新准备并执行相应检查。</p>
+      <aside class="lesson-questions" aria-labelledby="review-title">
+        <h2 id="review-title">复习与思考</h2>
+        <ol>
+          <li>“支持导入导出”为什么还不足以指导实现？请从替换或合并、确认或取消、失败处理三个方面补充要求。</li>
+          <li>导入会替换当前状态，与使用 JSON 保存版本和编号，分别属于哪一类决定？为什么需要先确定前者，再完成后者的方案？</li>
+          <li>为什么需求文件写完了，需求阶段仍可能没有完成？你会检查哪些内容，判断它能否供后续设计使用？</li>
+          <li>如果直到完成实现后，使用者才要求把替换改为合并，哪些阶段的结果需要重新检查？为什么仅修改一个判断条件可能不够？</li>
+          <li>把系统测试安排在实现之后，是否意味着前面不需要检查？请分别举出需求、设计和实现阶段能够提前检查的问题。</li>
+          <li>假如使用者还看不懂导入预览，你会继续完善所有导入代码，还是先让对方操作一个预览界面？你希望通过这次操作确认什么？</li>
+        </ol>
+      </aside>
+      <footer class="lesson-end"><p>接下来，我们会先做出可以操作的导入界面，请使用者尝试替换和合并，了解他怎样理解这两种操作，以及能否看出每一项的状态变化。</p><div class="actions"><a class="button primary" href="./1-4-rapid-prototyping.html">1.4 用快速原型确认需求 →</a><a class="text-link" href="./#chapter-one">返回课程目录</a></div></footer>
+    </article>
+  </main>
+  <footer class="footer wrap"><span>Arabidopsis / 生成式软件工程</span><a href="./">返回课程首页 ↗</a></footer>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="790" viewBox="0 0 1000 790" role="img" aria-labelledby="title desc">
+<title id="title">根据使用反馈改进上传状态提示</title>
+<desc id="desc">课堂笔记最初为未完成。使用者在电脑上勾选后没有上传，手机读取共享记录，得到的状态仍是未完成。开发者与使用者商量后补充上传提示，并测试提示是否符合实际结果。再次试用时，请使用者判断手机会读到哪种状态：上传前应为未完成，上传成功后应为已完成。如果使用者仍误解提示，就继续修改；如果已经理解操作却仍觉得繁琐，就讨论自动同步。</desc>
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M1 1 9 5 1 9" fill="none" stroke="#426a54" stroke-width="1.8" stroke-linejoin="round"/></marker>
+<filter id="shadow" x="-10%" y="-10%" width="125%" height="135%"><feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="#173f35" flood-opacity=".06"/></filter>
+<style>text{font-family:"Microsoft YaHei","PingFang SC",sans-serif;fill:#243d31}.head{font-size:23px;font-weight:600}.body{font-size:18px}.muted{font-size:16px;fill:#5e6e5a}.label{font-size:16px;font-weight:600;fill:#41614b}.num{font:italic 36px Georgia,serif;fill:#77926a}.link{fill:none;stroke:#426a54;stroke-width:2.5;marker-end:url(#arrow);stroke-linecap:round;stroke-linejoin:round}</style>
+</defs>
+<rect width="1000" height="790" rx="14" fill="#f8f7f0"/>
+<path d="M440 178H546" class="link"/><text x="500" y="157" text-anchor="middle" class="label">了解需要</text>
+<path d="M750 282V406" class="link"/><text x="780" y="337" class="label">按约定修改</text><text x="780" y="363" class="muted">准备测试</text>
+<path d="M560 522H454" class="link"/><text x="500" y="555" text-anchor="middle" class="label">测试通过</text>
+<path d="M250 420V296" class="link"/><text x="78" y="337" class="label">仍有误解</text><text x="78" y="363" class="muted">记录回答，继续修改</text>
+<text x="500" y="337" text-anchor="middle" class="muted">本次改进的目标</text>
+<text x="500" y="370" text-anchor="middle" style="font-size:22px;font-weight:600">分清勾选与上传</text>
+
+<g filter="url(#shadow)">
+<rect x="60" y="70" width="380" height="210" rx="12" fill="#fffef9" stroke="#c8d2be"/>
+<path d="M61 126H439" stroke="#dbe1d1"/>
+<text x="86" y="108" class="num">1</text><text x="127" y="106" class="head">勾选被误认为已上传</text>
+<text x="86" y="159" class="body">使用者在电脑上勾选课堂笔记，</text><text x="86" y="190" class="body">随后换到手机读取进度。</text>
+<text x="86" y="241" class="muted">未点击上传，手机仍读到未完成。</text>
+
+<rect x="560" y="70" width="380" height="210" rx="12" fill="#edf2e5" stroke="#b9c9a8"/>
+<path d="M561 126H939" stroke="#cdd9bd"/>
+<text x="586" y="108" class="num">2</text><text x="627" y="106" class="head">商量后补充上传提示</text>
+<text x="586" y="159" class="body">勾选后：提示修改尚未上传。</text><text x="586" y="190" class="body">上传成功后：显示已经上传。</text>
+<text x="586" y="241" class="muted">使用者愿意暂时手动上传时采用。</text>
+
+<rect x="560" y="420" width="380" height="210" rx="12" fill="#fffef9" stroke="#c8d2be"/>
+<path d="M561 476H939" stroke="#dbe1d1"/>
+<text x="586" y="458" class="num">3</text><text x="627" y="456" class="head">测试数据与提示</text>
+<text x="586" y="509" class="body">勾选后：共享记录中的课堂笔记未完成。</text><text x="586" y="540" class="body">上传成功：共享记录中课堂笔记已完成。</text>
+<text x="586" y="591" class="muted">提交被拒绝时，保留本机勾选并提示。</text>
+
+<rect x="60" y="420" width="380" height="210" rx="12" fill="#f3ecda" stroke="#d4c596"/>
+<path d="M61 476H439" stroke="#ddd2b3"/>
+<text x="86" y="458" class="num" style="fill:#a58c4c">4</text><text x="127" y="456" class="head">再次请使用者尝试</text>
+<text x="86" y="509" class="body">上传前：手机读到课堂笔记未完成。</text><text x="86" y="540" class="body">上传成功后：手机读到课堂笔记已完成。</text>
+<text x="86" y="591" class="muted">询问使用者，手机会读到哪种状态。</text>
+</g>
+<path d="M250 630V685H318" class="link"/>
+<rect x="330" y="665" width="610" height="81" rx="10" fill="#173f35"/>
+<text x="355" y="697" style="font-size:18px;font-weight:600;fill:#fffef5">能够正确判断上传前后的状态</text>
+<text x="355" y="726" style="font-size:17px;fill:#dce7d3">理解操作后仍觉得繁琐：继续讨论自动同步。</text>
+</svg>

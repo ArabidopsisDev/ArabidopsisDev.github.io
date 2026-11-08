@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1030" viewBox="0 0 1000 1030" role="img" aria-labelledby="title desc">
+<title id="title">Scrum 中的 Sprint 包含哪些工作</title>
+<desc id="desc">产品待办列表按优先顺序记录改进需要。团队在 Sprint 规划时选出本周期目标与工作。Sprint 是固定长度、最长一个月的开发周期，本例假设为两周。边界内包含规划、实现与测试、每日 Scrum、评审和回顾。每日 Scrum 贯穿开发期间。评审讨论实际软件，回顾改进协作。周期结束后紧接着开始下一个 Sprint。</desc>
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M1 1 9 5 1 9" fill="none" stroke="#426a54" stroke-width="1.8" stroke-linejoin="round"/></marker>
+<style>text{font-family:"Microsoft YaHei","PingFang SC",sans-serif;fill:#243d31}.title{font-size:25px;font-weight:600}.head{font-size:21px;font-weight:600}.body{font-size:18px}.small{font-size:16px;fill:#566c55}.eyebrow{font-size:17px;font-weight:600;fill:#45684c}.wire{fill:none;stroke:#426a54;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}.white{fill:#fffdf3}</style>
+</defs>
+<rect width="1000" height="1030" rx="14" fill="#f8f7f0"/>
+<rect x="35" y="25" width="930" height="130" rx="12" fill="#fffef9" stroke="#c8d2be"/>
+<text x="62" y="62" class="head">产品待办列表</text>
+<text x="62" y="92" class="small">产品负责人根据产品需要排列待做工作的顺序。</text>
+<g class="body">
+<rect x="505" y="52" width="130" height="60" rx="8" fill="#e8efdc"/><text x="570" y="89" text-anchor="middle">上传提示</text>
+<rect x="650" y="52" width="130" height="60" rx="8" fill="#f0eee3"/><text x="715" y="89" text-anchor="middle">自动同步</text>
+<rect x="795" y="52" width="140" height="60" rx="8" fill="#f0eee3"/><text x="865" y="89" text-anchor="middle">布局调整</text>
+</g>
+<text x="62" y="130" class="small">团队在规划时从中选择当前要做的工作。</text>
+<path d="M500 156V207" class="wire"/>
+<text x="523" y="191" class="small">开始本次 Sprint</text>
+
+<rect x="35" y="220" width="930" height="660" rx="16" fill="#edf2e4" stroke="#769267" stroke-width="2"/>
+<text x="65" y="259" class="title">Sprint / 固定长度的开发周期</text>
+<text x="935" y="258" text-anchor="end" class="eyebrow">假设本次为两周 / 最长一个月</text>
+<rect x="65" y="278" width="870" height="48" rx="7" fill="#173f35"/>
+<text x="85" y="308" class="body white"><tspan font-weight="600">本周期目标：</tspan>让使用者分清进度是否已经上传。</text>
+
+<rect x="65" y="351" width="240" height="199" rx="10" fill="#fffef9" stroke="#bccbab"/>
+<text x="85" y="387" class="head">Sprint 规划</text>
+<text x="85" y="419" class="body">团队确定周期目标，</text>
+<text x="85" y="448" class="body">选入上传提示改进，</text>
+<text x="85" y="477" class="body">安排实现与测试。</text>
+<text x="85" y="523" class="small">形成 Sprint 待办列表</text>
+<path d="M306 449H331" class="wire"/>
+
+<rect x="340" y="351" width="595" height="199" rx="10" fill="#fffef9" stroke="#bccbab"/>
+<text x="362" y="387" class="head">开发者实现并测试</text>
+<text x="362" y="421" class="body">勾选后提示尚未上传。</text>
+<text x="362" y="450" class="body">保存成功后显示已上传。</text>
+<text x="362" y="479" class="body">拒绝提交后保留本机修改。</text>
+<text x="362" y="523" class="small">持续验证数据与提示是否一致。</text>
+<rect x="666" y="368" width="248" height="160" rx="8" fill="#e9efde" stroke="#bccbab"/>
+<text x="685" y="398" class="head">每日 Scrum</text>
+<text x="685" y="430" class="body">每个工作日 15 分钟。</text>
+<text x="685" y="459" class="body">开发者对照周期目标，</text>
+<text x="685" y="488" class="body">调整接下来的工作。</text>
+<path d="M638 424H656" class="wire"/>
+<path d="M665 486H648" class="wire"/>
+
+<path d="M740 552V608" class="wire"/>
+<text x="763" y="584" class="small">共同查看实际软件</text>
+<rect x="545" y="620" width="390" height="150" rx="10" fill="#fffef9" stroke="#bccbab"/>
+<text x="568" y="655" class="head">Sprint 评审</text>
+<text x="568" y="688" class="body">团队与使用者操作上传功能，</text>
+<text x="568" y="717" class="body">讨论提示是否容易理解。</text>
+<text x="568" y="746" class="small">根据反馈调整产品待办列表。</text>
+<path d="M543 696H478" class="wire"/>
+
+<rect x="65" y="620" width="400" height="150" rx="10" fill="#f5edd8" stroke="#d1bf8d"/>
+<text x="88" y="655" class="head">Sprint 回顾</text>
+<text x="88" y="688" class="body">团队讨论怎样改进协作。</text>
+<text x="88" y="717" class="body">例如，改字段时怎样及时通知，</text>
+<text x="88" y="746" class="small">以及由谁参与联合测试。</text>
+
+<path d="M65 800H935" stroke="#c2d0b2"/>
+<text x="65" y="832" class="body">规划、实现、测试、每日 Scrum、评审与回顾都包含在 Sprint 内。</text>
+<text x="65" y="858" class="small">达到质量要求的改动可以在周期内交付，评审用于共同讨论实际结果。</text>
+<path d="M265 881V923" class="wire"/>
+<text x="288" y="910" class="small">当前周期结束后</text>
+<rect x="65" y="936" width="870" height="68" rx="10" fill="#173f35"/>
+<text x="88" y="965" class="head white">下一个 Sprint 紧接着开始</text>
+<text x="88" y="990" class="small" style="fill:#dce7d3">团队依据最新的产品待办列表确定目标，并采用已经商定的协作改进。</text>
+</svg>

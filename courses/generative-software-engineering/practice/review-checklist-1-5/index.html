@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="复习清单：记录完成状态，过滤未完成项，并显示待复习数量。">
+  <title>复习清单</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 48px 20px; color: #243e33; background: #f5f3eb; font-family: "Segoe UI", "Microsoft YaHei", sans-serif; }
+    main { max-width: 620px; margin: auto; }
+    h1 { margin: 0 0 16px; font-size: 32px; }
+    p { line-height: 1.8; color: #5a6c61; }
+    ul { padding: 0; margin-top: 28px; list-style: none; border-top: 1px solid #cad3c4; }
+    li { border-bottom: 1px solid #cad3c4; }
+    label { display: flex; align-items: center; gap: 16px; padding: 24px 0; cursor: pointer; }
+    input { width: 22px; height: 22px; flex-shrink: 0; accent-color: #375a32; }
+    input:focus-visible { outline: 3px solid #375a32; outline-offset: 4px; }
+    .item-text { flex: 1; min-width: 0; }
+    strong { display: block; font-size: 19px; }
+    small { display: block; margin-top: 8px; font-size: 13px; color: #61715f; }
+    .status { padding: 5px 10px; border: 1px solid #bdcbb3; font-size: 13px; white-space: nowrap; }
+    .completed strong { text-decoration: line-through; color: #687b64; }
+    .completed .status { background: #e3ebda; }
+    .filter-control { padding: 12px 0; font-size: 15px; }
+    #summary { color: #375a32; font-weight: 600; }
+    #empty { padding: 18px 0; }
+    #storage-message:not(:empty) { padding: 12px 16px; background: #f3e4cf; color: #754524; border-left: 3px solid #a16f37; }
+    @media (max-width: 420px) { .status { padding: 4px 6px; font-size: 12px; } label { gap: 12px; } strong { font-size: 17px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>复习清单</h1>
+    <p>用复选框记录每项内容的完成状态。记录保存在当前浏览器中。</p>
+    <p id="summary" role="status" aria-live="polite"></p>
+    <label class="filter-control"><input type="checkbox" id="pending-only">只看未完成</label>
+    <p id="empty" hidden>没有待复习内容</p>
+    <p id="storage-message" role="status" aria-live="polite"></p>
+    <ul id="review-list" aria-label="复习内容"></ul>
+  </main>
+  <script>
+    const storageKey = "gse-review-checklist-1-5";
+    const items = [
+      { id: "r001", title: "复习岩石分类", source: "课堂笔记", completed: false },
+      { id: "r002", title: "复习矿物识别", source: "观察记录", completed: false },
+      { id: "r003", title: "复习岩石分类", source: "练习题", completed: false }
+    ];
+    const list = document.querySelector("#review-list");
+    const message = document.querySelector("#storage-message");
+    const pendingOnly = document.querySelector("#pending-only");
+    const summary = document.querySelector("#summary");
+    const empty = document.querySelector("#empty");
+    const views = [];
+
+    function updateView() {
+      const focused = document.activeElement;
+      const pending = items.filter(item => !item.completed).length;
+      summary.textContent = `待复习 ${pending} 项`;
+      for (const view of views) {
+        view.checkbox.checked = view.item.completed;
+        view.status.textContent = view.item.completed ? "已完成" : "待复习";
+        view.row.classList.toggle("completed", view.item.completed);
+        view.row.hidden = pendingOnly.checked && view.item.completed;
+      }
+      empty.hidden = !pendingOnly.checked || pending > 0;
+      const hiddenFocus = views.some(view => view.checkbox === focused && view.row.hidden);
+      if (hiddenFocus) {
+        const next = views.find(view => !view.row.hidden);
+        (next?.checkbox ?? pendingOnly).focus();
+      }
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(storageKey);
+        if (raw === null) return;
+        const saved = JSON.parse(raw);
+        if (saved === null || typeof saved !== "object" || Array.isArray(saved)) {
+          throw new Error("完成记录格式不正确");
+        }
+        for (const item of items) {
+          item.completed = saved[item.id] === true;
+        }
+      } catch (error) {
+        message.textContent = "无法读取原来的完成记录。当前页面仍可操作，请先检查浏览器存储和原有记录。";
+      }
+    }
+
+    function saveState() {
+      const state = Object.fromEntries(items.map(item => [item.id, item.completed]));
+      try {
+        localStorage.setItem(storageKey, JSON.stringify(state));
+        message.textContent = "";
+      } catch (error) {
+        message.textContent = "记录未保存。当前页面仍可勾选，重新打开时可能无法恢复刚才的操作。";
+      }
+    }
+
+    function render() {
+      list.replaceChildren();
+      views.length = 0;
+      for (const item of items) {
+        const row = document.createElement("li");
+        row.dataset.id = item.id;
+        row.classList.toggle("completed", item.completed);
+        const label = document.createElement("label");
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = item.completed;
+        checkbox.setAttribute("aria-label", `${item.title} / ${item.source} / ${item.id}`);
+
+        const text = document.createElement("span");
+        text.className = "item-text";
+        const title = document.createElement("strong");
+        title.textContent = item.title;
+        const source = document.createElement("small");
+        source.textContent = `${item.source} / ${item.id}`;
+        text.append(title, source);
+        const status = document.createElement("span");
+        status.className = "status";
+        status.textContent = item.completed ? "已完成" : "待复习";
+
+        checkbox.addEventListener("change", () => {
+          item.completed = checkbox.checked;
+          saveState();
+          updateView();
+        });
+        label.append(checkbox, text, status);
+        row.append(label);
+        list.append(row);
+        views.push({ item, row, checkbox, status });
+      }
+      updateView();
+    }
+
+    pendingOnly.addEventListener("change", updateView);
+    loadState();
+    render();
+  </script>
+</body>
+</html>

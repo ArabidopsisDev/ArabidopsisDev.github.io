@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="比较复习进度替换与合并，逐项查看变化，确认或取消导入。">
+  <title>导入复习进度</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 40px 20px; color: #263f34; background: #f5f3eb; font-family: "Segoe UI", "Microsoft YaHei", sans-serif; line-height: 1.8; }
+    main { max-width: 850px; margin: auto; }
+    h1 { font-size: 30px; margin: 0 0 12px; }
+    h2 { font-size: 20px; margin: 0 0 16px; }
+    p { margin: 0 0 18px; }
+    section { padding: 24px; margin-block: 24px; background: #fafbf6; border: 1px solid #c8d2c0; }
+    #current-list { padding: 0; margin: 0 0 16px; list-style: none; }
+    #current-list li { border-bottom: 1px solid #d9dfd2; padding: 14px 0; }
+    #current-list label { display: flex; align-items: center; gap: 14px; cursor: pointer; }
+    #current-list label > span { flex: 1; }
+    #current-list small { display: block; font-size: 12px; color: #66775d; }
+    .state { font-size: 13px; white-space: nowrap; }
+    input[type="checkbox"], input[type="radio"] { width: 20px; height: 20px; flex-shrink: 0; accent-color: #375a32; }
+    select { display: block; width: 100%; font: inherit; color: inherit; background: white; padding: 10px; border: 1px solid #96aa89; margin: 8px 0 22px; }
+    fieldset { margin: 0 0 24px; padding: 18px; border: 1px solid #c8d2c0; }
+    legend { padding-inline: 8px; font-weight: 600; }
+    .mode-option { display: flex; gap: 12px; align-items: flex-start; margin: 8px 0 14px; cursor: pointer; }
+    .mode-option:last-child { margin-bottom: 0; }
+    .mode-option input { margin-top: 5px; }
+    .mode-option small { display: block; color: #66775d; line-height: 1.8; }
+    button { padding: 10px 20px; min-height: 44px; font: inherit; color: #f5f3eb; background: #244c3d; border: 1px solid #244c3d; cursor: pointer; }
+    button.secondary { background: transparent; color: #244c3d; }
+    button:disabled { opacity: .55; cursor: default; }
+    button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid #7d965c; outline-offset: 3px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .table-wrap { overflow-x: auto; margin: 16px 0 22px; }
+    table { width: 100%; border-collapse: collapse; min-width: 510px; text-align: left; font-size: 14px; }
+    th, td { padding: 12px; border-bottom: 1px solid #d1dac7; vertical-align: top; }
+    th { background: #e9eede; }
+    th small, td small { display: block; color: #66775d; }
+    .state-loss { color: #85421f; font-weight: 600; background: #f6e7d2; }
+    #message:not(:empty) { padding: 14px 18px; border-left: 3px solid #708953; background: #e8efdd; }
+    [hidden] { display: none !important; }
+    @media (max-width: 480px) { body { padding: 28px 16px; } section { padding: 18px; } h1 { font-size: 26px; } .state { font-size: 12px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>导入复习进度</h1>
+    <p>进度只保留在当前页面，刷新后恢复初始状态。</p>
+    <section aria-labelledby="current-title">
+      <h2 id="current-title">当前进度</h2>
+      <ul id="current-list"></ul>
+      <p id="current-summary"></p>
+      <button id="reset" class="secondary" type="button">恢复最初进度</button>
+    </section>
+    <section aria-labelledby="incoming-title">
+      <h2 id="incoming-title">准备导入的进度</h2>
+      <label for="incoming">选择一组进度</label>
+      <select id="incoming"><option value="one">只完成矿物识别</option><option value="two">完成矿物识别与练习题</option></select>
+      <fieldset><legend>怎样处理当前记录</legend>
+        <label class="mode-option"><input type="radio" name="mode" value="replace" checked><span>用待导入进度替换<small>当前已完成、待导入进度中未完成的条目，会变回未完成。</small></span></label>
+        <label class="mode-option"><input type="radio" name="mode" value="merge"><span>保留两边已完成项<small>同一项在任意一边已完成，结果就标记为完成。</small></span></label>
+      </fieldset>
+      <button id="preview-button" type="button">查看导入后的变化</button>
+    </section>
+    <section id="preview" aria-labelledby="preview-title" hidden>
+      <h2 id="preview-title" tabindex="-1">确认前查看变化</h2>
+      <p id="preview-summary"></p>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="当前、待导入与确认后的状态对照">
+        <table><thead><tr><th scope="col">复习内容</th><th scope="col">当前</th><th scope="col">待导入</th><th scope="col">确认后</th></tr></thead><tbody id="preview-rows"></tbody></table>
+      </div>
+      <div class="actions"><button id="confirm" type="button">确认替换当前进度</button><button id="cancel" class="secondary" type="button">取消，保留当前进度</button></div>
+    </section>
+    <p id="message" role="status" aria-live="polite"></p>
+  </main>
+  <script>
+    const items = [
+      { id: "r001", title: "复习岩石分类", source: "课堂笔记" },
+      { id: "r002", title: "复习矿物识别", source: "观察记录" },
+      { id: "r003", title: "复习岩石分类", source: "练习题" }
+    ];
+    const initial = { r001: true, r002: false, r003: false };
+    const snapshots = {
+      one: { r001: false, r002: true, r003: false },
+      two: { r001: false, r002: true, r003: true }
+    };
+    let current = { ...initial };
+    let candidate = null;
+    let selectedMode = "replace";
+    const currentList = document.querySelector("#current-list");
+    const summary = document.querySelector("#current-summary");
+    const incomingSelect = document.querySelector("#incoming");
+    const preview = document.querySelector("#preview");
+    const previewButton = document.querySelector("#preview-button");
+    const confirmButton = document.querySelector("#confirm");
+    const message = document.querySelector("#message");
+    const statusText = value => value ? "已完成" : "未完成";
+
+    function updateSummary() {
+      summary.textContent = `当前已完成 ${items.filter(item => current[item.id]).length} 项`;
+    }
+
+    function renderCurrent() {
+      currentList.replaceChildren();
+      for (const item of items) {
+        const row = document.createElement("li");
+        const label = document.createElement("label");
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = current[item.id];
+        checkbox.setAttribute("aria-label", `${item.title} / ${item.source} / ${item.id}`);
+        const text = document.createElement("span");
+        text.textContent = item.title;
+        const source = document.createElement("small");
+        source.textContent = `${item.source} / ${item.id}`;
+        text.append(source);
+        const state = document.createElement("b");
+        state.className = "state";
+        state.textContent = statusText(current[item.id]);
+        checkbox.addEventListener("change", () => {
+          current[item.id] = checkbox.checked;
+          state.textContent = statusText(checkbox.checked);
+          message.textContent = "";
+          updateSummary();
+        });
+        label.append(checkbox, text, state);
+        row.append(label);
+        currentList.append(row);
+      }
+      updateSummary();
+    }
+
+    function lockChoices(locked) {
+      document.querySelectorAll('#current-list input, #incoming, input[name="mode"], #reset, #preview-button')
+        .forEach(control => { control.disabled = locked; });
+    }
+
+    previewButton.addEventListener("click", () => {
+      selectedMode = document.querySelector('input[name="mode"]:checked').value;
+      const incoming = snapshots[incomingSelect.value];
+      candidate = Object.fromEntries(items.map(item => [item.id,
+        selectedMode === "merge" ? current[item.id] || incoming[item.id] : incoming[item.id]
+      ]));
+      const rows = document.querySelector("#preview-rows");
+      rows.replaceChildren();
+      for (const item of items) {
+        const row = document.createElement("tr");
+        const name = document.createElement("th");
+        name.scope = "row";
+        name.textContent = item.title;
+        const source = document.createElement("small");
+        source.textContent = `${item.source} / ${item.id}`;
+        name.append(source);
+        row.append(name);
+        for (const value of [current[item.id], incoming[item.id], candidate[item.id]]) {
+          const cell = document.createElement("td");
+          cell.textContent = statusText(value);
+          row.append(cell);
+        }
+        if (current[item.id] && !candidate[item.id]) {
+          row.lastElementChild.classList.add("state-loss");
+          row.lastElementChild.textContent = "已完成 → 未完成";
+        }
+        rows.append(row);
+      }
+      const changes = items.filter(item => current[item.id] !== candidate[item.id]).length;
+      document.querySelector("#preview-summary").textContent = `确认后将改变 ${changes} 项完成状态。取消会保留当前进度。`;
+      confirmButton.textContent = selectedMode === "merge" ? "确认保留两边已完成项" : "确认替换当前进度";
+      message.textContent = "";
+      lockChoices(true);
+      preview.hidden = false;
+      document.querySelector("#preview-title").focus();
+      preview.scrollIntoView({ block: "start", behavior: "auto" });
+    });
+
+    document.querySelector("#cancel").addEventListener("click", () => {
+      candidate = null;
+      preview.hidden = true;
+      lockChoices(false);
+      message.textContent = "已取消，当前进度保持不变。";
+      previewButton.focus();
+    });
+
+    confirmButton.addEventListener("click", () => {
+      if (!candidate) return;
+      current = { ...candidate };
+      candidate = null;
+      preview.hidden = true;
+      renderCurrent();
+      lockChoices(false);
+      message.textContent = selectedMode === "merge" ? "已在当前页面保留两边已完成项。" : "已替换当前页面中的进度。";
+      previewButton.focus();
+    });
+
+    document.querySelector("#reset").addEventListener("click", () => {
+      current = { ...initial };
+      incomingSelect.value = "one";
+      document.querySelector('input[name="mode"][value="replace"]').checked = true;
+      renderCurrent();
+      message.textContent = "已恢复最初进度。";
+    });
+
+    renderCurrent();
+  </script>
+</body>
+</html>

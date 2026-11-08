@@ -1,0 +1,17 @@
+{
+  "formatVersion": 1,
+  "progress": [
+    {
+      "id": "r001",
+      "completed": true
+    },
+    {
+      "id": "r002",
+      "completed": false
+    },
+    {
+      "id": "r001",
+      "completed": true
+    }
+  ]
+}

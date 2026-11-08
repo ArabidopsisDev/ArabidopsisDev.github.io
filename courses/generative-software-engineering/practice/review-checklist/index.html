@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="复习清单起始项目：显示三项复习内容。">
+  <title>复习清单</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 48px 20px; color: #243e33; background: #f5f3eb; font-family: "Segoe UI", "Microsoft YaHei", sans-serif; }
+    main { max-width: 620px; margin: auto; }
+    h1 { margin: 0 0 16px; font-size: 32px; }
+    p { line-height: 1.8; color: #5a6c61; }
+    ul { padding: 0; margin-top: 28px; list-style: none; border-top: 1px solid #cad3c4; }
+    li { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 24px 0; border-bottom: 1px solid #cad3c4; }
+    .item-text { flex: 1; min-width: 180px; }
+    strong { display: block; font-size: 19px; }
+    small { display: block; margin-top: 8px; font-size: 13px; color: #61715f; }
+    .status { border: 1px solid #bdcbb3; padding: 5px 10px; font-size: 13px; white-space: nowrap; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>复习清单</h1>
+    <p id="summary"></p>
+    <ul id="review-list" aria-label="复习内容"></ul>
+  </main>
+  <script>
+    const items = [
+      { id: "r001", title: "复习岩石分类", source: "课堂笔记" },
+      { id: "r002", title: "复习矿物识别", source: "观察记录" },
+      { id: "r003", title: "复习岩石分类", source: "练习题" }
+    ];
+
+    const list = document.querySelector("#review-list");
+    document.querySelector("#summary").textContent = `${items.length} 项待复习`;
+
+    for (const item of items) {
+      const row = document.createElement("li");
+      row.dataset.id = item.id;
+
+      const text = document.createElement("div");
+      text.className = "item-text";
+      const title = document.createElement("strong");
+      title.textContent = item.title;
+      const source = document.createElement("small");
+      source.textContent = `${item.source} / ${item.id}`;
+      text.append(title, source);
+
+      const status = document.createElement("span");
+      status.className = "status";
+      status.textContent = "待复习";
+      row.append(text, status);
+      list.append(row);
+    }
+  </script>
+</body>
+</html>

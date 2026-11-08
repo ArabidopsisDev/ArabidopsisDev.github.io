@@ -2,7 +2,7 @@
 title: "315\u5316\u5B66\u519C\u5168\u7A0B\u5B66\u4E60\u7B14\u8BB0"
 description: "\u6211\u7684 315 \u5316\u5B66\uFF08\u519C\uFF09\u590D\u4E60\u7B14\u8BB0\uFF01"
 date: 2026-09-26T18:57:00+08:00
-updated: 2026-10-25T20:24:26+08:00
+updated: 2026-11-05T13:11:28+08:00
 tags:
   - agriculture
   - chemistry
@@ -17,6 +17,8 @@ projectId: "chemistry-315"
 ## 第一章 分散系
 
 > 君家猪红腊前作，是时雪没吴山脚。
+
+在冷冻技术尚不成熟的古代，古人常常喜欢将视频腌制储存，例如咸鱼、腊肉等等。一方面腌制食品的口味相当不错，另一方面相比于正常状态的食物，腌制食品不容易放坏。
 
 为什么腌制食品不容易放坏呢？
 
@@ -873,6 +875,440 @@ $$
 
 ## 第三章 化学动力学
 
-> 野火烧不尽，春风吹又生。
+> 问渠那得清如许？为有源头活水来。
+
+水是生命的源泉，氢气和氧气可以发生反应生成水：
+
+$$
+2\text{H}_2\text{(g)} + \text{O}_2\text{(g)} = 2\text{H}_2\text{O(l)} \tag*{$\Delta_r H_m^\ominus$}
+$$
+
+这个条件在什么条件下能够进行？向体系内投入氢气与氧气，虽然反应的 $\Delta_r G_m^\ominus$ 极大，也就是说这个反应有非常显著的正向进行趋势。但是我们知道，这个反应在常温常压下反应极慢，反而在点燃后能够瞬间反应，这又是为什么？
 
 ### 化学平衡
+
+当反应的 $\Delta_r G_m^\ominus=0$ 时，会进入一个特殊的状态，这时反应既不会正向进行又不会逆向进行，我们称此时达到了**化学平衡**状态。但是我们实际上遇到的化学反应很多都不会在标准状态，例如对于反应
+
+$$
+\text{N}_2+3\text{H}_2 \rightleftharpoons 2\text{NH}_3 
+$$
+
+而言，当且仅当 $p(\text{N}_2) = p(\text{H}_2) = p(\text{NH}_3) = 10^5 \text{Pa}$ 时，才是标准状态，那么如果对于一开始投入1mol氮气和3mol氢气的情况呢？这自然不是标准状况，好在我们可以使用**化学等温方程式**来处理。
+
+$$
+\Delta_r G_m(T) = \Delta_r G_m(T)^\ominus + RT\ln Q
+$$
+
+当系统在某个状态下达到平衡时，显见 $\Delta_r G_m(T) = 0$，此时 $\Delta_r G_m(T)^\ominus = -RT\ln Q$。由于处于平衡态比较特殊，我们把此时的反应商 $Q$ 记作平衡时的反应商 $K^\ominus$，移项可得
+
+$$
+\boxed{\ln K^\ominus = -\frac{\Delta_r G_m(T)^\ominus}{RT}}
+$$
+
+在该状态下，当且仅当 $Q=K^\ominus$ 时，化学反应达到平衡状态，因此又称 $K^\ominus$ 为**标准平衡常数**。使用标准平衡常数时，由于标准平衡常数由 $\Delta_r G_m(T)^\ominus$ 推导而来，应特别注意：
+
+1. 由于上式为温度的函数，因此 $K^\ominus$ 与温度有关，且仅与温度有关。
+2. 由于上式由 $\Delta_r H_m^\ominus$ 与 $\Delta_r S_m^\ominus$ 组成，上一章已说明该数值跟具体化学方程式相关，因此 $K^\ominus$ 与具体化学方程式系数相关，具体来说，如果化学计量数为原来写法的 $n$ 倍，那么标准平衡常数变为原来的 $n$ 次幂：
+
+$$
+\ln K'^\ominus = -\frac{n\Delta_r G_m(T)^\ominus}{RT} \implies K'^\ominus = e^{n} \ln K^\ominus
+$$
+
+3. 固体、液体、溶剂水不写入平衡常数表达式。
+
+::: question 例题 类型=解答题
+一氧化碳可使人中毒，这是因为血红蛋白即可以与氧气结合，也可以与一氧化碳结合。
+
+$$
+\text{CO(g)} + \text{Hem·O}_2\text{(aq)} = \text{O}_2\text{(g)} + \text{Hem·CO(aq)} \tag*{$K^\ominus(310\text{K})=210$}
+$$
+
+实验证明，若有 10% 的氧合血红蛋白转化为一氧化碳合血红蛋白，就会引起危险，计算空气中 CO 的体积分数达到多少，会对人造成危险。
+:::
+
+一个反应要像稳定就必须处于平衡状态，本例中
+
+$$
+Q = \frac{\frac{p(\text{CO}(\text{g}))}{p^\ominus} \frac{c(\text{Hem·O}_2\text{(aq)})}{c^\ominus}}{\frac{p(\text{O}_2(\text{g}))}{p^\ominus} \frac{c(\text{Hem·CO}\text{(aq)})}{c^\ominus}} = K^\ominus
+$$
+
+为了表示方便，设 $\text{std}$ 函数表示某物质化为标准的浓度或气压，下同。值得说明的是，化学中不存在这么一个函数，这只是为了我们的方便，不要在任何地方使用这个表示法。
+
+$$
+\text{std}(\text{X}) = \frac{p(\text{X}\text{(g))}}{p^\ominus} \veebar \frac{c(\text{X}\text{(aq))}}{c^\ominus}
+$$
+
+我们的目的就求空气中 CO 的体积分数，也就是其分压 $\text{std}(\text{CO})$。这里有一个已知条件，就是氧气占空气的约 21%，因此氧气的分压 $\text{std}(\text{O}_2) = 0.21$。在题述条件下，有 10% 的氧合血红蛋白转化为一氧化碳合血红蛋白，即：
+
+$$
+\frac{\text{std}{(\text{Hem·CO}(\text{aq}))}}{\text{std}{(\text{Hem·O}_2(\text{aq}))}} = \frac{1}{9}
+$$
+
+将上述数据代入平衡常数表达式：
+
+$$
+\frac{0.21}{9 \text{std}(\text{CO})} = 210
+$$
+
+解得 $\text{std}(\text{CO)} = \frac{p(\text{CO(g)})}{p^\ominus} \sim 10^{-4}$，因此含量达到万分之一就会有危险。
+
+在进行平衡计算时，常常使用中学时常用的“三段式”方法。
+
+::: question 例题 类型=解答题
+298.15K 时，反应
+$$
+\text{Ag}^+(\text{aq}) + \text{Fe}^{2+}(\text{aq}) = \text{Ag(s)} +  \text{Fe}^{3+}(\text{aq}) 
+$$
+的标准平衡常数 $K^\ominus=3.2$。若反应前 $c(\text{Ag}^+) = c(\text{Fe}^{2+}) = 0.100\text{mol/L}$，计算平衡时各离子的浓度。
+:::
+
+
+不妨设转化的物质的量为 $x$，列出三段式（单位：$\text{mol/L}$）
+
+
+$$
+\begin{array}{c|ccccccc}
+ & \mathrm{Ag^+(aq)} & + & \mathrm{Fe^{2+}(aq)} & \rightleftharpoons & \mathrm{Ag(s)} & + & \mathrm{Fe^{3+}(aq)} \\
+\hline
+\text{始} & 0.1 & & 0.1 & & 0 & & 0 \\
+\text{转} & -x & & -x & & +x & & +x \\
+\text{平} & 0.1-x & & 0.1-x & & x & & x
+\end{array}
+$$
+
+平衡时，有
+
+$$
+\frac{x^2}{(0.1-x)^{2}} = K^\ominus
+$$
+
+解得 $x=0.02$，代入平衡时各离子表达式即可求得浓度。
+
+
+由于 $K^\ominus$ 是由 $\Delta_r G_m^\ominus$ 导出的量，因此标准平衡常数也可以表示反应的自发性，由化学等温方程式得：
+
+$$
+\Delta_r G_m(T) = \Delta_r G_m^\ominus(T) + RT\ln Q
+$$
+
+由于 $\Delta_r G_m^\ominus(T) = RT \ln K^\ominus$，因此
+$$
+\Delta_r G_m(T) = -RT \ln K^\ominus + RT\ln Q = RT\ln(\frac{Q}{K^\ominus}) 
+$$
+
+因此，当 $Q > K^\ominus$，$\Delta_r G_m(T) > 0$，反应逆向自发进行；$Q < K^\ominus$，$\Delta_r G_m(T) < 0$，反应正向自发进行；当 $Q=K^\ominus$，反应达到平衡状态。
+
+### 多重平衡系统
+
+很多时候，一个化学平衡系统常常包含多个彼此相关的平衡，也就是说系统中有物质参与了多个平衡反应，此时平衡系统称为**多重平衡系统**。例如，碳在氧气中燃烧时，部分碳必然燃烧不完全生成一氧化碳，体系中存在反应：
+
+$$
+\text{C(s)}+\frac{1}{2} \text{O}_2\text{(g)} \tag*{$K^\ominus(1)$} = \text{CO(g)}
+$$
+
+
+$$
+\text{CO(g)} + \frac{1}{2} \text{O}_2\text{(g)} = \text{CO}_2\text{(g)} \tag*{$K^\ominus(2)$}
+$$
+
+$$
+\text{C(s)} + \text{O}_2\text{(g)} = \text{CO}_2\text{(g)} \tag*{$K^\ominus(3)$}
+$$
+
+对上述三个反应而言，显然有反应(3)=反应(1)+反应(2)，那么它们之间的平衡常数有什么关系呢，不妨写出上述三个反应的平衡常数表达式：
+
+$$
+\Delta_r G_m^\ominus(1) = - RT \ln K^\ominus(1)
+$$
+
+$$
+\Delta_r G_m^\ominus(2) = - RT \ln K^\ominus(2)
+$$
+
+$$
+\Delta_r G_m^\ominus(3) = - RT \ln K^\ominus(3)
+$$
+
+由于 $\Delta_r G_m^\ominus(3) = \Delta_r G_m^\ominus(1) + \Delta_r G_m^\ominus(2)$，所以
+
+$$
+-RT \ln K^\ominus(3) = -RT( \ln K^\ominus(1) + \ln K^\ominus(2)) \implies \ln K^\ominus(3)  = \ln K^\ominus(1) + \ln K^\ominus(2)
+$$
+
+由对数性质
+
+$$
+\boxed{K^\ominus(3) = K^\ominus(1) \cdot  K^\ominus(2)}
+$$
+
+因此，**总反应的标准平衡常数等于各个分反应的标准平衡常数之乘积**。
+
+### 化学平衡的移动
+
+当改变外界条件时，化学平衡将发生移动。一切化学平衡的移动遵循**Le Chatelier原理**，化学平衡永远向抵消外界影响的方向移动。接下来我们将从各个因素对化学平衡的影响出发来验证这个原理。对于反应：
+
+
+$$
+a\text{A} + b\text{B} = y\text{Y} + z\text{Z} \tag*{$\Delta_r H_m^\ominus$}
+$$
+
+
+首先，各个物质的浓度将影响化学平衡。由于
+
+$$
+Q = \frac{\text{std(z)}^z\text{std(y)}^y}{\text{std(a)}^a\text{std(b)}^b}
+$$
+
+由外界投入反应物，$Q$ 的分母增大，$Q$ 减小，由于平衡时 $Q=K^\ominus$，因此投入反应物 $Q<K^\ominus$，反应正向移动，反之平衡反向移动。由勒夏特列原理，加入反应物，反应应该朝着抵消外界作用的方向变化，也就是消耗反应物形成生成物，与原理相符。
+
+在有气体参与的化学反应中，改变压力也会对平衡造成影响。仅讨论在**改变平衡体系体积**使系统总压力发生变化时对化学平衡移动的影响。假设体积被减小了 $n$ 倍，那么压力就增大了 $n$ 倍。也就是说，各物质分压增大了 $n$ 倍。
+
+$$
+Q' = \frac{n^z\text{std(z)}^zn^y\text{std(y)}^y}{n^a\text{std(a)}^an^b\text{std(b)}^b} = n^{z+y-a-b} Q
+$$
+
+即
+
+$$
+\boxed{Q' = n^{\sum_B \nu_B} Q}
+$$
+
+当 $n^{\sum_B \nu_B}$ 增大时，$Q$ 增大，此时 $Q > K^\ominus$，因此反应逆向移动。由于函数 $f(x) = n^x$ 是指数函数，因此该式增大有两种情况：
+
+1. $n >1, \sum_B \nu_B>0$，即压力增大，生成物总计量数大于反应物；
+2. $n <1, \sum_B \nu_B<0$，即压力减小，生成物总计量数小于反应物。
+
+分类讨论勒夏特列原理。对于情况1，压力增大，为了抵消压力增大的外界条件，反应应该向压力小的方向移动，也就是应该向生成气体较少的一方移动，由于生成物总计量数大于反应物，所以较少的一方是反应物，即平衡逆向移动。对于情况2，压力减小，为了抵消压力减小的外界条件，反应应该向压力大的方向移动，也就是应该向生成气体较多的一方移动，由于生成物总计量数小于反应物，所以较多的一方是反应物，即平衡正向移动。综上所述，均符合勒夏特列原理。对于减小的情况，反之亦然。
+
+最后是最复杂的一种情况，温度，由 $K^\ominus$ 的导出式可知，标准平衡常数与温度直接相关，但是好处也就是说，我们可以直接导出标准平衡常数与温度的关系式。我们已经知道：
+
+$$
+\Delta_r G_m^\ominus(T) = \Delta_r H_m^\ominus - T\Delta_r S_m^\ominus
+$$
+
+$$
+\ln K^\ominus(T) = -\frac{\Delta_r G_m^\ominus(T)}{RT}
+$$
+
+联立上式可得
+
+$$
+\boxed{\ln K^\ominus(T) = -\frac{\Delta_r H_m^\ominus}{RT} + \frac{\Delta_r S_m^\ominus}{R}}
+$$
+
+这个公式也被称为**van't Hoff**方程式，可见 $\ln K^\ominus(T)$ 与 $\frac{1}{T}$ 成线性关系，其中：
+
+$$
+k = -\frac{\Delta_r H_m^\ominus}{R},\> b = \frac{\Delta_r S_m^\ominus}{R}
+$$
+
+因此，$\Delta_r H_m^\ominus>0$ 时，斜率 $k<0$，因此函数是减函数，随着温度的升高，$\ln K^\ominus$ 增大（注意：横轴是温度的**倒数**），此时 $Q < K^\ominus$，因此平衡正向移动。根据勒夏特列原理，反应吸热，所以温度上升，应该通过吸热的方式抵抗环境温度的上升，反应正向移动，勒夏特列原理成立，反之亦然。
+
+![科学示意图-1c65d47ccf1645e4b8fa9298ac6b10c9](/assets/blog-projects/chemistry-315/%E7%A7%91%E5%AD%A6%E7%A4%BA%E6%84%8F%E5%9B%BE-1c65d47ccf1645e4b8fa9298ac6b10c9.svg)
+
+上面我们已经看了对化学平衡产生影响的所有因素，并一一验证了勒夏特列原理。勒夏特列原理最重要的一点就是，我们不必再记忆这些移动的具体机理，只需要记住一句话：**化学平衡永远向抵消外界影响的方向移动。**
+
+::: question 例题 类型=解答题
+已知反应
+$$
+\text{N}_2\text{(g)}+3\text{H}_2\text{(g)}=2\text{NH}_3\text{(g)}
+$$
+
+该反应的 $\Delta_r H_m^\ominus=-92.2\text{kJ·mol}^{-1}$，$K^\ominus(298.15\text{K})=6.2×10^5$，计算该反应在 473K 时标准平衡常数。
+:::
+
+对两个温度分别列化学等温方程式：
+
+$$
+\ln K^\ominus(1) = -\frac{\Delta_r H_m^\ominus}{RT_1} + \frac{\Delta_r S_m^\ominus}{R}
+$$
+
+$$
+\ln K^\ominus(2) = -\frac{\Delta_r H_m^\ominus}{RT_2} + \frac{\Delta_r S_m^\ominus}{R}
+$$
+
+
+由于两式都有共同项，考虑作差：
+
+$$
+\ln K^\ominus(2) - \ln K^\ominus(1) = -\frac{\Delta_r H_m^\ominus}{R}(\frac{1}{T_2} - \frac{1}{T_1})
+$$
+
+对右侧通分得
+
+$$
+\boxed{\ln \frac{K^\ominus(2)}{K^\ominus(1)} = \frac{\Delta_r H_m^\ominus}{R} \frac{T_2-T_1}{T_1T_2}}
+$$
+
+这个式子中，包含了五个未知数，可以根据四个求出另外一个，不过它最多用途就是求解不同温度下的 $\ln K(T)^\ominus$。
+
+本题中显然
+
+$$
+\boxed{\ln \frac{K^\ominus(473\text{K})}{6.2×10^5} = \frac{-92.2\text{kJ·mol}^{-1}}{8.314\text{J·mol}^{-1}·\text{K}^{-1}} \frac{473\text{K}-298.15\text{K}}{473\text{K} \cdot 298.15\text{K}}}
+$$
+
+解得 $K^\ominus(473\text{K}) = 0.62$。
+
+### 化学反应的速率
+
+我们现在解决了化学反应方向的问题，但是还是没有回答一个重要的疑问：为什么有些反应的 $\Delta_r G_m^\ominus$（$K^\ominus$） 极大，也就是说这个反应有非常显著的正向进行趋势。但是这个反应在常温常压下反应极慢，反而在特殊条件下后能够瞬间反应？
+
+这是因为，除了方向外，化学反应还有一个重要的——**速率**。不同的化学反应，酸碱中和反应可以很快完成，而塑料袋的降解却需要几十甚至上百年。即使是同一反应，在不同条件下的反应速率也会天差地别。
+
+通常用单位时间内的反应物或者生成物的浓度变化来表示化学反应速率。例如在 $\text{I}^-$ 作用下的过氧化氢分解反应：
+
+$$
+2\text{H}_2\text{O}_2(\text{aq}) \xrightarrow{\text{I}^-} 2\text{H}_2\text{O}(\text{l}) + \text{O}_2(\text{g})
+$$
+
+在体系中加入 $0.8\text{mol/L}$ 的过氧化氢溶液，20分钟后测得过氧化氢的浓度为 $0.4\text{mol/L}$，那么过氧化氢在 20 分钟内的平均反应速率就为
+
+$$
+\bar{v} = -\frac{\Delta c}{\Delta t} = -\frac{0.4\text{mol/L} - 0.8\text{mol/L}}{20\text{min}} = 0.020 \text{mol·L}^{-1}\text{·min}^{-1}
+$$
+
+如果再往后测20分钟，那么可以继续计算20-40分钟的平均反应速率，甚至可以画成一个图像。但是无论如何我们测定的都是一段时间内的平均速率，这个速率是不断变化的，那么如何测定在某一瞬间的反应速率呢？
+
+事实上，某一瞬间的反应速率就是 $\Delta t$ 趋近于0时的平均反应速率，这正是导数的定义。也就是说，瞬时速率
+
+$$
+v = \pm \lim_{\Delta t \to 0 } \frac{\Delta c}{\Delta t} = \pm \frac{\mathrm{d} c}{\mathrm{d} t}
+$$
+
+还记得我们在推导标准摩尔反应焓时的一个关键步骤吗？由于各物质存在化学计量数，所以我们需要将原有式除以一个物质的化学计量数，这样用反应中的任何一种物质计量，都不会出现反应速率不一致的问题。对于物质B而言:
+
+$$
+\boxed{v = \frac{\mathrm{d} c}{\nu_B \mathrm{d} t}}
+$$
+
+但是这个公式其实并没有什么作用，因为一般我们会用**质量作用定律**来求解化学反应速率。实验证明，有些反应从反应物转化为生成物，是一步完成的，这样的反应称为**基元反应**，而大多数反应是非基元反应。例如，反应
+
+$$
+2\text{N}_2\text{O}_5\text{(g)} = 4\text{NO}_2\text{(g)}+\text{O}_2\text{(g)}
+$$
+
+是由下列三个基元反应构成的：
+
+$$
+\text{N}_2\text{O}_5 \rightleftharpoons \text{NO}_2 + \text{NO}_3 \tag{1}
+$$
+
+$$
+\text{NO}_2 + \text{NO}_3 = \text{NO} + \text{NO}_2 + \text{O}_2 \tag{2}
+$$
+
+$$
+\text{NO}_3 = 2\text{NO}_2 \tag{3}
+$$
+
+对于基元反应
+
+$$
+a\text{A} + b\text{B} = y\text{Y} + z\text{Z} \tag*{$\Delta_r H_m^\ominus$}
+$$
+
+而言，质量作用定律指出，其瞬时反应速率于反应物的浓度有密切联系。
+
+$$
+\boxed{v = kc^a\text{(A)}c^b\text{(B)}}
+$$
+
+式中，$k$ 为速率常数，这个常数由反应物的本性决定，与浓度无关。改变温度或使用催化剂，速率常数会发生变化，这个我们在中学就已经多次提到过。
+
+而对于非基元反应而言，速率方程的指数就不由反应物的化学计量数决定了。
+
+$$
+v = kc^m\text{(A)}c^n\text{(B)}
+$$
+
+指数 $m,n$ 直接由实验测定，下面的例题演示了这一点。
+
+::: question 例题 类型=解答题
+300K 时，乙醛分解反应
+
+$$
+\text{CH}_3\text{CHO}\text{(g)}=\text{CH}_4\text{(g)} + \text{CO}\text{(g)}
+$$
+
+反应速率与乙醛浓度的关系如下表所示：
+
+
+| $c(\text{CH}_3\text{CHO}) / (\text{mol}\cdot\text{L}^{-1})$ | &emsp; | 0.10 | 0.20 | 0.30 | 0.40 |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| $v / (\text{mol}\cdot\text{L}^{-1}\cdot\text{s}^{-1})$ |&emsp; | 0.025 | 0.102 | 0.228 | 0.406 |
+
+（1）写出反应的速率方程；
+
+（2）求速率常数 $k$；
+
+（3）求 $c(\text{CH}_3\text{CHO})=0.25 \text{mol·L}^{-1}$ 时的反应速率。
+:::
+
+（1）该反应显然不是基元反应，反应的速率方程为：
+
+$$
+v= kc^m(\text{CH}_3\text{CHO})
+$$
+
+有两个未知数，选取两个数据列方程组：
+
+\begin{cases}
+  0.025 = (0.1)^mk \\
+  0.102 = (0.2)^mk
+\end{cases} \implies 2^m=4
+
+因此 $m=2$，反应的速率方程为：
+
+$$
+v = kc^2(\text{CH}_3\text{CHO})
+$$
+
+（2）接下来向方程中代入一组数据，代入 $v=0.025,c=0.10$：
+$$
+0.025 = (0.10)^2k
+$$
+
+解得 $k = 2.5$，需要特别注意的是 $k$ 的单位，速率方程式的指数之和称为反应的**级数**，级数不同的反应， $k$ 的单位是不同的。不妨假设只有一种反应物，对于0级反应：
+
+$$
+v = k
+$$
+
+其中 $v$ 是反应速率，因此 $k$ 的单位是 $\text{mol·L}^{-1}\text{·s}^{-1}$，而对于1级反应而言：
+
+$$
+v = kc
+$$
+
+此时 $k$ 的单位为 $\text{mol·L}^{-1}\text{·s}^{-1}$ 除以 $\text{mol·L}^{-1}$，因此为 $\text{s}^{-1}$。对于二级反应：
+
+$$
+v = kc^2
+$$
+
+此时 $k$ 的单位为 $\text{mol·L}^{-1}\text{·s}^{-1}$ 除以 $\text{mol}^2\text{·L}^{-2}$ 等于 $\text{mol}^{-1}\text{·L·s}^{-2}$。 可以推导，对于 $n$ 级反应
+
+$$
+v = kc^n
+$$
+
+而言，$k$ 的单位为：
+
+$$
+\frac{\text{mol·L}^{-1}\text{·s}^{-1}}{\text{mol}^n\text{·L}^{-n}} = \text{mol}^{-(n-1)}·\text{L}^{n-1}·\text{s}^{-1}
+$$
+
+这个公式看看就好，没必要背过，因为推导一下单位还是很简单的。回到原题，由于反应是2级反应，因此 $k=2.5 \text{mol}^{-1}\text{·L·s}^{-2}$。
+
+（3）现在化学反应的速率表达式就已经完整了，把 $c(\text{CH}_3\text{CHO})=0.25 \text{mol·L}^{-1}$ 代入即可计算。
+
+$$
+v = 0.25×c^2(\text{CH}_3\text{CHO}) = 0.156\text{mol·L}^{-1}
+$$
+
+### 温度对速率的影响
+
+温度会对化学反应的速率产生影响，这是由化学反应的机理决定的。一方面，对于气相基元反应 $\text{A+B}\rightarrow \text{C}$，认为反应物分子A和B只有相互碰撞才能反应，碰撞的要求是**有效碰撞**，即合适的碰撞方位和足够的能量。升高温度，分子热运动加剧，有效碰撞自然增多。
+
+另一方面，过渡态理论认为，在反应过程中，反应物必须吸收能量达到过渡态，之后再转换为生成物。

@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 850" width="1000" height="850" role="img" aria-labelledby="title desc">
+<title id="title">RUP 的阶段、迭代与工作类别</title>
+<desc id="desc">项目按初始、细化、构建和移交阶段推进。每个阶段内部安排迭代，需求、设计、实现、测试和交付准备会随阶段目标继续进行。阶段结束时评审是否继续。</desc>
+<style>text{font-family:"Segoe UI","Microsoft YaHei",sans-serif;fill:#173f35}.phase{font-size:25px;font-weight:650}.en{font-size:15px;fill:#60705c}.body{font-size:17px;fill:#435a42}.label{font-size:18px;font-weight:600}.small{font-size:16px;fill:#556a4d}</style>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M2 1L8 5 2 9" fill="none" stroke="#6b8357" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<rect width="1000" height="850" fill="#f8f7f0"/>
+<text x="24" y="49" class="label">项目阶段</text>
+<text x="24" y="191" class="small">工作类别</text>
+<rect x="153" y="20" width="199" height="655" rx="12" fill="#edf0e5"/>
+<text x="252.5" y="53" text-anchor="middle" class="phase">初始</text><text x="252.5" y="80" text-anchor="middle" class="en">Inception</text>
+<text x="252.5" y="111" text-anchor="middle" class="body">确定投入理由</text>
+<text x="252.5" y="136" text-anchor="middle" class="body">划定首版范围</text>
+<g transform="translate(180.5 155)" fill="none" stroke="#6b8357" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8A10 10 0 1 0 22 20M21 3V8H16"/></g><text x="260.5" y="179" text-anchor="middle" class="small">安排迭代</text>
+<rect x="358" y="20" width="199" height="655" rx="12" fill="#e3ecde"/>
+<text x="457.5" y="53" text-anchor="middle" class="phase">细化</text><text x="457.5" y="80" text-anchor="middle" class="en">Elaboration</text>
+<text x="457.5" y="111" text-anchor="middle" class="body">验证关键做法</text>
+<text x="457.5" y="136" text-anchor="middle" class="body">确定后续方案</text>
+<g transform="translate(385.5 155)" fill="none" stroke="#6b8357" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8A10 10 0 1 0 22 20M21 3V8H16"/></g><text x="465.5" y="179" text-anchor="middle" class="small">安排迭代</text>
+<rect x="563" y="20" width="199" height="655" rx="12" fill="#e9eee3"/>
+<text x="662.5" y="53" text-anchor="middle" class="phase">构建</text><text x="662.5" y="80" text-anchor="middle" class="en">Construction</text>
+<text x="662.5" y="111" text-anchor="middle" class="body">完成首版功能</text>
+<text x="662.5" y="136" text-anchor="middle" class="body">集成并测试代码</text>
+<g transform="translate(590.5 155)" fill="none" stroke="#6b8357" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8A10 10 0 1 0 22 20M21 3V8H16"/></g><text x="670.5" y="179" text-anchor="middle" class="small">安排迭代</text>
+<rect x="768" y="20" width="199" height="655" rx="12" fill="#f1ebdd"/>
+<text x="867.5" y="53" text-anchor="middle" class="phase">移交</text><text x="867.5" y="80" text-anchor="middle" class="en">Transition</text>
+<text x="867.5" y="111" text-anchor="middle" class="body">在实际设备试用</text>
+<text x="867.5" y="136" text-anchor="middle" class="body">完成交付与维护移交</text>
+<g transform="translate(795.5 155)" fill="none" stroke="#6b8357" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8A10 10 0 1 0 22 20M21 3V8H16"/></g><text x="875.5" y="179" text-anchor="middle" class="small">安排迭代</text>
+<text x="24" y="247" class="label">需求</text>
+<text x="170" y="236" class="body">明确同步目的</text>
+<text x="170" y="265" class="body">讨论使用方式</text>
+<text x="375" y="236" class="body">补充冲突规则</text>
+<text x="375" y="265" class="body">确定失败后的处理</text>
+<text x="580" y="236" class="body">细化本次功能</text>
+<text x="580" y="265" class="body">核对已有要求</text>
+<text x="785" y="236" class="body">收集试用问题</text>
+<text x="785" y="265" class="body">确认使用结果</text>
+<text x="24" y="337" class="label">分析与设计</text>
+<path d="M22 296H972" stroke="#d7dfcf" stroke-width="1"/>
+<text x="170" y="326" class="body">比较文件与同步</text>
+<text x="170" y="355" class="body">了解运行条件</text>
+<text x="375" y="326" class="body">确定读写流程</text>
+<text x="375" y="355" class="body">验证代码分工</text>
+<text x="580" y="326" class="body">完善冲突处理</text>
+<text x="580" y="355" class="body">记录方案变化</text>
+<text x="785" y="326" class="body">调整运行安排</text>
+<text x="785" y="355" class="body">解决环境问题</text>
+<text x="24" y="427" class="label">实现</text>
+<path d="M22 386H972" stroke="#d7dfcf" stroke-width="1"/>
+<text x="170" y="416" class="body">试验进度保存方法</text>
+<text x="170" y="445" class="body">准备试验代码</text>
+<text x="375" y="416" class="body">实现核心读写</text>
+<text x="375" y="445" class="body">编写版本检查</text>
+<text x="580" y="416" class="body">补齐首版功能</text>
+<text x="580" y="445" class="body">集成双方代码</text>
+<text x="785" y="416" class="body">修复试用问题</text>
+<text x="785" y="445" class="body">准备发布版本</text>
+<text x="24" y="517" class="label">测试</text>
+<path d="M22 476H972" stroke="#d7dfcf" stroke-width="1"/>
+<text x="170" y="506" class="body">确定预期结果</text>
+<text x="170" y="535" class="body">尝试已有实验</text>
+<text x="375" y="506" class="body">验证关键操作</text>
+<text x="375" y="535" class="body">记录实际结果</text>
+<text x="580" y="506" class="body">测试新增功能</text>
+<text x="580" y="535" class="body">重测已有操作</text>
+<text x="785" y="506" class="body">在目标设备运行</text>
+<text x="785" y="535" class="body">核对交付条件</text>
+<text x="24" y="607" class="label">交付准备</text>
+<path d="M22 566H972" stroke="#d7dfcf" stroke-width="1"/>
+<text x="170" y="596" class="body">了解使用设备</text>
+<text x="170" y="625" class="body">讨论维护条件</text>
+<text x="375" y="596" class="body">试验目标环境</text>
+<text x="375" y="625" class="body">确定保存位置</text>
+<text x="580" y="596" class="body">整理操作说明</text>
+<text x="580" y="625" class="body">准备备份与恢复</text>
+<text x="785" y="596" class="body">交给使用者试用</text>
+<text x="785" y="625" class="body">移交代码与运行说明</text>
+<text x="24" y="722" class="label">阶段结束</text><text x="24" y="748" class="small">评审后决定</text><path d="M180 705H955" fill="none" stroke="#8da17b" stroke-width="2" marker-end="url(#arrow)"/>
+<circle cx="252.5" cy="705" r="7" fill="#f8f7f0" stroke="#527650" stroke-width="2.5"/>
+<text x="252.5" y="743" text-anchor="middle" class="body">目标与范围</text>
+<text x="252.5" y="771" text-anchor="middle" class="body">是否可以接受？</text>
+<circle cx="457.5" cy="705" r="7" fill="#f8f7f0" stroke="#527650" stroke-width="2.5"/>
+<text x="457.5" y="743" text-anchor="middle" class="body">关键做法</text>
+<text x="457.5" y="771" text-anchor="middle" class="body">是否经过验证？</text>
+<circle cx="662.5" cy="705" r="7" fill="#f8f7f0" stroke="#527650" stroke-width="2.5"/>
+<text x="662.5" y="743" text-anchor="middle" class="body">首版功能</text>
+<text x="662.5" y="771" text-anchor="middle" class="body">是否具备试用条件？</text>
+<circle cx="867.5" cy="705" r="7" fill="#f8f7f0" stroke="#527650" stroke-width="2.5"/>
+<text x="867.5" y="743" text-anchor="middle" class="body">使用者</text>
+<text x="867.5" y="771" text-anchor="middle" class="body">能否实际使用？</text>
+<path d="M165 805H973" stroke="#d3ddc9"/><text x="165" y="833" class="small">评审发现目标尚未达到时，调整当前阶段的迭代计划，根据新计划继续开发。</text></svg>
