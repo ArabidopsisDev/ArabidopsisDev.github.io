@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ReciteHelper 是一款 Windows 课程复习软件。用课程资料和规则建题，按小问批改，再由 FSRS-6 和 cFSRS 安排下一次复习。">
+  <meta name="theme-color" content="#f7f4f6">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ReciteHelper | 课程复习与模拟考试">
+  <meta property="og:description" content="从课程资料到题库。根据答题表现预测记忆，优先复习薄弱小问。">
+  <meta property="og:url" content="https://arabid.top/projects/recitehelper/">
+  <meta property="og:image" content="https://arabid.top/projects/recitehelper/assets/smart-review.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://arabid.top/projects/recitehelper/">
+  <link rel="icon" href="./assets/recitehelper.ico">
+  <link rel="stylesheet" href="./assets/recitehelper.css">
+  <script src="./assets/recitehelper.js" defer></script>
+  <title>ReciteHelper | 课程复习与模拟考试</title>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <header class="site-header">
+    <div class="shell masthead">
+      <a class="brand" href="../../"><img src="./assets/recitehelper.ico" alt="" width="27" height="27">Arabidopsis</a>
+      <nav aria-label="页面导航">
+        <a href="#review">复习算法</a>
+        <a href="#dashboard">看板</a>
+        <a href="#workflow">功能</a>
+        <a class="nav-download" href="#download">下载</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero shell" aria-labelledby="product-name">
+      <div class="hero-intro">
+        <div>
+          <p class="product-category">Windows 课程复习软件</p>
+          <h1 id="product-name">ReciteHelper</h1>
+        </div>
+        <div class="hero-description">
+          <p>用课程资料建题，按小问作答和批改。FSRS-6 估计你现在还能记住多少，cFSRS 据此安排要优先复习的小问。</p>
+          <div class="actions">
+            <a class="button button-primary" href="#review">看看复习怎么排</a>
+            <a class="button button-quiet" href="#download">下载 Windows 版</a>
+          </div>
+        </div>
+      </div>
+      <figure class="hero-figure">
+        <div class="hero-stage">
+          <a href="./assets/smart-review.png" aria-label="查看智能复习实机原图"><img src="./assets/smart-review.png" width="1400" height="925" alt="农业昆虫学的智能复习页面。当前练习叶蝉科成虫形态，下方显示三次作答的得分变化。" fetchpriority="high"></a>
+        </div>
+        <figcaption><span>农业昆虫学 / 智能复习</span><span>查看历次得分，再作答</span></figcaption>
+      </figure>
+    </section>
+
+    <section class="review-band" id="review" aria-labelledby="review-title">
+      <div class="shell review-layout">
+        <div class="review-intro">
+          <h2 id="review-title">下一道复习题怎么选？</h2>
+          <p>批改结果告诉软件哪些要点还没掌握，记忆模型估计这些要点隔了几天还能想起多少。两者共同决定复习顺序。</p>
+          <dl class="review-methods">
+            <div>
+              <dt>FSRS-6 预测遗忘</dt>
+              <dd>作答后更新难度和记忆稳定性，再根据间隔计算当前回忆概率。软件以 90% 为默认目标，估算下一次复习的时间。一个项目积累足够记录后，可以用自己的数据重新拟合参数。</dd>
+            </div>
+            <div>
+              <dt>cFSRS 调度小问</dt>
+              <dd>多问文字题可按小问建立独立的记忆记录。排题时合并小问的分值权重、上次计分和当前回忆概率。智能复习从整个项目里选题，并轮换来自不同原题的小问。</dd>
+            </div>
+          </dl>
+        </div>
+
+        <figure class="memory-example" data-memory-example>
+          <figcaption>
+            <p class="example-label">用一道题试算</p>
+            <h3>天牛科成虫与幼虫的形态</h3>
+            <p>设成虫小问答对，幼虫小问只答出一半要点。两问分别占原题 60% 和 40%。</p>
+          </figcaption>
+          <div class="memory-controls" data-memory-controls hidden>
+            <div class="range-row">
+              <label for="days-elapsed">距上次原题作答</label>
+              <output for="days-elapsed" data-memory-days>7 天</output>
+              <input type="range" id="days-elapsed" min="1" max="30" value="7">
+            </div>
+            <label class="rehearsal-option">
+              <input type="checkbox" id="rehearsed">
+              <span>今天补练幼虫小问并答对</span>
+            </label>
+          </div>
+          <table class="component-table">
+            <thead>
+              <tr><th scope="col">小问</th><th scope="col">权重</th><th scope="col">上次计分</th><th scope="col">回忆概率</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">成虫形态</th><td>60%</td><td>100%</td><td data-adult-recall>96%</td></tr>
+              <tr><th scope="row">幼虫形态</th><td>40%</td><td data-larva-score>50%</td><td data-larva-recall>86%</td></tr>
+            </tbody>
+          </table>
+          <div class="memory-result" aria-live="polite" aria-atomic="true">
+            <div class="memory-result-title"><span>原题预计掌握度</span><strong data-total-mastery>75%</strong></div>
+            <div class="coverage-track" aria-hidden="true">
+              <div class="coverage-segment adult" data-adult-bar style="width:57.4%"></div>
+              <div class="coverage-segment larva" data-larva-bar style="width:17.1%"></div>
+            </div>
+            <p data-review-decision>幼虫形态有未掌握的要点，优先安排复习。</p>
+          </div>
+          <p class="example-note">算例采用默认遗忘曲线。成虫和幼虫小问的示例稳定性分别为 21 天和 4 天。</p>
+        </figure>
+
+        <details class="memory-method">
+          <summary>查看回忆概率、掌握度与排题的计算</summary>
+          <dl>
+            <div><dt>回忆概率</dt><dd>FSRS-6 遗忘曲线为 <code>R(t,S) = (1 + f × t / S)<sup>−w</sup></code>，<code>f = 0.9<sup>−1/w</sup> − 1</code>。<var>t</var> 为间隔天数，<var>S</var> 为稳定性，默认衰减参数 <var>w</var> 为 0.1542。<a href="https://github.com/open-spaced-repetition/awesome-fsrs/wiki/The-Algorithm#fsrs-6">FSRS-6 公式</a></dd></div>
+            <div><dt>原题掌握度</dt><dd>每个小问的贡献等于「权重 × 上次计分比例 × 当前回忆概率」。把各问的贡献相加，得到原题的预计掌握度。补练一问只更新这一问的计分和记忆状态，其他小问继续按各自的间隔计算。</dd></div>
+            <div><dt>复习优先级</dt><dd>软件先安排仍有缺漏且已到重练时间的小问。小问的覆盖缺口等于「权重 ×（1 − 上次计分比例 × 当前回忆概率）」。同类候选中，覆盖缺口较大的排在前面。</dd></div>
+          </dl>
+        </details>
+      </div>
+    </section>
+
+    <section class="dashboard shell" id="dashboard" aria-labelledby="dashboard-title">
+      <div class="section-heading">
+        <h2 id="dashboard-title">学习看板</h2>
+        <p>日历显示每天的作答量。选中一天，可以查看当天练了哪些科目、做了多少题，以及各学习场次的表现。</p>
+      </div>
+      <figure class="dashboard-figure">
+        <a href="./assets/dashboard.png" aria-label="查看学习看板实机原图"><img src="./assets/dashboard.png" width="1400" height="925" alt="ReciteHelper 学习看板。上方列出学习效率、正确率和累计计时，下方显示学习日历、本月作答柱状图和农业昆虫学的当日记录。" loading="lazy"></a>
+        <figcaption>农业昆虫学的当日作答记录</figcaption>
+      </figure>
+      <dl class="dashboard-metrics">
+        <div><dt>作答次数与得分</dt><dd>按日查看作答量，按科目对照正确率和平均得分，并查看练习与考试场次。</dd></div>
+        <div><dt>学习效率</dt><dd>用活跃学习时间除以软件在前台的计时时间。输入答案和滚动阅读等操作会计入活跃时间，长时间没有操作则停止累加活跃时间。</dd></div>
+        <div><dt>学习评分</dt><dd>头像旁显示学习评分。场次评分以作答质量为主，结合题量、作答节奏和可用的活跃时间记录，再汇总历史与近期表现。</dd></div>
+      </dl>
+    </section>
+
+    <section class="workflow shell" id="workflow" aria-labelledby="workflow-title">
+      <div class="section-heading">
+        <h2 id="workflow-title">从课程资料到模拟考试</h2>
+        <p>农业昆虫学项目里的习题来自复习笔记。练习留下的批改和作答记录，可以继续用于订正和复习。</p>
+      </div>
+      <div class="demo-tabs" data-demo-tabs hidden>
+        <button type="button" id="tab-generate" aria-controls="demo-generate">出题</button>
+        <button type="button" id="tab-practice" aria-controls="demo-practice">作答</button>
+        <button type="button" id="tab-feedback" aria-controls="demo-feedback">批改</button>
+        <button type="button" id="tab-mistakes" aria-controls="demo-mistakes">订正</button>
+        <button type="button" id="tab-exam" aria-controls="demo-exam">考试</button>
+      </div>
+      <div class="demo-panels">
+        <section class="demo-panel" id="demo-generate" aria-labelledby="generate-title">
+          <div class="demo-copy">
+            <h3 id="generate-title">按课程范围出题</h3>
+            <p>导入讲义或笔记建立题库，也可以使用规则化复习。比如在「昆虫分类学」大类写明要考哪些科和形态特征，再附上复习笔记。</p>
+            <p>先预览两道简答题，确认后生成其余题目。已有项目可继续增加大类和题目。</p>
+          </div>
+          <figure class="demo-figure">
+            <a href="./assets/generate.png" aria-label="查看出题管理原图"><img src="./assets/generate.png" width="1450" height="1100" alt="农业昆虫学题库管理页，大类为昆虫分类学，下方列出用于出题的 PDF 复习笔记。" loading="lazy"></a>
+            <figcaption>管理大类与出题</figcaption>
+          </figure>
+        </section>
+        <section class="demo-panel" id="demo-practice" aria-labelledby="practice-title">
+          <div class="demo-copy">
+            <h3 id="practice-title">每个小问单独作答</h3>
+            <p>阅读完整题干，再分栏作答。例如先概述半翅目的特征，再比较两个类群的口器和前翅。切换题目后，可以回到本次尚未提交的草稿。</p>
+            <p>等待判分时，软件可以轮换短填空或选择题，安排反复答错的知识隔开再练。</p>
+          </div>
+          <figure class="demo-figure">
+            <a href="./assets/practice.png" aria-label="查看分问作答原图"><img src="./assets/practice.png" width="1400" height="925" alt="练习页以两处独立输入框回答半翅目特征和类群比较，左侧是答题卡。" loading="lazy"></a>
+            <figcaption>多问简答题的作答界面</figcaption>
+          </figure>
+        </section>
+        <section class="demo-panel" id="demo-feedback" aria-labelledby="feedback-title">
+          <div class="demo-copy">
+            <h3 id="feedback-title">批改直接标在作答上</h3>
+            <p>各小问分别评分。概念性小问看核心关键词和等义表达，表达性小问看回答方向、条理和必要内容。</p>
+            <p>答案里的正确内容标绿，错误标红，需要补充的地方标黄。作答历史用百分比分数显示进步轨迹。</p>
+          </div>
+          <figure class="demo-figure">
+            <a href="./assets/feedback.png" aria-label="查看逐问批改原图"><img src="./assets/feedback.png" width="1400" height="925" alt="天牛科成虫和幼虫形态题的批改结果，绿色标记正确内容，黄色标出需要补充之处。" loading="lazy"></a>
+            <figcaption>逐问批改与作答历史</figcaption>
+          </figure>
+        </section>
+        <section class="demo-panel workspace-panel" id="demo-mistakes" aria-labelledby="mistakes-title">
+          <div class="demo-copy">
+            <h3 id="mistakes-title">把漏答和错答带回资料里查</h3>
+            <p>「资料与解析」先检索相关原文，再按需生成解析。附过材料的规则题会检索对应材料，传统项目还可以用向量检索补足本地搜索的结果。</p>
+            <p>错误列表保留整道题及原作答，用黄色标漏项、红色标错误，可以整页翻阅或导出 Word。项目笔记会自动保存，笔记、解析和错误列表可以停靠或浮动。</p>
+            <p>已经掌握的题可归档。题和记录保留在项目中，归档期间退出智能复习和等待判分小题的抽选。</p>
+          </div>
+          <figure class="demo-figure">
+            <a href="./assets/mistakes.png" aria-label="查看错误列表原图"><img src="./assets/mistakes.png" width="445" height="846" alt="农业昆虫学的错误列表。题干下显示原作答与订正要点，黄色标明遗漏，红色标明错误。" loading="lazy"></a>
+            <figcaption>浮动的错误列表面板</figcaption>
+          </figure>
+        </section>
+        <section class="demo-panel" id="demo-exam" aria-labelledby="exam-title">
+          <div class="demo-copy">
+            <h3 id="exam-title">从题库组一套限时试卷</h3>
+            <p>设定考试时间和题量，按章节权重抽题，也可以选择已导入的整套试卷。</p>
+            <p>交卷后可以查看分数、批改结果和错题。考试记录单独保存，平时的练习答案仍可查阅。</p>
+          </div>
+          <figure class="demo-figure">
+            <a href="./assets/exam.png" aria-label="查看模拟考试设置原图"><img src="./assets/exam.png" width="1400" height="1062" alt="模拟考试设置窗口，左侧调整考试时间和题量，右侧设置昆虫分类学章节的抽题权重。" loading="lazy"></a>
+            <figcaption>模拟考试的时长、题量与章节权重</figcaption>
+          </figure>
+        </section>
+      </div>
+    </section>
+
+    <section class="download shell" id="download" aria-labelledby="download-title">
+      <div>
+        <h2 id="download-title">下载 ReciteHelper</h2>
+        <p>Windows 桌面软件。项目、笔记和学习记录保存在本地。使用 AI 出题或批改时，可以在设置里选择已接入的模型服务。</p>
+      </div>
+      <div class="actions">
+        <a href="https://github.com/ArabidopsisDev/ReciteHelper/releases/latest" class="button button-primary">Windows 发布包</a>
+        <a href="https://github.com/ArabidopsisDev/ReciteHelper" class="button button-quiet">源码与手册</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell site-footer">
+    <a href="../../">Arabidopsis 首页</a>
+    <span>ReciteHelper</span>
+  </footer>
+</body>
+</html>

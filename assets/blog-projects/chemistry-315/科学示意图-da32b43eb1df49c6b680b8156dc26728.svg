@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="500" viewBox="0 0 840 500" font-family="Times New Roman, SimSun" font-size="20" font-style="normal" fill="black">
+  <title>过渡态理论：活化能与焓变</title>
+  <desc>放热反应的焓随反应进程变化示意图。曲线峰顶为过渡态，正向活化能为过渡态与反应物的焓差，逆向活化能为过渡态与生成物的焓差。反应焓变等于正向活化能减去逆向活化能。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="black" />
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="840" height="500" fill="white" />
+
+  <g fill="none" stroke="black" stroke-width="1.6">
+    <path d="M 85 415 L 85 50" marker-end="url(#arrow)" />
+    <path d="M 85 415 L 785 415" marker-end="url(#arrow)" />
+  </g>
+  <text x="40" y="62" text-anchor="middle"><tspan font-family="SimSun" font-style="normal">焓</tspan><tspan x="40" dy="27" font-style="italic">H</tspan></text>
+  <text x="737" y="449" text-anchor="middle" font-family="SimSun" font-style="normal">反应进程</text>
+
+  <g fill="none" stroke="black" stroke-width="1.1" stroke-dasharray="6 5">
+    <path d="M 250 110 H 598" />
+    <path d="M 135 285 H 748" />
+    <path d="M 552 365 H 748" />
+  </g>
+
+  <path d="M 125 285 L 175 285 C 255 285 305 110 400 110 C 495 110 515 365 625 365 L 690 365" fill="none" stroke="black" stroke-width="2.6" />
+
+  <text x="400" y="52" text-anchor="middle" font-family="SimSun" font-style="normal">过渡态</text>
+  <path d="M 400 64 V 96" fill="none" stroke="black" stroke-width="1.1" />
+  <text x="151" y="318" text-anchor="middle" font-family="SimSun" font-style="normal">反应物</text>
+  <text x="654" y="395" text-anchor="middle" font-family="SimSun" font-style="normal">生成物</text>
+
+  <g fill="none" stroke="black" stroke-width="1.5">
+    <path d="M 260 281 V 114" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+    <path d="M 585 361 V 114" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+    <path d="M 735 289 V 361" marker-end="url(#arrow)" />
+  </g>
+
+  <text x="246" y="198" text-anchor="end">
+    <tspan font-style="italic">E</tspan><tspan dy="5" font-size="14">a</tspan><tspan dy="-5">（</tspan><tspan font-family="SimSun" font-style="normal">正</tspan><tspan>）</tspan>
+  </text>
+  <text x="601" y="228">
+    <tspan font-style="italic">E</tspan><tspan dy="5" font-size="14">a</tspan><tspan dy="-5">（</tspan><tspan font-family="SimSun" font-style="normal">逆</tspan><tspan>）</tspan>
+  </text>
+  <text x="751" y="331">
+    <tspan>Δ</tspan><tspan font-style="italic">H</tspan>
+  </text>
+
+  <text x="420" y="473" text-anchor="middle" font-size="21">
+    <tspan>Δ</tspan><tspan font-style="italic">H</tspan><tspan> = </tspan><tspan font-style="italic">E</tspan><tspan dy="5" font-size="14">a</tspan><tspan dy="-5">（</tspan><tspan font-family="SimSun" font-style="normal">正</tspan><tspan>） − </tspan><tspan font-style="italic">E</tspan><tspan dy="5" font-size="14">a</tspan><tspan dy="-5">（</tspan><tspan font-family="SimSun" font-style="normal">逆</tspan><tspan>） &lt; 0</tspan>
+  </text>
+  <text x="760" y="38" text-anchor="end" font-size="16" font-family="SimSun" font-style="normal">放热反应示意</text>
+</svg>
